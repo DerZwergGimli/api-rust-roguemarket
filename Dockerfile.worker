@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------------
 # Cargo Build Stage
 # ------------------------------------------------------------------------------
-FROM messense/rust-musl-cross:x86_64-muslt as cargo-build
+FROM messense/rust-musl-cross:mips-musl as cargo-build
 
 WORKDIR /usr/src/myapp
 COPY . .
