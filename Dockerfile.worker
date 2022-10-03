@@ -1,6 +1,6 @@
 
 # Our first FROM statement declares the build environment.
-FROM joxit/rust-openssl:latest AS builder
+FROM rust:latest AS builder
 WORKDIR app
 
 COPY . .
