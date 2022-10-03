@@ -1,16 +1,18 @@
+FROM rust:slim AS builder
 
-# Our first FROM statement declares the build environment.
-FROM rust:latest AS builder
-WORKDIR app
+RUN rustup target add x86_64-unknown-linux-musl
+RUN apt update && apt install -y musl-tools musl-dev
+RUN update-ca-certificates
 
+WORKDIR /usr/src/app
+
+# copy entire workspace
 COPY . .
 
-RUN cd worker && cargo build --release
+RUN cd worker && cargo build --target x86_64-unknown-linux-musl --release
 
-FROM alpine:latest
-RUN apk --no-cache add ca-certificates openssl
-COPY --from=builder \
-    /app/worker/target/release/worker \
-    /usr/local/bin/
-CMD /usr/local/bin/worker
+
+FROM alpine
+COPY --from=builder /usr/src/app/worker/target/x86_64-unknown-linux-musl/release/worker ./
+CMD [ "./worker" ]
 
