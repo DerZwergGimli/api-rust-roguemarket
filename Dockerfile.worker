@@ -1,11 +1,20 @@
-# 1. This tells docker to use the Rust official image
-FROM rust:latest
+FROM lukemathwalker/cargo-chef:latest-rust-1.56.0 AS chef
+WORKDIR app
 
-# 2. Copy the files in your machine to the Docker image
-COPY ./ ./
+FROM chef AS planner
+COPY . .
+RUN cd worker && cargo chef prepare --recipe-path recipe.json
 
-# Build your program for release
-RUN cd ./worker && cargo build --release
+FROM chef AS builder
+COPY --from=planner /app/worker/recipe.json ./worker/recipe.json
+# Build dependencies - this is the caching Docker layer!
+RUN cd worker &&  cargo chef cook --release --recipe-path recipe.json
+# Build application
+COPY . .
+RUN cd worker && cargo build --release --bin worker
 
-# Run the binary
-CMD ["./worker/target/release/worker"]
+# We do not need the Rust toolchain to run the binary!
+FROM debian:buster-slim AS runtime
+WORKDIR app
+COPY --from=builder /app/worker/target/release/app /usr/local/bin
+ENTRYPOINT ["/usr/local/bin/worker"]
