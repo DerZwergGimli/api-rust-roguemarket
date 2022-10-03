@@ -1,15 +1,15 @@
 
 # Our first FROM statement declares the build environment.
 FROM joxit/rust-openssl:latest AS builder
-WORKDIR build
-# Add our source code.
+WORKDIR app
+
 COPY . .
-# Build our application.
+
 RUN cd worker && cargo build --release
 
 FROM alpine:latest
 RUN apk --no-cache add ca-certificates
 COPY --from=builder \
-    /build/worker/target/release/worker \
+    /app/worker/target/release/worker \
     /usr/local/bin/
 CMD /usr/local/bin/worker
