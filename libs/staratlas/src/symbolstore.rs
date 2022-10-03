@@ -33,7 +33,6 @@ impl BuilderSymbolStore {
             .json::<Vec<StarAtlasNft>>()
             .await
             .unwrap();
-        print!("{:?}", data);
         self.create_currencies();
         self.map_data(data)
     }

@@ -1,0 +1,4 @@
+use console::Emoji;
+
+pub static LOOKING_GLASS: Emoji<'_, '_> = Emoji("🔍  ", "");
+pub static TRUCK: Emoji<'_, '_> = Emoji("🚚  ", "");

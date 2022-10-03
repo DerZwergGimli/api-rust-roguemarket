@@ -22,26 +22,33 @@ pub struct Fetcher {
 }
 
 impl Fetcher {
-    pub fn new(&mut self, store: SymbolStore) {
-        let url = "https://ssc-dao.genesysgo.net/".to_string();
-        self.client = RpcClient::new(url);
-        self.store = store
+    pub fn new(url: &str, store: SymbolStore) -> Fetcher {
+        Fetcher {
+            client: RpcClient::new(url),
+            store: store,
+        }
     }
 
     pub fn fetch_signatures(
         &self,
         address: &str,
         limit: Option<usize>,
+        before: Option<String>,
     ) -> Vec<RpcConfirmedTransactionStatusWithSignature> {
+        let mut l_before = None;
+        if !before.is_none() {
+            l_before = Some(Signature::from_str(before.unwrap_or_default().as_str()).unwrap())
+        };
+
         let signatures = self
             .client
             .get_signatures_for_address_with_config(
                 &Pubkey::from_str(address).unwrap(),
                 GetConfirmedSignaturesForAddress2Config {
-                    before: None,
+                    before: l_before,
                     until: None,
                     limit: limit,
-                    commitment: None,
+                    commitment: Some(CommitmentConfig::finalized()),
                 },
             )
             .expect("Unable to get signatures");
