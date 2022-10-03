@@ -8,8 +8,9 @@ COPY . .
 RUN cd worker && cargo build --release
 
 FROM alpine:latest
-RUN apk --no-cache add ca-certificates
+RUN apk --no-cache add ca-certificates openssl
 COPY --from=builder \
     /app/worker/target/release/worker \
     /usr/local/bin/
 CMD /usr/local/bin/worker
+
