@@ -1,0 +1,37 @@
+version: "3.7"
+
+services:
+  worker_loop:
+    image: derzwerggimli/worker.skullnbones.trades
+    restart: always
+    environment:
+      MODE: loop
+      RPCCLIENT: https://ssc-dao.genesysgo.net/
+      MONGOURL: ${MONGOURL}
+      MONGODB: ${MONGODB}
+      MONGOCOL: ${MONGOCOL}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+
+
+  worker_sync:
+    #image: skullandbonesdao/rogue_worker:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    restart: always
+    environment:
+      LIMIT: 200
+      MODE: sync
+      SIGNATURE: 57wn4ipKbcso7FbXMBttrTAwgoNNibiS8PcCtDHvvPHPZQxETpjpjHsoy3VMm3kpdgBK8iBNgjvF6dxv5vqAZVdb
+      SLEEP: 1000
+      SOLANARPC: https://ssc-dao.genesysgo.net/
+      MONGOURL: ${MONGOURL}
+      MONGODB: ${MONGODB}
+      MONGOCOL: ${MONGOCOL}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
