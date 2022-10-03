@@ -4,7 +4,7 @@ WORKDIR app
 FROM chef AS planner
 COPY . .
 RUN cd worker
-RUN cargo chef prepare --recipe-path ./recipe.json
+RUN cargo chef prepare --recipe-path recipe.json
 
 FROM chef AS builder
 COPY --from=planner /app/worker/recipe.json worker/recipe.json
