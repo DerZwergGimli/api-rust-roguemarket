@@ -1,20 +1,30 @@
 # ------------------------------------------------------------------------------
 # Cargo Build Stage
 # ------------------------------------------------------------------------------
-FROM messense/rust-musl-cross:mips-musl as cargo-build
 
-WORKDIR /usr/src/myapp
-COPY . .
-RUN cd worker && rust-musl-builder cargo build --release
 
-# ------------------------------------------------------------------------------
-# Final Stage
-# ------------------------------------------------------------------------------
+# -*- mode: dockerfile -*-
+#
+# An example Dockerfile showing how to build a Rust executable using this
+# image, and deploy it with a tiny Alpine Linux container.
+
+# You can override this `--build-arg BASE_IMAGE=...` to use different
+# version of Rust or OpenSSL.
+ARG BASE_IMAGE=ekidd/rust-musl-builder:latest
+
+# Our first FROM statement declares the build environment.
+FROM ${BASE_IMAGE} AS builder
+
+# Add our source code.
+ADD --chown=rust:rust . ./
+
+# Build our application.
+RUN cd worker && cargo build --release
+
+# Now, we need to build our _real_ Docker container, copying in `using-diesel`.
 FROM alpine:latest
-RUN addgroup -g 1000 worker
-RUN adduser -D -s /bin/sh -u 1000 -G worker worker
-WORKDIR /home/app/bin/
-COPY --from=cargo-build /usr/src/myapp/worker/target/x86_64-unknown-linux-musl/release/worker .
-RUN chown worker:worker worker
-USER worker
-CMD ["./worker"]
+RUN apk --no-cache add ca-certificates
+COPY --from=builder \
+    /home/rust/src/target/x86_64-unknown-linux-musl/release/using-diesel \
+    /usr/local/bin/
+CMD /usr/local/bin/using-diesel
