@@ -9,7 +9,7 @@ pub async fn executeTask(
     mode: &str,
     fetcher: &Fetcher,
     database: &MongoDBConnection,
-    signature: &str,
+    program_sig: &str,
     count: usize,
     mut before: Option<String>,
 ) -> Option<String> {
@@ -24,7 +24,7 @@ pub async fn executeTask(
         style("[1/5]").bold().dim(),
         LOOKING_GLASS
     );
-    let signatures = fetcher.fetch_signatures(signature, Some(count), before);
+    let signatures = fetcher.fetch_signatures(program_sig, Some(count), before);
 
     println!(
         "{} {}Fetching transactions...",
@@ -77,7 +77,7 @@ fn logStatus(
     let newdate = datetime.format("%Y-%m-%d %H:%M:%S");
 
     println!(
-        "mode={}\tfetched\t-> filtered\t-> mapped\t-> written  \
+        "mode={}\tfetched\t\t-> filtered\t-> mapped\t-> written  \
         \n\t\t{}\t\t-> {}\t\t-> {}\t\t-> {}\n\
         {} {}",
         mode, fetched, filtered, mapped, written, last_sign, newdate

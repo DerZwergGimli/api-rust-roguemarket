@@ -36,8 +36,8 @@ impl Fetcher {
         before: Option<String>,
     ) -> Vec<RpcConfirmedTransactionStatusWithSignature> {
         let mut l_before = None;
-        if !before.is_none() {
-            l_before = Some(Signature::from_str(before.unwrap_or_default().as_str()).unwrap())
+        if before != None {
+            l_before = Some(Signature::from_str(before.unwrap().as_str()).unwrap());
         };
 
         let signatures = self
