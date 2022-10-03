@@ -1,5 +1,2 @@
-pub struct DBTrade {
-    pub signature: String,
-    pub timestamp: i64,
-}
-
+pub mod databasetrade;
+pub mod tokentransafer;

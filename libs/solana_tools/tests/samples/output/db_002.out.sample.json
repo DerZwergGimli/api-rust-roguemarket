@@ -1,0 +1,19 @@
+[
+  {
+    "signature": "4hCGmE3RdUCmxz7PKKzYFtF9xmu3Lgb2YccW67roFbZNrmp8wbD8htzckFtnojaRUNqrGQqZzTg1HU1TYmCp8VWS",
+    "timestamp": 1664734907,
+    "slot": 153380180,
+    "symbol": "OGKATPUSDC",
+    "exchange": [
+      {
+        "side": false,
+        "seller": "nmKo7LePnEASpD9NsdS9JFA5cWRcJgLHghDhsG2Fyap",
+        "buyer": "A4sLrEUzJSmznFuZdr7CPRwBGLNAFFrv6WiaKxJzxiEH",
+        "currency_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+        "token_mint": "CWxNX9sTexuqvQefqskhP9f6AP5C8hq2VNkicRseqAT5",
+        "currency_amount": 1914.775,
+        "token_amount": 1.0
+      }
+    ]
+  }
+]

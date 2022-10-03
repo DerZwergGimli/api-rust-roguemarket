@@ -1,0 +1,19 @@
+[
+  {
+    "signature": "HyKP1yrsHPu75ym8zVD9EKS4KAYPnRcB1HfazyP1Cvh32hFnvuP7gkQBQLhw7qZwTzcxfgpoVKqgaBn6DH7J6X3",
+    "timestamp": 1664722193,
+    "slot": 153357697,
+    "symbol": "AMMOATLAS",
+    "exchange": [
+      {
+        "side": true,
+        "seller": "FsMRWqwGibZFiNgk7JBKKcAqPkNbgpDVf6jJHWsaEwNx",
+        "buyer": "CPnhL83FXTgvRXXtZ2SvDfvNMiJWCqG9rFS75gqoyucP",
+        "currency_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+        "token_mint": "ammoK8AkX2wnebQb35cDAZtTkvsXQbi82cGeTnUvvfK",
+        "currency_amount": 0.50534165,
+        "token_amount": 250.0
+      }
+    ]
+  }
+]
