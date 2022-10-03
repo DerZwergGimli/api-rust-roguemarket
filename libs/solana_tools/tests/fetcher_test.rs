@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod fetcher_test {
     use assert_json_diff::assert_json_eq;
-    use helper::filehelper::{read_file, write_file};
+    use helper::filehelper::read_file;
     use solana_client::rpc_client::RpcClient;
     use solana_client::rpc_response::RpcConfirmedTransactionStatusWithSignature;
     use solana_tools::fetcher::fetcher::Fetcher;

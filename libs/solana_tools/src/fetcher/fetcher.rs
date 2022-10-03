@@ -2,16 +2,14 @@ use log::{info, warn};
 use solana_client::rpc_client::{GetConfirmedSignaturesForAddress2Config, RpcClient};
 use solana_client::rpc_config::RpcTransactionConfig;
 use solana_client::rpc_response::RpcConfirmedTransactionStatusWithSignature;
-use solana_program::instruction::CompiledInstruction;
 use solana_program::pubkey::Pubkey;
 use solana_sdk::commitment_config::CommitmentConfig;
 use solana_sdk::signature::Signature;
 use solana_transaction_status::option_serializer::OptionSerializer;
-use solana_transaction_status::parse_instruction::parse;
+
 use solana_transaction_status::{
     EncodedConfirmedTransactionWithStatusMeta, EncodedTransaction,
     EncodedTransactionWithStatusMeta, UiInstruction, UiParsedInstruction, UiTransactionEncoding,
-    UiTransactionStatusMeta,
 };
 use staratlas::symbolstore::SymbolStore;
 use std::str::FromStr;
@@ -57,21 +55,27 @@ impl Fetcher {
         let mut transactions = Vec::new();
 
         signatures.into_iter().for_each(|signature| {
-            transactions.push(
-                self.client
-                    .get_transaction_with_config(
-                        &Signature::from_str(signature.signature.as_str()).unwrap(),
-                        RpcTransactionConfig {
-                            encoding: Some(UiTransactionEncoding::JsonParsed),
-                            commitment: Some(CommitmentConfig::finalized()),
-                            max_supported_transaction_version: None,
-                        },
-                    )
-                    .expect("Error to get transactions"),
-            );
+            transactions.push(self.fetch_transaction(signature.clone()));
         });
         return transactions;
     }
+
+    pub fn fetch_transaction(
+        &self,
+        signature: RpcConfirmedTransactionStatusWithSignature,
+    ) -> EncodedConfirmedTransactionWithStatusMeta {
+        self.client
+            .get_transaction_with_config(
+                &Signature::from_str(signature.signature.as_str()).unwrap(),
+                RpcTransactionConfig {
+                    encoding: Some(UiTransactionEncoding::JsonParsed),
+                    commitment: Some(CommitmentConfig::finalized()),
+                    max_supported_transaction_version: None,
+                },
+            )
+            .expect("Error to get transactions")
+    }
+
     pub fn filter_transactions_for_exchange(
         &self,
         transactions: Vec<EncodedConfirmedTransactionWithStatusMeta>,

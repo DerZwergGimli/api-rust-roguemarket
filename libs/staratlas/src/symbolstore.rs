@@ -52,21 +52,21 @@ impl BuilderSymbolStore {
     }
 
     fn map_data(&self, data: Vec<StarAtlasNft>) -> SymbolStore {
-        let mut symbolStore: SymbolStore = SymbolStore {
+        let mut symbol_store: SymbolStore = SymbolStore {
             assets: vec![],
             currencies: vec![],
         };
-        symbolStore.currencies = self.create_currencies();
+        symbol_store.currencies = self.create_currencies();
 
         data.iter().for_each(|asset| {
-            symbolStore.currencies.iter().for_each(|currency| {
-                symbolStore.assets.push(Asset {
+            symbol_store.currencies.iter().for_each(|currency| {
+                symbol_store.assets.push(Asset {
                     symbol: format!("{}{}", asset.symbol.clone(), currency.name.clone()),
                     mint: asset.mint.clone(),
                     pair_mint: currency.mint.clone(),
                 })
             })
         });
-        return symbolStore;
+        return symbol_store;
     }
 }
