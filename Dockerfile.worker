@@ -19,6 +19,6 @@ RUN cd worker && cargo build --release
 FROM alpine:latest
 RUN apk --no-cache add ca-certificates
 COPY --from=builder \
-    /home/rust/src/target/x86_64-unknown-linux-musl/release/using-sqlx \
+    /home/rust/worker/target/x86_64-unknown-linux-musl/release/worker \
     /usr/local/bin/
-CMD /usr/local/bin/using-sqlx
+CMD /usr/local/bin/worker
