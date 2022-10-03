@@ -7,7 +7,6 @@ use crate::emotes::{LOOKING_GLASS, TRUCK};
 use crate::task::execute_task;
 use anyhow::Result;
 use console::style;
-use core::num::dec2flt::parse::parse_number;
 use indicatif::{MultiProgress, ProgressBar};
 use log::info;
 use mongo::mongodb::MongoDBConnection;
