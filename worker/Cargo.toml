@@ -16,4 +16,3 @@ console = "0.15.2"
 solana_tools = { path = "../libs/solana_tools" }
 staratlas = { path = "../libs/staratlas" }
 mongo = { path = "../libs/mongo" }
-resolver = "1"
