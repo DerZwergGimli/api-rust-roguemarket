@@ -5,7 +5,7 @@ use indicatif::{MultiProgress, ProgressBar};
 use mongo::mongodb::MongoDBConnection;
 use solana_tools::fetcher::fetcher::Fetcher;
 
-pub async fn executeTask(
+pub async fn execute_task(
     mode: &str,
     fetcher: &Fetcher,
     database: &MongoDBConnection,
@@ -50,7 +50,7 @@ pub async fn executeTask(
     let written_to_db = database.insert_dbTrade(&database_transactions).await;
     let last_timestamp = signatures.last().unwrap().clone().block_time;
     let last_signatire = signatures.last().unwrap().clone().signature;
-    logStatus(
+    log_status(
         mode,
         signatures.clone().len(),
         filtered_transactions.len(),
@@ -63,7 +63,7 @@ pub async fn executeTask(
     return Some(last_signatire);
 }
 
-fn logStatus(
+fn log_status(
     mode: &str,
     fetched: usize,
     filtered: usize,

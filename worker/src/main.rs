@@ -1,10 +1,13 @@
+extern crate core;
+
 mod emotes;
 mod task;
 
 use crate::emotes::{LOOKING_GLASS, TRUCK};
-use crate::task::executeTask;
+use crate::task::execute_task;
 use anyhow::Result;
 use console::style;
+use core::num::dec2flt::parse::parse_number;
 use indicatif::{MultiProgress, ProgressBar};
 use log::info;
 use mongo::mongodb::MongoDBConnection;
@@ -13,7 +16,6 @@ use staratlas::symbolstore::BuilderSymbolStore;
 use std::time::Duration;
 use std::{env, thread};
 
-const count: usize = 100;
 const PROGRAM: &str = "traderDnaR5w6Tcoi3NFm53i48FTDNbGjBSZwWXDRrg";
 
 #[tokio::main]
@@ -24,7 +26,10 @@ async fn main() -> Result<()> {
     if env::var("LASTSIG").unwrap_or("".to_string()) != "" {
         last_signature = Some(env::var("LASTSIG").unwrap());
     }
-
+    let mut count = 100;
+    if env::var("COUNT").unwrap_or("".to_string()) != "" {
+        count = parse_number::<i32>(env::var("LASTSIG").unwrap().as_ref());
+    }
     let database =
         MongoDBConnection::new(env::var("MONGOURL").expect("NO MONGOURL").as_str()).await;
 
@@ -35,7 +40,7 @@ async fn main() -> Result<()> {
     );
 
     while true {
-        last_signature = executeTask(
+        last_signature = execute_task(
             env::var("MODE").unwrap_or("".to_string()).as_str(),
             &fetcher,
             &database,
