@@ -24,5 +24,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
+          context: .
+          file: ./Dockerfile.worker
           push: true
           tags: derzwerggimli/api-roguemarket-worker:latest
