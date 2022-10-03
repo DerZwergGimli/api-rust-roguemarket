@@ -28,7 +28,7 @@ async fn main() -> Result<()> {
     }
     let mut count = 100;
     if env::var("COUNT").unwrap_or("".to_string()) != "" {
-        count = parse_number::<i32>(env::var("LASTSIG").unwrap().as_ref());
+        count = env::var("COUNT").unwrap().parse::<i32>().unwrap_or(100);
     }
     let database =
         MongoDBConnection::new(env::var("MONGOURL").expect("NO MONGOURL").as_str()).await;
