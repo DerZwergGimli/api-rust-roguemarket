@@ -47,7 +47,7 @@ pub async fn execute_task(
     println!("{} {}Map to DB...", style("[5/5]").bold().dim(), TRUCK);
     let database_transactions = fetcher.map_transactions(&filtered_transactions);
 
-    let written_to_db = database.insert_dbTrade(&database_transactions).await;
+    let written_to_db = database.insert_db_trade(&database_transactions).await;
     let last_timestamp = signatures.last().unwrap().clone().block_time;
     let last_signatire = signatures.last().unwrap().clone().signature;
     log_status(

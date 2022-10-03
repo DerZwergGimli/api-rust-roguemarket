@@ -1,6 +1,5 @@
 use mongodb::bson::doc;
 use mongodb::options::{ClientOptions, IndexOptions};
-use mongodb::results::InsertManyResult;
 use mongodb::{Client, Collection, Database, IndexModel};
 use types::databasetrade::DBTrade;
 
@@ -51,14 +50,14 @@ impl MongoDBConnection {
         }
     }
 
-    pub async fn insert_dbTrade(&self, dbTrades: &Vec<DBTrade>) -> usize {
+    pub async fn insert_db_trade(&self, db_trades: &Vec<DBTrade>) -> usize {
         let mut inserted = 0;
 
-        for db_trade in dbTrades.iter() {
+        for db_trade in db_trades.iter() {
             let result = self.collection.insert_one(db_trade, None).await;
             match result {
                 Ok(_) => inserted = inserted + 1,
-                Err(err) => {}
+                Err(_) => {}
             }
         }
         return inserted;

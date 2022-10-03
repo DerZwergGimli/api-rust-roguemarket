@@ -6,8 +6,6 @@ mod task;
 use crate::emotes::{LOOKING_GLASS, TRUCK};
 use crate::task::execute_task;
 use anyhow::Result;
-use console::style;
-use indicatif::{MultiProgress, ProgressBar};
 use log::info;
 use mongo::mongodb::MongoDBConnection;
 use solana_tools::fetcher::fetcher::Fetcher;
@@ -38,7 +36,7 @@ async fn main() -> Result<()> {
         store.init().await,
     );
 
-    while true {
+    loop {
         last_signature = execute_task(
             env::var("MODE").unwrap_or("".to_string()).as_str(),
             &fetcher,
@@ -51,5 +49,5 @@ async fn main() -> Result<()> {
         thread::sleep(Duration::from_millis(5000));
     }
 
-    Ok(())
+    //Ok(())
 }
