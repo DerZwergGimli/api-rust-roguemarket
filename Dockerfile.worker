@@ -19,10 +19,10 @@ RUN cd worker && RUSTFLAGS=-Clinker=musl-gcc cargo build --release --target=x86_
 # Final Stage
 # ------------------------------------------------------------------------------
 FROM alpine:latest
-RUN addgroup -g 1000 myapp
-RUN adduser -D -s /bin/sh -u 1000 -G myapp myapp
+RUN addgroup -g 1000 worker
+RUN adduser -D -s /bin/sh -u 1000 -G worker worker
 WORKDIR /home/myapp/bin/
 COPY --from=cargo-build /usr/src/myapp/worker/target/x86_64-unknown-linux-musl/release/worker .
-RUN chown myapp:myapp myapp
-USER myapp
+RUN chown worker:worker worker
+USER worker
 CMD ["./worker"]
