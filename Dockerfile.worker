@@ -15,6 +15,6 @@ RUN cargo build --release --bin worker
 
 # We do not need the Rust toolchain to run the binary!
 FROM debian:buster-slim AS runtime
-WORKDIR app
+WORKDIR worker
 COPY --from=builder /worker/worker/target/release/worker /usr/local/bin
 ENTRYPOINT ["/usr/local/bin/worker"]
