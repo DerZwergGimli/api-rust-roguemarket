@@ -25,9 +25,9 @@ async fn main() -> Result<()> {
     if env::var("LASTSIG").unwrap_or("".to_string()) != "" {
         last_signature = Some(env::var("LASTSIG").unwrap());
     }
-    let mut count = 100;
+    let mut count: usize = 100;
     if env::var("COUNT").unwrap_or("".to_string()) != "" {
-        count = env::var("COUNT").unwrap().parse::<i32>().unwrap_or(100);
+        count = env::var("COUNT").unwrap().parse::<usize>().unwrap_or(100);
     }
     let database =
         MongoDBConnection::new(env::var("MONGOURL").expect("NO MONGOURL").as_str()).await;
@@ -44,7 +44,7 @@ async fn main() -> Result<()> {
             &fetcher,
             &database,
             PROGRAM,
-            100,
+            count,
             last_signature,
         )
         .await;
