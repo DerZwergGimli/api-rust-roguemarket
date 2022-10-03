@@ -16,7 +16,7 @@ ARG BASE_IMAGE=ekidd/rust-musl-builder:latest
 FROM ${BASE_IMAGE} AS builder
 
 # Add our source code.
-ADD --chown=rust:rust . ./
+COPY . .
 
 # Build our application.
 RUN cd worker && cargo build --release
