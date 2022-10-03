@@ -1,10 +1,9 @@
 # ------------------------------------------------------------------------------
 # Cargo Build Stage
 # ------------------------------------------------------------------------------
-
 FROM rust:latest as cargo-build
 RUN apt-get update
-RUN apt-get install musl-tools -y
+RUN apt-get install musl-tools openssl-sys -y
 RUN rustup target add x86_64-unknown-linux-musl
 WORKDIR /usr/src/myapp
 COPY . .
@@ -21,7 +20,7 @@ RUN cd worker && RUSTFLAGS=-Clinker=musl-gcc cargo build --release --target=x86_
 FROM alpine:latest
 RUN addgroup -g 1000 worker
 RUN adduser -D -s /bin/sh -u 1000 -G worker worker
-WORKDIR /home/myapp/bin/
+WORKDIR /home/app/bin/
 COPY --from=cargo-build /usr/src/myapp/worker/target/x86_64-unknown-linux-musl/release/worker .
 RUN chown worker:worker worker
 USER worker
