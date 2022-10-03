@@ -11,7 +11,7 @@ COPY worker/Cargo.toml worker/Cargo.toml
 RUN mkdir src/
 RUN echo "fn main() {println!(\"if you see this, the build broke\")}" > src/main.rs
 RUN cd worker && RUSTFLAGS=-Clinker=musl-gcc cargo build --release --target=x86_64-unknown-linux-musl
-RUN cd worker && rm -f target/x86_64-unknown-linux-musl/release/deps/myapp*
+RUN cd worker && rm -f target/x86_64-unknown-linux-musl/release/deps/worker*
 COPY . .
 RUN cd worker && RUSTFLAGS=-Clinker=musl-gcc cargo build --release --target=x86_64-unknown-linux-musl
 
