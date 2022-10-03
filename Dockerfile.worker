@@ -1,18 +1,11 @@
 # ------------------------------------------------------------------------------
 # Cargo Build Stage
 # ------------------------------------------------------------------------------
-FROM rust:latest as cargo-build
-RUN apt-get update
-RUN apt-get install musl-tools -y
-RUN apt-get install -y --no-install-recommends ca-certificates wget gcc libssl-dev libc6-dev
-RUN rustup target add x86_64-unknown-linux-musl
+FROM messense/rust-musl-cross:x86_64-muslt as cargo-build
+
 WORKDIR /usr/src/myapp
 COPY . .
-RUN echo "fn main() {println!(\"if you see this, the build broke\")}" > worker/src/main.rs
-RUN cd worker && RUSTFLAGS=-Clinker=musl-gcc cargo build --release --target=x86_64-unknown-linux-musl
-RUN cd worker && rm -f target/x86_64-unknown-linux-musl/release/deps/worker*
-COPY . .
-RUN cd worker && RUSTFLAGS=-Clinker=musl-gcc cargo build --release --target=x86_64-unknown-linux-musl
+RUN cd worker && rust-musl-builder cargo build --release
 
 # ------------------------------------------------------------------------------
 # Final Stage
