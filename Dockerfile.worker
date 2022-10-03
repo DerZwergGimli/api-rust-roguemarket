@@ -11,7 +11,7 @@ COPY . .
 COPY --from=planner /app/worker/recipe.json worker/recipe.json
 RUN cd worker && cargo chef cook --release --recipe-path recipe.json
 # Build application
-RUN cd worker && cargo build --release --bin worker
+RUN cd worker && cargo build --package worker --release --bin worker
 
 # We do not need the Rust toolchain to run the binary!
 FROM debian:bullseye-slim AS runtime
