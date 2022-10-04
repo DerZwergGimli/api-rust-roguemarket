@@ -82,7 +82,10 @@ impl Fetcher {
                 },
             ) {
                 Ok(data) => Some(data),
-                Err(_) => None,
+                Err(err) => {
+                    warn!("{:?}", err.kind);
+                    None
+                }
             }
         }
         return result.unwrap();
