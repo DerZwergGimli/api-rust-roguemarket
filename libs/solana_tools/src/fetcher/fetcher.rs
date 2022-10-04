@@ -62,7 +62,10 @@ impl Fetcher {
         let mut transactions = Vec::new();
 
         signatures.into_iter().for_each(|signature| {
-            transactions.push(self.fetch_transaction(signature.clone()));
+            //Make sure to remove failed TXs
+            if signature.err.is_none() {
+                transactions.push(self.fetch_transaction(signature.clone()));
+            }
         });
         return transactions;
     }
@@ -95,11 +98,9 @@ impl Fetcher {
         &self,
         transactions: Vec<EncodedConfirmedTransactionWithStatusMeta>,
     ) -> Vec<EncodedConfirmedTransactionWithStatusMeta> {
-        let mut filtered_transactions: Vec<EncodedConfirmedTransactionWithStatusMeta> = Vec::new();
-        transactions
-            .into_iter()
-            .for_each(|transaction| filtered_transactions.push(transaction));
+        let filtered_transactions: Vec<EncodedConfirmedTransactionWithStatusMeta> = transactions;
 
+        //Find only with 'ProcessExhange'
         filtered_transactions
             .into_iter()
             .filter(|transaction| {
