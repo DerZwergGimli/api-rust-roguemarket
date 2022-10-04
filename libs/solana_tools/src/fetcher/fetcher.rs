@@ -71,16 +71,20 @@ impl Fetcher {
         &self,
         signature: RpcConfirmedTransactionStatusWithSignature,
     ) -> EncodedConfirmedTransactionWithStatusMeta {
-        self.client
-            .get_transaction_with_config(
-                &Signature::from_str(signature.signature.as_str()).unwrap(),
-                RpcTransactionConfig {
-                    encoding: Some(UiTransactionEncoding::JsonParsed),
-                    commitment: Some(CommitmentConfig::finalized()),
-                    max_supported_transaction_version: None,
-                },
-            )
-            .expect("Error to get transactions")
+        let trying = true;
+        while trying {
+            trying = false;
+            self.client
+                .get_transaction_with_config(
+                    &Signature::from_str(signature.signature.as_str()).unwrap(),
+                    RpcTransactionConfig {
+                        encoding: Some(UiTransactionEncoding::JsonParsed),
+                        commitment: Some(CommitmentConfig::finalized()),
+                        max_supported_transaction_version: None,
+                    },
+                )
+                .unwrap_or(trying = true)
+        }
     }
 
     pub fn filter_transactions_for_exchange(
