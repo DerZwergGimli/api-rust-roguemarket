@@ -1,10 +1,17 @@
 [
   {
     "signature": "5xMYHMozm5HvCCgscE2cx5dhj62VNTAECHauJNyXquFhjh8XmXSycnnpEWFQj1iwLzuLcKZF6yhyCDDyJKtFascc",
-    "slot": 153380180,
-    "err": "AccountInUse",
+    "slot": 153657962,
+    "err": {
+      "InstructionError": [
+        0,
+        {
+          "Custom": 3012
+        }
+      ]
+    },
     "memo": null,
-    "blockTime": 1664727707,
+    "blockTime": 1664894565,
     "confirmationStatus": "finalized"
   }
 ]

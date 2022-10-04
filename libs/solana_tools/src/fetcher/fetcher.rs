@@ -63,7 +63,7 @@ impl Fetcher {
 
         signatures.into_iter().for_each(|signature| {
             //Make sure to remove failed TXs
-            if signature.err.is_none() {
+            if signature.err == None {
                 transactions.push(self.fetch_transaction(signature.clone()));
             }
         });
