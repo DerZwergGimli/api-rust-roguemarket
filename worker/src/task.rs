@@ -36,7 +36,10 @@ pub async fn execute_task(
 
     let mut transactions = Vec::new();
     signatures.clone().into_iter().for_each(|signature| {
-        transactions.push(fetcher.fetch_transaction(signature));
+        //Make sure to remove failed TXs
+        if signature.err == None {
+            transactions.push(fetcher.fetch_transaction(signature));
+        }
         pb.inc(1);
     });
     pb.finish_with_message("done!");
