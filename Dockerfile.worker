@@ -9,5 +9,6 @@ RUN cd worker && cargo build --release
 FROM debian:bullseye
 COPY --from=builder build/worker/target/release/worker ./
 RUN apt update && apt install -y libssl-dev
+RUN update-ca-certificates
 ENTRYPOINT [ "./worker" ]
 
