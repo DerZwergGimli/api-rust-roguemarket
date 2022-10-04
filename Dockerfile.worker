@@ -1,17 +1,13 @@
-FROM rust:slim AS builder
-
-RUN rustup target add x86_64-unknown-linux-musl
-RUN apt update && apt install -y musl-tools musl-dev openssl curl
-RUN update-ca-certificates
-
-WORKDIR /usr/src/app
-
+FROM rust:latest AS builder
+WORKDIR build
+RUN apt update && apt install -y libssl-dev pkg-config
 COPY . .
 
-RUN cd worker && cargo build --target --release
+RUN cd worker && cargo build --release
 
 
-FROM alpine
-COPY --from=builder /usr/src/app/worker/target/x86_64-unknown-linux-musl/release/worker ./
-CMD [ "./worker" ]
+FROM debian:bullseye
+COPY --from=builder build/worker/target/release/worker ./
+RUN apt update && apt install -y libssl-dev
+ENTRYPOINT [ "./worker" ]
 
