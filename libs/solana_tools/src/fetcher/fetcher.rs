@@ -40,9 +40,9 @@ impl Fetcher {
             l_before = Some(Signature::from_str(before.unwrap().as_str()).unwrap());
         };
 
-        let signatures = self
-            .client
-            .get_signatures_for_address_with_config(
+        let mut result: Option<Vec<RpcConfirmedTransactionStatusWithSignature>> = None;
+        while result == None {
+            result = match self.client.get_signatures_for_address_with_config(
                 &Pubkey::from_str(address).unwrap(),
                 GetConfirmedSignaturesForAddress2Config {
                     before: l_before,
@@ -50,9 +50,15 @@ impl Fetcher {
                     limit: limit,
                     commitment: Some(CommitmentConfig::finalized()),
                 },
-            )
-            .expect("Unable to get signatures");
-        return signatures;
+            ) {
+                Ok(data) => Some(data),
+                Err(err) => {
+                    warn!("{:?}", err.kind);
+                    None
+                }
+            }
+        }
+        return result.unwrap();
     }
 
     pub fn fetch_transactions(
