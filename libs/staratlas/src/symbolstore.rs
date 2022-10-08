@@ -5,19 +5,40 @@ use serde::{Deserialize, Serialize};
 pub struct SymbolStore {
     pub assets: Vec<Asset>,
     pub currencies: Vec<Currency>,
+    pub exchange: Exchange,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Asset {
+    pub asset_name: String,
+    pub pair_name: String,
+    pub description: String,
+    pub asset_type: String,
     pub symbol: String,
     pub mint: String,
     pub pair_mint: String,
+    pub pricescale: i64,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Currency {
     pub name: String,
     pub mint: String,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct Exchange {
+    pub symbol: String,
+    pub name: String,
+    pub description: String,
+    pub asset_type: String,
+    pub sesstion: String,
+    pub timezone: String,
+    pub minmovement: f64,
+    pub minmov: f64,
+    pub minmovement2: f64,
+    pub minmov2: f64,
+    pub supported_resolutions: Vec<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -55,15 +76,49 @@ impl BuilderSymbolStore {
         let mut symbol_store: SymbolStore = SymbolStore {
             assets: vec![],
             currencies: vec![],
+            exchange: Exchange {
+                symbol: "GM".to_string(),
+                name: "GalacticMarket".to_string(),
+                description: "StarAtlas GalacticMarket".to_string(),
+                asset_type: "nft".to_string(),
+                sesstion: "24x7".to_string(),
+                timezone: "UTC".to_string(),
+                minmovement: 0.0001,
+                minmov: 0.001,
+                minmovement2: 0.0,
+                minmov2: 0.0,
+                supported_resolutions: vec![
+                    "1".to_string(),
+                    "3".to_string(),
+                    "5".to_string(),
+                    "15".to_string(),
+                    "30".to_string(),
+                    "60".to_string(),
+                    "120".to_string(),
+                    "240".to_string(),
+                    "360".to_string(),
+                    "480".to_string(),
+                    "720".to_string(),
+                    "1D".to_string(),
+                    "3D".to_string(),
+                    "1W".to_string(),
+                    "1M".to_string(),
+                ],
+            },
         };
         symbol_store.currencies = self.create_currencies();
 
         data.iter().for_each(|asset| {
             symbol_store.currencies.iter().for_each(|currency| {
                 symbol_store.assets.push(Asset {
+                    asset_name: asset.symbol.clone(),
+                    pair_name: currency.name.clone(),
+                    description: format!("{} / {}", asset.symbol.clone(), currency.name.clone()),
+                    asset_type: format!("{:?}", asset.attributes.item_type),
                     symbol: format!("{}{}", asset.symbol.clone(), currency.name.clone()),
                     mint: asset.mint.clone(),
                     pair_mint: currency.mint.clone(),
+                    pricescale: 10,
                 })
             })
         });

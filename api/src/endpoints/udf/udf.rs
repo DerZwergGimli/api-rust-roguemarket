@@ -2,7 +2,7 @@ use crate::endpoints::udf::{udf_config_t, udf_history_t, udf_symbols_t};
 use crate::endpoints::udf::{udf_search_t, udf_symbolInfo_t};
 use crate::udf_config_t::{Exchange, SymbolsType};
 use serde::{Deserialize, Serialize};
-use staratlas::symbolstore::BuilderSymbolStore;
+use staratlas::symbolstore::{BuilderSymbolStore, SymbolStore};
 use std::time::{SystemTime, UNIX_EPOCH};
 use std::{
     convert::Infallible,
@@ -83,8 +83,7 @@ pub struct HistoryParams {
 pub async fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone
 {
     let store = Store::default();
-    let storeSA = BuilderSymbolStore::new();
-    storeSA.init().await;
+    let storeSA = BuilderSymbolStore::new().init().await;
 
     let home = warp::path!("udf")
         .and(warp::get())
@@ -101,14 +100,13 @@ pub async fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp:
     let config = warp::path!("udf" / "config")
         .and(warp::get())
         .and(warp::path::end())
-        .and(with_sa_store(storeSA.clone()))
         .and(warp::query::<ListQueryParams>())
         .and_then(get_config);
 
     let symbol_info = warp::path!("udf" / "symbol_info")
         .and(warp::get())
         .and(warp::path::end())
-        .and(with_store(store.clone()))
+        .and(with_sa_store(storeSA.clone()))
         .and(warp::query::<ListQueryParams>())
         .and_then(get_symbol_info);
 
@@ -142,8 +140,8 @@ fn with_store(store: Store) -> impl Filter<Extract = (Store,), Error = Infallibl
     warp::any().map(move || store.clone())
 }
 fn with_sa_store(
-    store: BuilderSymbolStore,
-) -> impl Filter<Extract = (BuilderSymbolStore,), Error = Infallible> + Clone {
+    store: SymbolStore,
+) -> impl Filter<Extract = (SymbolStore,), Error = Infallible> + Clone {
     warp::any().map(move || store.clone())
 }
 
@@ -192,10 +190,7 @@ responses(
 (status = 200, description = "Response: Config successful", body = [UdfConfig])
 )
 )]
-pub async fn get_config(
-    store: BuilderSymbolStore,
-    query: ListQueryParams,
-) -> Result<impl Reply, Infallible> {
+pub async fn get_config(query: ListQueryParams) -> Result<impl Reply, Infallible> {
     let config = udf_config_t::UdfConfig {
         exchanges: vec![Exchange {
             value: "GM".to_string(),
@@ -229,7 +224,6 @@ pub async fn get_config(
         supports_timescale_marks: false,
         supports_time: true,
     };
-
     Ok(warp::reply::json(&config))
 }
 
@@ -245,31 +239,66 @@ responses(
 )
 )]
 pub async fn get_symbol_info(
-    store: Store,
+    store: SymbolStore,
     query: ListQueryParams,
 ) -> Result<impl Reply, Infallible> {
     let config = udf_symbolInfo_t::UdfSymbolInfo {
-        symbol: vec![],
-        ticker: vec![],
-        name: vec![],
-        full_name: vec![],
-        description: vec![],
-        exchange: "".to_string(),
-        listed_exchange: "".to_string(),
-        udf_symbol_info_type: "".to_string(),
-        currency_code: vec![],
-        session: "".to_string(),
-        timezone: "".to_string(),
-        minmovement: 0,
-        minmov: 0,
-        minmovement2: 0,
-        minmov2: 0,
-        pricescale: vec![],
-        supported_resolutions: vec![],
-        has_intraday: false,
-        has_daily: false,
-        has_weekly_and_monthly: false,
-        data_status: "".to_string(),
+        symbol: store
+            .assets
+            .clone()
+            .into_iter()
+            .map(|asset| asset.symbol)
+            .collect(),
+        ticker: store
+            .assets
+            .clone()
+            .into_iter()
+            .map(|asset| asset.symbol)
+            .collect(),
+        name: store
+            .assets
+            .clone()
+            .into_iter()
+            .map(|asset| asset.symbol)
+            .collect(),
+        full_name: store
+            .assets
+            .clone()
+            .into_iter()
+            .map(|asset| asset.symbol)
+            .collect(),
+        description: store
+            .assets
+            .clone()
+            .into_iter()
+            .map(|asset| asset.description)
+            .collect(),
+        exchange: store.exchange.clone().name,
+        listed_exchange: store.exchange.clone().name,
+        udf_symbol_info_type: store.exchange.clone().asset_type,
+        currency_code: store
+            .assets
+            .clone()
+            .into_iter()
+            .map(|asset| asset.pair_name)
+            .collect(),
+        session: store.exchange.clone().sesstion,
+        timezone: store.exchange.clone().timezone,
+        minmovement: store.exchange.clone().minmovement,
+        minmov: store.exchange.clone().minmov,
+        minmovement2: store.exchange.clone().minmovement2,
+        minmov2: store.exchange.clone().minmov2,
+        pricescale: store
+            .assets
+            .clone()
+            .into_iter()
+            .map(|asset| asset.pricescale)
+            .collect(),
+        supported_resolutions: store.exchange.clone().supported_resolutions,
+        has_intraday: true,
+        has_daily: true,
+        has_weekly_and_monthly: true,
+        data_status: "streaming".to_string(),
     };
 
     Ok(warp::reply::json(&config))
