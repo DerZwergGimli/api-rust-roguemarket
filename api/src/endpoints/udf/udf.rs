@@ -1,13 +1,17 @@
 use crate::endpoints::udf::{udf_config_t, udf_history_t, udf_symbols_t};
 use crate::endpoints::udf::{udf_search_t, udf_symbolInfo_t};
 use crate::udf_config_t::{Exchange, SymbolsType};
+use mongo::mongodb::{find_udf_trades, MongoDBConnection};
+use mongodb::Collection;
 use serde::{Deserialize, Serialize};
 use staratlas::symbolstore::{BuilderSymbolStore, SymbolStore};
 use std::time::{SystemTime, UNIX_EPOCH};
 use std::{
     convert::Infallible,
+    env,
     sync::{Arc, Mutex},
 };
+use types::databasetrade::DBTrade;
 use utoipa::openapi::SchemaFormat::DateTime;
 use utoipa::{IntoParams, ToSchema};
 use warp::sse::reply;
@@ -51,7 +55,9 @@ pub struct HistoryParams {
 
 pub async fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone
 {
-    let storeSA = BuilderSymbolStore::new().init().await;
+    let store_sa = BuilderSymbolStore::new().init().await;
+    let mongo_db =
+        MongoDBConnection::new(env::var("MONGOURL").expect("NO MONGOURL").as_str()).await;
 
     let home = warp::path!("udf")
         .and(warp::get())
@@ -66,32 +72,33 @@ pub async fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp:
     let config = warp::path!("udf" / "config")
         .and(warp::get())
         .and(warp::path::end())
-        .and(with_sa_store(storeSA.clone()))
+        .and(with_sa_store(store_sa.clone()))
         .and_then(get_config);
 
     let symbol_info = warp::path!("udf" / "symbol_info")
         .and(warp::get())
         .and(warp::path::end())
-        .and(with_sa_store(storeSA.clone()))
+        .and(with_sa_store(store_sa.clone()))
         .and_then(get_symbol_info);
 
     let symbols = warp::path!("udf" / "symbols")
         .and(warp::get())
         .and(warp::path::end())
-        .and(with_sa_store(storeSA.clone()))
+        .and(with_sa_store(store_sa.clone()))
         .and(warp::query::<SymbolsParams>())
         .and_then(get_symbols);
 
     let search = warp::path!("udf" / "search")
         .and(warp::get())
         .and(warp::path::end())
-        .and(with_sa_store(storeSA.clone()))
+        .and(with_sa_store(store_sa.clone()))
         .and(warp::query::<SearchParams>())
         .and_then(get_search);
 
     let history = warp::path!("udf" / "history")
         .and(warp::get())
         .and(warp::path::end())
+        .and(with_mongo_store(mongo_db.collection.clone()))
         .and(warp::query::<HistoryParams>())
         .and_then(get_history);
 
@@ -106,6 +113,12 @@ pub async fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp:
 fn with_sa_store(
     store: SymbolStore,
 ) -> impl Filter<Extract = (SymbolStore,), Error = Infallible> + Clone {
+    warp::any().map(move || store.clone())
+}
+
+fn with_mongo_store(
+    store: Collection<DBTrade>,
+) -> impl Filter<Extract = (Collection<DBTrade>,), Error = Infallible> + Clone {
     warp::any().map(move || store.clone())
 }
 
@@ -356,8 +369,20 @@ responses(
 (status = 200, description = "Response: SymbolInfo successful", body = [UdfHistory])
 )
 )]
-pub async fn get_history(query: HistoryParams) -> Result<impl Reply, Infallible> {
+pub async fn get_history(
+    trades: Collection<DBTrade>,
+    query: HistoryParams,
+) -> Result<impl Reply, Infallible> {
     //TODO: make this a VEC
+
+    let data = find_udf_trades(
+        trades,
+        query.symbol.unwrap(),
+        query.from.unwrap_or_default(),
+        query.to.unwrap_or_default(),
+        60,
+    )
+    .await;
 
     let search = udf_history_t::UdfHistory {
         s: "".to_string(),

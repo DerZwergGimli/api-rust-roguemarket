@@ -18,5 +18,8 @@ futures = "0.3"
 #utoipa = "2.2.0"
 utoipa = {path = "../libs/utopia_temp/utoipa" }
 staratlas = { path = "../libs/staratlas" }
+types = { path = "../libs/types" }
+mongodb = "2.3.0"
+mongo = { path = "../libs/mongo" }
 utoipa-swagger-ui = "2.0.1"
 chrono = "0.4.22"

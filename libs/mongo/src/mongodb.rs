@@ -1,4 +1,5 @@
-use mongodb::bson::doc;
+use crate::agg_history::get_history_aggregation;
+use mongodb::bson::{doc, Document};
 use mongodb::options::{ClientOptions, IndexOptions};
 use mongodb::{Client, Collection, Database, IndexModel};
 use types::databasetrade::DBTrade;
@@ -6,7 +7,7 @@ use types::databasetrade::DBTrade;
 pub struct MongoDBConnection {
     client: Client,
     db: Database,
-    collection: Collection<DBTrade>,
+    pub collection: Collection<DBTrade>,
 }
 
 impl MongoDBConnection {
@@ -61,5 +62,23 @@ impl MongoDBConnection {
             }
         }
         return inserted;
+    }
+}
+
+pub async fn find_udf_trades(
+    collection: Collection<DBTrade>,
+    symbol: String,
+    from: u64,
+    to: u64,
+    resolution_sec: i64,
+) -> Option<Vec<Document>> {
+    match collection
+        .aggregate(
+            get_history_aggregation(symbol, from, to, resolution_sec),
+            None,
+        )
+        .await
+    {
+        Ok(data) => Some(data.collect().await),
     }
 }
