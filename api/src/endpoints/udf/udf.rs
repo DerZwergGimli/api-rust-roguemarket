@@ -66,7 +66,7 @@ pub struct SearchParams {
     #[param(rename = "type")]
     stype: Option<String>,
     exchange: Option<String>,
-    limit: Option<i32>,
+    limit: Option<usize>,
 }
 
 #[derive(Debug, Deserialize, IntoParams)]
@@ -100,6 +100,7 @@ pub async fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp:
     let config = warp::path!("udf" / "config")
         .and(warp::get())
         .and(warp::path::end())
+        .and(with_sa_store(storeSA.clone()))
         .and(warp::query::<ListQueryParams>())
         .and_then(get_config);
 
@@ -120,6 +121,7 @@ pub async fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp:
     let search = warp::path!("udf" / "search")
         .and(warp::get())
         .and(warp::path::end())
+        .and(with_sa_store(storeSA.clone()))
         .and(warp::query::<SearchParams>())
         .and_then(get_search);
 
@@ -191,39 +193,26 @@ responses(
 (status = 200, description = "Response: Config successful", body = [UdfConfig])
 )
 )]
-pub async fn get_config(query: ListQueryParams) -> Result<impl Reply, Infallible> {
+pub async fn get_config(
+    store: SymbolStore,
+    query: ListQueryParams,
+) -> Result<impl Reply, Infallible> {
     let config = udf_config_t::UdfConfig {
         exchanges: vec![Exchange {
-            value: "GM".to_string(),
-            name: "GalacticMarket".to_string(),
-            desc: "StarAtlas GalacticMarket".to_string(),
+            value: store.exchange.clone().symbol,
+            name: store.exchange.clone().name,
+            desc: store.exchange.clone().description,
         }],
         symbols_types: vec![SymbolsType {
-            value: "nfts".to_string(),
+            value: store.exchange.clone().asset_type,
             name: "StarAtlas Assets".to_string(),
         }],
-        supported_resolutions: vec![
-            "1".to_string(),
-            "3".to_string(),
-            "5".to_string(),
-            "15".to_string(),
-            "30".to_string(),
-            "60".to_string(),
-            "120".to_string(),
-            "240".to_string(),
-            "360".to_string(),
-            "480".to_string(),
-            "720".to_string(),
-            "1D".to_string(),
-            "3D".to_string(),
-            "1W".to_string(),
-            "1M".to_string(),
-        ],
-        supports_search: true,
-        supports_group_request: false,
-        supports_marks: false,
-        supports_timescale_marks: false,
-        supports_time: true,
+        supported_resolutions: store.exchange.clone().supported_resolutions,
+        supports_search: store.exchange.clone().supports_search,
+        supports_group_request: store.exchange.clone().supports_group_request,
+        supports_marks: store.exchange.clone().supports_marks,
+        supports_timescale_marks: store.exchange.clone().supports_timescale_marks,
+        supports_time: store.exchange.clone().supports_time,
     };
     Ok(warp::reply::json(&config))
 }
@@ -368,19 +357,37 @@ responses(
 (status = 200, description = "Response: SymbolInfo successful", body = [UdfSearchSymbol])
 )
 )]
-pub async fn get_search(query: SearchParams) -> Result<impl Reply, Infallible> {
-    //TODO: make this a VEC
+pub async fn get_search(store: SymbolStore, query: SearchParams) -> Result<impl Reply, Infallible> {
+    let filtered = store
+        .assets
+        .into_iter()
+        .filter(|asset| {
+            asset
+                .symbol
+                .contains(query.query.clone().unwrap_or("".to_string()).as_str())
+        })
+        .collect::<Vec<_>>();
 
-    let search = udf_search_t::UdfSearchSymbol {
-        symbol: "".to_string(),
-        full_name: "".to_string(),
-        description: "".to_string(),
-        exchange: "".to_string(),
-        ticker: "".to_string(),
-        udf_symbol_type: "".to_string(),
-    };
+    let mut search: Vec<udf_search_t::UdfSearchSymbol> = Vec::new();
+    filtered.into_iter().for_each(|asset| {
+        search.push(udf_search_t::UdfSearchSymbol {
+            symbol: asset.clone().symbol,
+            full_name: asset.clone().asset_name,
+            description: asset.clone().description,
+            exchange: store.exchange.clone().symbol,
+            ticker: asset.clone().symbol,
+            udf_symbol_type: store.exchange.clone().asset_type,
+        })
+    });
 
-    Ok(warp::reply::json(&search))
+    let mut search_limited: Vec<udf_search_t::UdfSearchSymbol> = Vec::new();
+    if (query.limit.unwrap_or(0) > 0) {
+        for l in 0..query.limit.unwrap() {
+            search_limited.push(search[l].clone());
+        }
+    }
+
+    Ok(warp::reply::json(&search_limited))
 }
 
 /// Get History request

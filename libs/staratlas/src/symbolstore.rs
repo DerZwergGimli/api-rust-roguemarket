@@ -43,6 +43,11 @@ pub struct Exchange {
     pub has_daily: bool,
     pub has_weekly_and_monthly: bool,
     pub data_status: String,
+    pub supports_search: bool,
+    pub supports_group_request: bool,
+    pub supports_marks: bool,
+    pub supports_timescale_marks: bool,
+    pub supports_time: bool,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -112,6 +117,11 @@ impl BuilderSymbolStore {
                 has_daily: true,
                 has_weekly_and_monthly: false,
                 data_status: "streaming".to_string(),
+                supports_search: true,
+                supports_group_request: false,
+                supports_marks: false,
+                supports_timescale_marks: false,
+                supports_time: true,
             },
         };
         symbol_store.currencies = self.create_currencies();
