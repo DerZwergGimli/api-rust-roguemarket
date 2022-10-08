@@ -39,6 +39,10 @@ pub struct Exchange {
     pub minmovement2: f64,
     pub minmov2: f64,
     pub supported_resolutions: Vec<String>,
+    pub has_intraday: bool,
+    pub has_daily: bool,
+    pub has_weekly_and_monthly: bool,
+    pub data_status: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -104,6 +108,10 @@ impl BuilderSymbolStore {
                     "1W".to_string(),
                     "1M".to_string(),
                 ],
+                has_intraday: true,
+                has_daily: true,
+                has_weekly_and_monthly: false,
+                data_status: "streaming".to_string(),
             },
         };
         symbol_store.currencies = self.create_currencies();

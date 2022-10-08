@@ -55,7 +55,7 @@ pub struct SymbolInfoParams {
 #[into_params(parameter_in = Query)]
 pub struct SymbolsParams {
     #[param(style = Form, example = "FOOD")]
-    symbol: Option<String>,
+    symbol: String,
 }
 
 #[derive(Debug, Deserialize, IntoParams)]
@@ -113,6 +113,7 @@ pub async fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp:
     let symbols = warp::path!("udf" / "symbols")
         .and(warp::get())
         .and(warp::path::end())
+        .and(with_sa_store(storeSA.clone()))
         .and(warp::query::<SymbolsParams>())
         .and_then(get_symbols);
 
@@ -295,10 +296,10 @@ pub async fn get_symbol_info(
             .map(|asset| asset.pricescale)
             .collect(),
         supported_resolutions: store.exchange.clone().supported_resolutions,
-        has_intraday: true,
-        has_daily: true,
-        has_weekly_and_monthly: true,
-        data_status: "streaming".to_string(),
+        has_intraday: store.exchange.clone().has_intraday,
+        has_daily: store.exchange.clone().has_daily,
+        has_weekly_and_monthly: store.exchange.clone().has_weekly_and_monthly,
+        data_status: store.exchange.data_status,
     };
 
     Ok(warp::reply::json(&config))
@@ -312,35 +313,48 @@ get,
 path = "/udf/symbols",
 params(SymbolsParams),
 responses(
-(status = 200, description = "Response: SymbolInfo successful", body = [UdfSymbolInfo])
+(status = 200, description = "Response: SymbolInfo successful", body = [UdfSymbolInfo]),
+(status = 404, description = "Todo not found to delete")
 )
 )]
-pub async fn get_symbols(query: SymbolsParams) -> Result<impl Reply, Infallible> {
-    let config = udf_symbols_t::UdfSymbols {
-        symbol: "".to_string(),
-        ticker: "".to_string(),
-        name: "".to_string(),
-        full_name: "".to_string(),
-        description: "".to_string(),
-        exchange: "".to_string(),
-        listed_exchange: "".to_string(),
-        udf_symbols_type: "".to_string(),
-        currency_code: "".to_string(),
-        session: "".to_string(),
-        timezone: "".to_string(),
-        minmovement: 0,
-        minmov: 0,
-        minmovement2: 0,
-        minmov2: 0,
-        pricescale: 0,
-        supported_resolutions: vec![],
-        has_intraday: false,
-        has_daily: false,
-        has_weekly_and_monthly: false,
-        data_status: "".to_string(),
-    };
+pub async fn get_symbols(
+    store: SymbolStore,
+    query: SymbolsParams,
+) -> Result<Box<dyn Reply>, Infallible> {
+    let filtered = store
+        .assets
+        .clone()
+        .into_iter()
+        .filter(|asset| asset.symbol == query.symbol)
+        .collect::<Vec<_>>();
 
-    Ok(warp::reply::json(&config))
+    if (filtered.len() == 1) {
+        let symbols = udf_symbols_t::UdfSymbols {
+            symbol: filtered[0].clone().symbol,
+            ticker: filtered[0].clone().symbol,
+            name: filtered[0].clone().symbol,
+            full_name: filtered[0].clone().symbol,
+            description: filtered[0].clone().description,
+            exchange: store.exchange.clone().name,
+            listed_exchange: store.exchange.clone().name,
+            udf_symbols_type: filtered[0].clone().asset_type,
+            currency_code: filtered[0].clone().pair_name,
+            session: store.exchange.clone().sesstion,
+            timezone: store.exchange.clone().timezone,
+            minmovement: store.exchange.clone().minmovement,
+            minmov: store.exchange.clone().minmov,
+            minmovement2: store.exchange.clone().minmovement2,
+            minmov2: store.exchange.clone().minmov2,
+            pricescale: filtered[0].clone().pricescale,
+            supported_resolutions: store.exchange.clone().supported_resolutions,
+            has_intraday: store.exchange.clone().has_intraday,
+            has_daily: store.exchange.clone().has_daily,
+            has_weekly_and_monthly: store.exchange.clone().has_weekly_and_monthly,
+            data_status: store.exchange.data_status,
+        };
+        return Ok(Box::new(warp::reply::json(&symbols)));
+    }
+    return Ok(Box::new(StatusCode::NOT_FOUND));
 }
 
 /// Get Search request
