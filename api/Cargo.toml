@@ -15,5 +15,6 @@ log = "0.4"
 futures = "0.3"
 #utoipa = "2.2.0"
 utoipa = {path = "../libs/utoipa/utoipa" }
+staratlas = { path = "../libs/staratlas" }
 utoipa-swagger-ui = "2.0.1"
 chrono = "0.4.22"

@@ -77,7 +77,7 @@ async fn main() {
     warp::serve(
         api_doc
             .or(swagger_ui)
-            .or(udf::handlers())
+            .or(udf::handlers().await)
             .or(todo::handlers()),
     )
     .run((Ipv4Addr::UNSPECIFIED, 8080))

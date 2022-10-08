@@ -1,7 +1,7 @@
 use crate::staratlasnft::StarAtlasNft;
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct SymbolStore {
     pub assets: Vec<Asset>,
     pub currencies: Vec<Currency>,
@@ -20,6 +20,7 @@ pub struct Currency {
     pub mint: String,
 }
 
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct BuilderSymbolStore {}
 
 impl BuilderSymbolStore {

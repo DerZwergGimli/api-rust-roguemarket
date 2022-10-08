@@ -1,12 +1,13 @@
+use crate::endpoints::udf::{udf_config_t, udf_history_t, udf_symbols_t};
+use crate::endpoints::udf::{udf_search_t, udf_symbolInfo_t};
+use crate::udf_config_t::{Exchange, SymbolsType};
+use serde::{Deserialize, Serialize};
+use staratlas::symbolstore::BuilderSymbolStore;
 use std::time::{SystemTime, UNIX_EPOCH};
 use std::{
     convert::Infallible,
     sync::{Arc, Mutex},
 };
-
-use crate::endpoints::udf::{udf_config_t, udf_history_t, udf_symbols_t};
-use crate::endpoints::udf::{udf_search_t, udf_symbolInfo_t};
-use serde::{Deserialize, Serialize};
 use utoipa::openapi::SchemaFormat::DateTime;
 use utoipa::{IntoParams, ToSchema};
 use warp::sse::reply;
@@ -79,8 +80,11 @@ pub struct HistoryParams {
     countback: Option<u64>,
 }
 
-pub fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
+pub async fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone
+{
     let store = Store::default();
+    let storeSA = BuilderSymbolStore::new();
+    storeSA.init().await;
 
     let home = warp::path!("udf")
         .and(warp::get())
@@ -97,7 +101,7 @@ pub fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejec
     let config = warp::path!("udf" / "config")
         .and(warp::get())
         .and(warp::path::end())
-        .and(with_store(store.clone()))
+        .and(with_sa_store(storeSA.clone()))
         .and(warp::query::<ListQueryParams>())
         .and_then(get_config);
 
@@ -135,6 +139,11 @@ pub fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejec
 }
 
 fn with_store(store: Store) -> impl Filter<Extract = (Store,), Error = Infallible> + Clone {
+    warp::any().map(move || store.clone())
+}
+fn with_sa_store(
+    store: BuilderSymbolStore,
+) -> impl Filter<Extract = (BuilderSymbolStore,), Error = Infallible> + Clone {
     warp::any().map(move || store.clone())
 }
 
@@ -183,16 +192,42 @@ responses(
 (status = 200, description = "Response: Config successful", body = [UdfConfig])
 )
 )]
-pub async fn get_config(store: Store, query: ListQueryParams) -> Result<impl Reply, Infallible> {
+pub async fn get_config(
+    store: BuilderSymbolStore,
+    query: ListQueryParams,
+) -> Result<impl Reply, Infallible> {
     let config = udf_config_t::UdfConfig {
-        exchanges: vec![],
-        symbols_types: vec![],
-        supported_resolutions: vec![],
-        supports_search: false,
+        exchanges: vec![Exchange {
+            value: "GM".to_string(),
+            name: "GalacticMarket".to_string(),
+            desc: "StarAtlas GalacticMarket".to_string(),
+        }],
+        symbols_types: vec![SymbolsType {
+            value: "nfts".to_string(),
+            name: "StarAtlas Assets".to_string(),
+        }],
+        supported_resolutions: vec![
+            "1".to_string(),
+            "3".to_string(),
+            "5".to_string(),
+            "15".to_string(),
+            "30".to_string(),
+            "60".to_string(),
+            "120".to_string(),
+            "240".to_string(),
+            "360".to_string(),
+            "480".to_string(),
+            "720".to_string(),
+            "1D".to_string(),
+            "3D".to_string(),
+            "1W".to_string(),
+            "1M".to_string(),
+        ],
+        supports_search: true,
         supports_group_request: false,
         supports_marks: false,
         supports_timescale_marks: false,
-        supports_time: false,
+        supports_time: true,
     };
 
     Ok(warp::reply::json(&config))
