@@ -37,7 +37,7 @@ async fn main() {
     udf::get_history,
     ),
     components(
-    schemas(udf::UDF, udf_config_t::UdfConfig, udf_symbolInfo_t::UdfSymbolInfo,
+    schemas(udf_config_t::UdfConfig, udf_symbolInfo_t::UdfSymbolInfo,
     udf_search_t::UdfSearchSymbol, udf_history_t::UdfHistory)
     ),
     modifiers(&SecurityAddon),

@@ -13,37 +13,6 @@ use utoipa::{IntoParams, ToSchema};
 use warp::sse::reply;
 use warp::{hyper::StatusCode, Filter, Reply};
 
-pub type Store = Arc<Mutex<Vec<UDF>>>;
-
-/// Item to complete.
-#[derive(Serialize, Deserialize, ToSchema, Clone)]
-pub struct UDF {
-    /// Unique database id.
-    #[schema(example = 1)]
-    id: i64,
-    /// Description of what need to be done.
-    #[schema(example = "Buy movie tickets")]
-    value: String,
-}
-
-#[derive(Debug, Deserialize, ToSchema)]
-#[serde(rename_all = "snake_case")]
-pub enum Order {
-    AscendingId,
-    DescendingId,
-}
-
-#[derive(Debug, Deserialize, IntoParams)]
-#[into_params(parameter_in = Query)]
-pub struct ListQueryParams {
-    /// Filters the returned `Todo` items according to whether they contain the specified string.
-    #[param(style = Form, example = json!("task"))]
-    contains: Option<String>,
-    /// Order the returned `Todo` items.
-    #[param(inline)]
-    order: Option<Order>,
-}
-
 #[derive(Debug, Deserialize, IntoParams)]
 #[into_params(parameter_in = Query)]
 pub struct SymbolInfoParams {
@@ -82,7 +51,6 @@ pub struct HistoryParams {
 
 pub async fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone
 {
-    let store = Store::default();
     let storeSA = BuilderSymbolStore::new().init().await;
 
     let home = warp::path!("udf")
@@ -93,22 +61,18 @@ pub async fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp:
     let time = warp::path!("udf" / "time")
         .and(warp::get())
         .and(warp::path::end())
-        .and(with_store(store.clone()))
-        .and(warp::query::<ListQueryParams>())
         .and_then(get_time);
 
     let config = warp::path!("udf" / "config")
         .and(warp::get())
         .and(warp::path::end())
         .and(with_sa_store(storeSA.clone()))
-        .and(warp::query::<ListQueryParams>())
         .and_then(get_config);
 
     let symbol_info = warp::path!("udf" / "symbol_info")
         .and(warp::get())
         .and(warp::path::end())
         .and(with_sa_store(storeSA.clone()))
-        .and(warp::query::<ListQueryParams>())
         .and_then(get_symbol_info);
 
     let symbols = warp::path!("udf" / "symbols")
@@ -139,9 +103,6 @@ pub async fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp:
         .or(history)
 }
 
-fn with_store(store: Store) -> impl Filter<Extract = (Store,), Error = Infallible> + Clone {
-    warp::any().map(move || store.clone())
-}
 fn with_sa_store(
     store: SymbolStore,
 ) -> impl Filter<Extract = (SymbolStore,), Error = Infallible> + Clone {
@@ -173,7 +134,7 @@ responses(
 (status = 200, description = "Response: Time successful", body = String)
 )
 )]
-pub async fn get_time(store: Store, query: ListQueryParams) -> Result<impl Reply, Infallible> {
+pub async fn get_time() -> Result<impl Reply, Infallible> {
     let time = SystemTime::now().duration_since(UNIX_EPOCH);
     let time_string = time.unwrap_or_default().as_secs();
 
@@ -193,10 +154,7 @@ responses(
 (status = 200, description = "Response: Config successful", body = [UdfConfig])
 )
 )]
-pub async fn get_config(
-    store: SymbolStore,
-    query: ListQueryParams,
-) -> Result<impl Reply, Infallible> {
+pub async fn get_config(store: SymbolStore) -> Result<impl Reply, Infallible> {
     let config = udf_config_t::UdfConfig {
         exchanges: vec![Exchange {
             value: store.exchange.clone().symbol,
@@ -228,10 +186,7 @@ responses(
 (status = 200, description = "Response: SymbolInfo successful", body = [UdfSymbolInfo])
 )
 )]
-pub async fn get_symbol_info(
-    store: SymbolStore,
-    query: ListQueryParams,
-) -> Result<impl Reply, Infallible> {
+pub async fn get_symbol_info(store: SymbolStore) -> Result<impl Reply, Infallible> {
     let config = udf_symbolInfo_t::UdfSymbolInfo {
         symbol: store
             .assets
