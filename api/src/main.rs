@@ -35,17 +35,14 @@ async fn main() {
     udf::get_symbols,
     udf::get_search,
     udf::get_history,
-    todo::list_todos,
-    todo::create_todo,
-    todo::delete_todo
     ),
     components(
-    schemas(todo::Todo, udf::UDF, udf_config_t::UdfConfig, udf_symbolInfo_t::UdfSymbolInfo,
+    schemas(udf::UDF, udf_config_t::UdfConfig, udf_symbolInfo_t::UdfSymbolInfo,
     udf_search_t::UdfSearchSymbol, udf_history_t::UdfHistory)
     ),
     modifiers(&SecurityAddon),
     tags(
-    (name = "todo", description = "Todo items management API")
+    (name = "udf", description = "UDF compatible endpoints")
     )
     )]
     struct ApiDoc;

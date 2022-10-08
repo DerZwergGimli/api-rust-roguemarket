@@ -1,7 +1,9 @@
 [package]
-name = "api"
-version = "0.1.0"
+name = "RogueMarketAPI"
+description = "This API is used by the RogueMarket to display charts and data"
+version = "0.2.1"
 edition = "2021"
+license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
