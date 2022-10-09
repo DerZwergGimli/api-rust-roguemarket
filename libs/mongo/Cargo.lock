@@ -563,6 +563,7 @@ name = "mongo"
 version = "0.1.0"
 dependencies = [
  "futures",
+ "log",
  "mongodb",
  "serde",
  "serde_json",

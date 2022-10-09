@@ -2,6 +2,7 @@ use crate::agg_history::get_history_aggregation;
 use crate::agg_history_countback::get_history_aggregation_countback;
 use crate::agg_next::get_history_aggregation_next;
 use futures::stream::{StreamExt, TryStreamExt};
+use log::warn;
 use mongodb::bson::{doc, Bson, Document};
 use mongodb::options::{ClientOptions, IndexOptions};
 use mongodb::{bson, Client, Collection, Database, IndexModel};
@@ -33,20 +34,9 @@ impl MongoDBConnection {
         let db = client.database("galacticMarket");
         let collection = db.collection::<DBTrade>("trades");
 
-        collection
-            .create_index(model_sig, None)
-            .await
-            .expect("Error setting index-model");
-
-        collection
-            .create_index(model_sym, None)
-            .await
-            .expect("Error setting index-model");
-
-        collection
-            .create_index(model_ts, None)
-            .await
-            .expect("Error setting index-model");
+        collection.create_index(model_sig, None).await;
+        collection.create_index(model_sym, None).await;
+        collection.create_index(model_ts, None).await;
 
         MongoDBConnection {
             client,
