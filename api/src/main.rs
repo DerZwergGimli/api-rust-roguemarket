@@ -14,6 +14,7 @@ use utoipa::{
 };
 use utoipa_swagger_ui::Config;
 use warp::http::uri::Port;
+use warp::http::Method;
 use warp::{
     http::Uri,
     hyper::{Response, StatusCode},
@@ -78,11 +79,14 @@ async fn main() {
         .unwrap();
 
     println!("Running on http://{}:{}/docs/", Ipv4Addr::UNSPECIFIED, port);
+    let cors = warp::cors()
+        .allow_any_origin()
+        .allow_methods(&[Method::GET]);
 
     warp::serve(
         api_doc
             .or(swagger_ui)
-            .or(udf::handlers().await)
+            .or(udf::handlers().await.with(cors))
             .or(todo::handlers()),
     )
     .run((Ipv4Addr::UNSPECIFIED, port))
