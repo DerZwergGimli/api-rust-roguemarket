@@ -403,8 +403,7 @@ pub async fn get_history(
         query.symbol.clone(),
         query.from.unwrap_or_default(),
         query.to.unwrap_or_default(),
-        convert_udf_time_to_sec(query.resolution.unwrap_or("".to_string()).as_str())
-            .unwrap_or(1 * 60 * 60),
+        convert_udf_time_to_sec(query.resolution.unwrap_or("".to_string()).as_str()).unwrap(),
         query.countback,
     )
     .await
@@ -438,7 +437,11 @@ pub async fn get_history(
             }
             None => {
                 info!("error");
-                return Ok(warp::reply::json(&history));
+                return Ok(warp::reply::json(&UdfError {
+                    s: Status::no_data,
+                    errmsg: "No data found".to_string(),
+                    nextTime: None,
+                }));
             }
         };
     }
