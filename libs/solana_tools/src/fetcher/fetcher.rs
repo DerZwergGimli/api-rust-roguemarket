@@ -1,4 +1,4 @@
-use log::{info, warn};
+use log::{error, info, warn};
 use solana_client::rpc_client::{GetConfirmedSignaturesForAddress2Config, RpcClient};
 use solana_client::rpc_config::RpcTransactionConfig;
 use solana_client::rpc_response::RpcConfirmedTransactionStatusWithSignature;
@@ -203,7 +203,12 @@ impl Fetcher {
                 UiInstruction::Parsed(parsed) => match parsed {
                     UiParsedInstruction::PartiallyDecoded(_) => {}
                     UiParsedInstruction::Parsed(p) => {
-                        token_transfers.push(serde_json::from_value(p.parsed.clone()).unwrap())
+                        match serde_json::from_value(p.parsed.clone()) {
+                            Ok(data) => token_transfers.push(data),
+                            Err(err) => {
+                                warn!("{}", err)
+                            }
+                        };
                     }
                 },
             });
