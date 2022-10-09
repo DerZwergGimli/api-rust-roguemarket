@@ -1,6 +1,6 @@
 
 
-name: deploy-to-dockerhub
+name: deploy-to-dockerhub[API]
 
 on:
   push:
