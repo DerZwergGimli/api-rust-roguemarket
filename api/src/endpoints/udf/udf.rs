@@ -1,7 +1,9 @@
+use crate::endpoints::udf::udf_error_t::{Status, UdfError};
 use crate::endpoints::udf::{udf_config_t, udf_history_t, udf_symbols_t};
 use crate::endpoints::udf::{udf_search_t, udf_symbolInfo_t};
 use crate::udf_config_t::{Exchange, SymbolsType};
-use mongo::mongodb::{find_udf_trades, MongoDBConnection};
+use log::info;
+use mongo::mongodb::{find_udf_trade_next, find_udf_trades, MongoDBConnection};
 use mongodb::bson::Document;
 use mongodb::Collection;
 use serde::{Deserialize, Serialize};
@@ -14,6 +16,7 @@ use std::{
 };
 use types::databasetrade::DBTrade;
 use types::m_ohclvt::M_OHCLVT;
+use udf::time_convert::convert_udf_time_to_sec;
 use utoipa::openapi::SchemaFormat::DateTime;
 use utoipa::{IntoParams, ToSchema};
 use warp::sse::reply;
@@ -385,7 +388,7 @@ pub async fn get_history(
     trades: Collection<DBTrade>,
     query: HistoryParams,
 ) -> Result<impl Reply, Infallible> {
-    let mut search = udf_history_t::UdfHistory {
+    let mut history = udf_history_t::UdfHistory {
         s: "".to_string(),
         t: vec![],
         c: vec![],
@@ -396,25 +399,47 @@ pub async fn get_history(
     };
 
     match find_udf_trades(
-        trades,
-        query.symbol,
+        trades.clone(),
+        query.symbol.clone(),
         query.from.unwrap_or_default(),
         query.to.unwrap_or_default(),
-        60,
+        convert_udf_time_to_sec(query.resolution.unwrap_or("".to_string()).as_str())
+            .unwrap_or(1 * 60 * 60),
+        query.countback,
     )
     .await
     {
-        None => {}
         Some(data) => {
-            search.s = "ok".to_string();
-            search.o = data.clone().into_iter().map(|d| d.open).collect();
-            search.h = data.clone().into_iter().map(|d| d.high).collect();
-            search.c = data.clone().into_iter().map(|d| d.close).collect();
-            search.l = data.clone().into_iter().map(|d| d.low).collect();
-            search.v = data.clone().into_iter().map(|d| d.volume).collect();
-            search.t = data.clone().into_iter().map(|d| d.time_last).collect();
+            if (data.len() > 0) {
+                history.s = "ok".to_string();
+                history.o = data.clone().into_iter().map(|d| d.open).collect();
+                history.h = data.clone().into_iter().map(|d| d.high).collect();
+                history.c = data.clone().into_iter().map(|d| d.close).collect();
+                history.l = data.clone().into_iter().map(|d| d.low).collect();
+                history.v = data.clone().into_iter().map(|d| d.volume).collect();
+                history.t = data.clone().into_iter().map(|d| d.time_last).collect();
+            }
         }
+        _ => {}
     };
 
-    Ok(warp::reply::json(&search))
+    if (history.t.len() > 0) {
+        info!("found");
+        return Ok(warp::reply::json(&history));
+    } else {
+        return match find_udf_trade_next(trades, query.symbol, query.to.unwrap_or_default()).await {
+            Some(data) => {
+                info!("no-data");
+                return Ok(warp::reply::json(&UdfError {
+                    s: Status::no_data,
+                    errmsg: "No data found".to_string(),
+                    nextTime: Some(data.timestamp),
+                }));
+            }
+            None => {
+                info!("error");
+                return Ok(warp::reply::json(&history));
+            }
+        };
+    }
 }

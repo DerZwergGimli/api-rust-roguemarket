@@ -1,9 +1,9 @@
 use mongodb::bson::doc;
 use mongodb::bson::Document;
-pub fn get_history_aggregation(
+pub fn get_history_aggregation_countback(
     symbol: String,
-    from: u64,
     to: u64,
+    countback: u64,
     resolution_sec: i64,
 ) -> Vec<Document> {
     [
@@ -16,9 +16,6 @@ pub fn get_history_aggregation(
             "$match": doc! {
                 "timestamp": doc! {
                     "$lt": to as i64,
-                },
-                "timestamp": doc! {
-                    "$gt": from as i64
                 }
             }
         },
@@ -39,8 +36,8 @@ pub fn get_history_aggregation(
                     }, {
                         "$sum": "$exchange.token_amount"
                     }
-                    ]
-                    },
+                ]
+                },
                 "volume": doc! {
                     "$sum": "$exchange.token_amount"
                 }
@@ -76,6 +73,9 @@ pub fn get_history_aggregation(
                     "$sum": "$volume"
                 }
             }
+        },
+        doc! {
+            "$limit": countback as i64
         },
     ]
     .to_vec()
