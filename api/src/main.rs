@@ -77,7 +77,7 @@ async fn main() {
         .parse::<u16>()
         .unwrap();
 
-    println!("Running on http://{}:{}/docs/", Ipv4Addr::LOCALHOST, port);
+    println!("Running on http://{}:{}/docs/", Ipv4Addr::UNSPECIFIED, port);
 
     warp::serve(
         api_doc
@@ -85,7 +85,7 @@ async fn main() {
             .or(udf::handlers().await)
             .or(todo::handlers()),
     )
-    .run((Ipv4Addr::LOCALHOST, port))
+    .run((Ipv4Addr::UNSPECIFIED, port))
     .await
 }
 
