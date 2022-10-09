@@ -86,7 +86,7 @@ pub async fn find_udf_trades(
             while let Some(doc) = cursor.try_next().await.unwrap() {
                 data.push(bson::from_document(doc).unwrap());
             }
-            data.sort_by(|a, b| b.time_last.cmp(&a.time_last));
+            data.sort_by(|a, b| a.time_last.cmp(&b.time_last));
             return Some(data);
         }
 
