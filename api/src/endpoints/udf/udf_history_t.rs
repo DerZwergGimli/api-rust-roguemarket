@@ -9,5 +9,5 @@ pub struct UdfHistory {
     pub o: Vec<f64>,
     pub h: Vec<f64>,
     pub l: Vec<f64>,
-    pub v: Vec<i64>,
+    pub v: Vec<f64>,
 }

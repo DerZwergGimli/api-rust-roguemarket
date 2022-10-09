@@ -8,3 +8,6 @@ edition = "2021"
 [dependencies]
 mongodb = "2.3.0"
 types = { path = "../types" }
+futures = "0.3.24"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"

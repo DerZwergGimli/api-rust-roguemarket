@@ -2,6 +2,7 @@ use crate::endpoints::udf::{udf_config_t, udf_history_t, udf_symbols_t};
 use crate::endpoints::udf::{udf_search_t, udf_symbolInfo_t};
 use crate::udf_config_t::{Exchange, SymbolsType};
 use mongo::mongodb::{find_udf_trades, MongoDBConnection};
+use mongodb::bson::Document;
 use mongodb::Collection;
 use serde::{Deserialize, Serialize};
 use staratlas::symbolstore::{BuilderSymbolStore, SymbolStore};
@@ -12,6 +13,7 @@ use std::{
     sync::{Arc, Mutex},
 };
 use types::databasetrade::DBTrade;
+use types::m_ohclvt::M_OHCLVT;
 use utoipa::openapi::SchemaFormat::DateTime;
 use utoipa::{IntoParams, ToSchema};
 use warp::sse::reply;
@@ -46,7 +48,7 @@ pub struct SearchParams {
 #[into_params(parameter_in = Query)]
 pub struct HistoryParams {
     #[param(style = Form, example = "FOOD")]
-    symbol: Option<String>,
+    symbol: String,
     from: Option<u64>,
     to: Option<u64>,
     resolution: Option<String>,
@@ -373,18 +375,7 @@ pub async fn get_history(
     trades: Collection<DBTrade>,
     query: HistoryParams,
 ) -> Result<impl Reply, Infallible> {
-    //TODO: make this a VEC
-
-    let data = find_udf_trades(
-        trades,
-        query.symbol.unwrap(),
-        query.from.unwrap_or_default(),
-        query.to.unwrap_or_default(),
-        60,
-    )
-    .await;
-
-    let search = udf_history_t::UdfHistory {
+    let mut search = udf_history_t::UdfHistory {
         s: "".to_string(),
         t: vec![],
         c: vec![],
@@ -392,6 +383,27 @@ pub async fn get_history(
         h: vec![],
         l: vec![],
         v: vec![],
+    };
+
+    match find_udf_trades(
+        trades,
+        query.symbol,
+        query.from.unwrap_or_default(),
+        query.to.unwrap_or_default(),
+        60,
+    )
+    .await
+    {
+        None => {}
+        Some(data) => {
+            search.s = "ok".to_string();
+            search.o = data.clone().into_iter().map(|d| d.open).collect();
+            search.h = data.clone().into_iter().map(|d| d.high).collect();
+            search.c = data.clone().into_iter().map(|d| d.close).collect();
+            search.l = data.clone().into_iter().map(|d| d.low).collect();
+            search.v = data.clone().into_iter().map(|d| d.volume).collect();
+            search.t = data.clone().into_iter().map(|d| d.time_last).collect();
+        }
     };
 
     Ok(warp::reply::json(&search))

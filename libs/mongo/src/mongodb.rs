@@ -1,8 +1,10 @@
 use crate::agg_history::get_history_aggregation;
-use mongodb::bson::{doc, Document};
+use futures::stream::{StreamExt, TryStreamExt};
+use mongodb::bson::{doc, Bson, Document};
 use mongodb::options::{ClientOptions, IndexOptions};
-use mongodb::{Client, Collection, Database, IndexModel};
+use mongodb::{bson, Client, Collection, Database, IndexModel};
 use types::databasetrade::DBTrade;
+use types::m_ohclvt::M_OHCLVT;
 
 pub struct MongoDBConnection {
     client: Client,
@@ -71,7 +73,8 @@ pub async fn find_udf_trades(
     from: u64,
     to: u64,
     resolution_sec: i64,
-) -> Option<Vec<Document>> {
+) -> Option<Vec<M_OHCLVT>> {
+    let mut data: Vec<M_OHCLVT> = Vec::new();
     match collection
         .aggregate(
             get_history_aggregation(symbol, from, to, resolution_sec),
@@ -79,6 +82,14 @@ pub async fn find_udf_trades(
         )
         .await
     {
-        Ok(data) => Some(data.collect().await),
+        Ok(mut cursor) => {
+            while let Some(doc) = cursor.try_next().await.unwrap() {
+                data.push(bson::from_document(doc).unwrap());
+            }
+            data.sort_by(|a, b| b.time_last.cmp(&a.time_last));
+            return Some(data);
+        }
+
+        Err(_) => None,
     }
 }

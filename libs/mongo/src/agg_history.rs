@@ -8,62 +8,66 @@ pub fn get_history_aggregation(
 ) -> Vec<Document> {
     [
         doc! {
-            "$match": {
-                "trade.symbol": symbol,
-            },
+            "$match": doc! {
+                "symbol": symbol
+            }
         },
         doc! {
-            "$match": {
-                "timestamp": {"$lt": to, "$gt": from},
-            },
+            "$match": doc! {
+                "timestamp": doc! {
+                    "$lt": from as i64,
+                    "$gt": to as i64
+                }
+            }
         },
         doc! {
-            "$addFields": {
-                "time": {
-                    "$toDate": {
-                        "$multiply": ["$timestamp", 1000],
-                    },
+            "$addFields": doc! {
+                "time": doc! {
+                    "$toDate": doc! {
+                        "$multiply": [
+                            "$timestamp",
+                            resolution_sec
+                        ]
+                    }
                 },
-                "symbol": "$trade.symbol",
-                "price": "$trade.cost_price",
-                "volume": "$trade.size",
-            },
+                "price": doc! {
+                    "$sum": "$exchange.currency_amount"
+                },
+                "volume": doc! {
+                    "$sum": "$exchange.token_amount"
+                }
+            }
         },
         doc! {
-            "$group": {
-                "_id": {
-                    "time": {
-                        "$dateTrunc": {
+            "$group": doc! {
+                "_id": doc! {
+                    "time": doc! {
+                        "$dateTrunc": doc! {
                             "date": "$time",
                             "unit": "minute",
-                            "binSize": resolution_sec,
-                        },
-                    },
+                            "binSize": 1
+                        }
+                    }
                 },
-                "time_last": {
-                    "$last": "$timestamp",
+                "time_last": doc! {
+                    "$last": "$timestamp"
                 },
-                "high": {
-                    "$max": "$price",
+                "high": doc! {
+                    "$max": "$price"
                 },
-                "low": {
-                    "$min": "$price",
+                "low": doc! {
+                    "$min": "$price"
                 },
-                "open": {
-                    "$first": "$price",
+                "open": doc! {
+                    "$first": "$price"
                 },
-                "close": {
-                    "$last": "$price",
+                "close": doc! {
+                    "$last": "$price"
                 },
-                "volume": {
-                    "$sum": "$volume",
-                },
-            },
-        },
-        doc! {
-            "$sort": {
-                "time_last": 1,
-            },
+                "volume": doc! {
+                    "$sum": "$volume"
+                }
+            }
         },
     ]
     .to_vec()
