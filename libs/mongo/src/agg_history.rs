@@ -15,8 +15,8 @@ pub fn get_history_aggregation(
         doc! {
             "$match": doc! {
                 "timestamp": doc! {
-                    "$lt": from as i64,
-                    "$gt": to as i64
+                    "$lt": to as i64,
+                    "$gt": from as i64
                 }
             }
         },

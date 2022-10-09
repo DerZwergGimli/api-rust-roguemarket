@@ -19,6 +19,7 @@ use utoipa::{IntoParams, ToSchema};
 use warp::sse::reply;
 use warp::{hyper::StatusCode, Filter, Reply};
 
+//region PARAMS
 #[derive(Debug, Deserialize, IntoParams)]
 #[into_params(parameter_in = Query)]
 pub struct SymbolInfoParams {
@@ -54,7 +55,9 @@ pub struct HistoryParams {
     resolution: Option<String>,
     countback: Option<u64>,
 }
+//endregion
 
+//region HANDLERS
 pub async fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone
 {
     let store_sa = BuilderSymbolStore::new().init().await;
@@ -123,6 +126,7 @@ fn with_mongo_store(
 ) -> impl Filter<Extract = (Collection<DBTrade>,), Error = Infallible> + Clone {
     warp::any().map(move || store.clone())
 }
+//endregion
 
 /// UDF Home
 ///
@@ -352,8 +356,14 @@ pub async fn get_search(store: SymbolStore, query: SearchParams) -> Result<impl 
 
     let mut search_limited: Vec<udf_search_t::UdfSearchSymbol> = Vec::new();
     if (query.limit.unwrap_or(0) > 0) {
-        for l in 0..query.limit.unwrap() {
-            search_limited.push(search[l].clone());
+        if (search.len() < query.limit.unwrap()) {
+            for l in 0..search.len() {
+                search_limited.push(search[l].clone());
+            }
+        } else {
+            for l in 0..query.limit.unwrap() {
+                search_limited.push(search[l].clone());
+            }
         }
     }
 
