@@ -6,12 +6,14 @@ use endpoints::udf::udf_history_t;
 use endpoints::udf::udf_search_t;
 use endpoints::udf::udf_symbolInfo_t;
 use log::info;
-use std::{net::Ipv4Addr, sync::Arc};
+use std::{env, net::Ipv4Addr, sync::Arc};
+use tokio::net::unix::SocketAddr;
 use utoipa::{
     openapi::security::{ApiKey, ApiKeyValue, SecurityScheme},
     Modify, OpenApi,
 };
 use utoipa_swagger_ui::Config;
+use warp::http::uri::Port;
 use warp::{
     http::Uri,
     hyper::{Response, StatusCode},
@@ -70,14 +72,20 @@ async fn main() {
         .and(warp::any().map(move || config.clone()))
         .and_then(serve_swagger);
 
-    println!("Running on http://localhost:8080/docs/");
+    let port = env::var("APIPORT")
+        .unwrap_or("8080".to_string())
+        .parse::<u16>()
+        .unwrap();
+
+    println!("Running on http://{}:{}/docs/", Ipv4Addr::LOCALHOST, port);
+
     warp::serve(
         api_doc
             .or(swagger_ui)
             .or(udf::handlers().await)
             .or(todo::handlers()),
     )
-    .run((Ipv4Addr::UNSPECIFIED, 8080))
+    .run((Ipv4Addr::LOCALHOST, port))
     .await
 }
 
