@@ -16,7 +16,7 @@ use std::{
 };
 use types::databasetrade::DBTrade;
 use types::m_ohclvt::M_OHCLVT;
-use udf::time_convert::convert_udf_time_to_sec;
+use udf::time_convert::convert_udf_time_to_minute;
 use utoipa::openapi::SchemaFormat::DateTime;
 use utoipa::{IntoParams, ToSchema};
 use warp::sse::reply;
@@ -400,7 +400,8 @@ pub async fn get_history(
         query.symbol.clone(),
         query.from.unwrap_or_default(),
         query.to.unwrap_or_default(),
-        convert_udf_time_to_sec(query.resolution.unwrap_or("3600".to_string()).as_str()).unwrap(),
+        convert_udf_time_to_minute(query.resolution.unwrap_or("3600".to_string()).as_str())
+            .unwrap(),
         query.countback,
     )
     .await

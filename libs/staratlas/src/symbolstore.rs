@@ -91,7 +91,7 @@ impl BuilderSymbolStore {
                 description: "StarAtlas GalacticMarket".to_string(),
                 asset_type: "nft".to_string(),
                 sesstion: "24x7".to_string(),
-                timezone: "UTC".to_string(),
+                timezone: "Etc/UTC".to_string(),
                 minmovement: 0.0,
                 minmov: 1.0,
                 minmovement2: 0.0,

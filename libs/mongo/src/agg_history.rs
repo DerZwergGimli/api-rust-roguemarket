@@ -4,7 +4,7 @@ pub fn get_history_aggregation(
     symbol: String,
     from: u64,
     to: u64,
-    resolution_sec: i64,
+    resolution_minute: i64,
 ) -> Vec<Document> {
     [
         doc! {
@@ -52,8 +52,8 @@ pub fn get_history_aggregation(
                     "time": doc! {
                         "$dateTrunc": doc! {
                             "date": "$time",
-                            "unit": "second",
-                            "binSize": resolution_sec
+                            "unit": "minute",
+                            "binSize": resolution_minute
                         }
                     }
                 },

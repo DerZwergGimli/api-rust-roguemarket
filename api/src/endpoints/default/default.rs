@@ -16,7 +16,7 @@ use std::{
 };
 use types::databasetrade::DBTrade;
 use types::m_ohclvt::M_OHCLVT;
-use udf::time_convert::convert_udf_time_to_sec;
+use udf::time_convert::convert_udf_time_to_minute;
 use utoipa::openapi::SchemaFormat::DateTime;
 use utoipa::{IntoParams, ToSchema};
 use warp::sse::reply;
