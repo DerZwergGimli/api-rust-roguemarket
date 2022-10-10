@@ -43,13 +43,18 @@ async fn main() {
     udf::get_history,
     ),
     components(
-    schemas(udf_config_t::UdfConfig, udf_config_t::Exchange, udf_config_t::SymbolsType, udf_symbolInfo_t::UdfSymbolInfo,
-    udf_search_t::UdfSearchSymbol, udf_history_t::UdfHistory)
+    schemas(
+    udf_config_t::UdfConfig,
+    udf_config_t::Exchange,
+    udf_config_t::SymbolsType,
+    udf_symbolInfo_t::UdfSymbolInfo,
+    udf_search_t::UdfSearchSymbol,
+    udf_history_t::UdfHistory)
     ),
     modifiers(&SecurityAddon),
     tags(
-    (name = "udf", description = "UDF compatible endpoints"),
-    (name = "default", description = "Default Data endpoints")
+    (name = "default", description = "Default Data endpoints"),
+    (name = "udf", description = "UDF compatible endpoints")
     )
     )]
     struct ApiDoc;
