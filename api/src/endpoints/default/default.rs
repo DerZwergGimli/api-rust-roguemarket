@@ -55,7 +55,7 @@ pub async fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp:
 
 /// Info
 ///
-/// Responses with info object - NOT IMPLEMENTED.
+/// Responses with info object.
 #[utoipa::path(
 get,
 path = "/info",
@@ -64,7 +64,7 @@ responses(
 )
 )]
 pub async fn get_info() -> Result<impl Reply, Infallible> {
-    let message = "Hello this is a UDF compatible route!".to_string();
+    let message = "Hello from RogueMarket API".to_string();
     Ok(warp::reply::with_status(message, StatusCode::OK))
 }
 
@@ -80,11 +80,6 @@ responses(
 )
 )]
 pub async fn get_last(query: DefaultLastParams) -> Result<impl Reply, Infallible> {
-    let time = SystemTime::now().duration_since(UNIX_EPOCH);
-    let time_string = time.unwrap_or_default().as_secs();
-
-    Ok(warp::reply::with_status(
-        time_string.to_string(),
-        StatusCode::OK,
-    ))
+    let message = "NOT IMPLEMENTED".to_string();
+    Ok(warp::reply::with_status(message, StatusCode::OK))
 }
