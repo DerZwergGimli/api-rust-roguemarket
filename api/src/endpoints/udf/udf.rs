@@ -41,11 +41,12 @@ pub struct SymbolsParams {
 #[into_params(parameter_in = Query)]
 pub struct SearchParams {
     #[param(style = Form, example = "FOOD")]
-    query: Option<String>,
+    query: String,
     #[param(rename = "type")]
     stype: Option<String>,
     exchange: Option<String>,
-    limit: Option<usize>,
+    #[param(style = Form, example = "2")]
+    limit: usize,
 }
 
 #[derive(Debug, Deserialize, IntoParams)]
@@ -338,11 +339,7 @@ pub async fn get_search(store: SymbolStore, query: SearchParams) -> Result<impl 
     let filtered = store
         .assets
         .into_iter()
-        .filter(|asset| {
-            asset
-                .symbol
-                .contains(query.query.clone().unwrap_or("".to_string()).as_str())
-        })
+        .filter(|asset| asset.symbol.contains(query.query.clone().as_str()))
         .collect::<Vec<_>>();
 
     let mut search: Vec<udf_search_t::UdfSearchSymbol> = Vec::new();
@@ -358,13 +355,13 @@ pub async fn get_search(store: SymbolStore, query: SearchParams) -> Result<impl 
     });
 
     let mut search_limited: Vec<udf_search_t::UdfSearchSymbol> = Vec::new();
-    if (query.limit.unwrap_or(0) > 0) {
-        if (search.len() < query.limit.unwrap()) {
+    if (query.limit > 0) {
+        if (search.len() < query.limit) {
             for l in 0..search.len() {
                 search_limited.push(search[l].clone());
             }
         } else {
-            for l in 0..query.limit.unwrap() {
+            for l in 0..query.limit {
                 search_limited.push(search[l].clone());
             }
         }
