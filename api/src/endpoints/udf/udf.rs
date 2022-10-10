@@ -138,7 +138,7 @@ fn with_mongo_store(
 get,
 path = "/udf/",
 responses(
-(status = 200, description = "Get time successfully", body = [Todo])
+(status = 200, description = "Get time successfully", body = String)
 )
 )]
 pub async fn get_home() -> Result<impl Reply, Infallible> {

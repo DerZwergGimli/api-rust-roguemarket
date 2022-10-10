@@ -1,4 +1,5 @@
 mod endpoints;
+use crate::endpoints::default::default;
 use crate::endpoints::udf::udf;
 use endpoints::udf::udf_config_t;
 use endpoints::udf::udf_history_t;
@@ -30,6 +31,8 @@ async fn main() {
     #[derive(OpenApi)]
     #[openapi(
     paths(
+    default::get_info,
+    default::get_last,
     udf::get_home,
     udf::get_time,
     udf::get_config,
@@ -44,7 +47,8 @@ async fn main() {
     ),
     modifiers(&SecurityAddon),
     tags(
-    (name = "udf", description = "UDF compatible endpoints")
+    (name = "udf", description = "UDF compatible endpoints"),
+    (name = "default", description = "Default Data endpoints")
     )
     )]
     struct ApiDoc;
@@ -82,9 +86,14 @@ async fn main() {
         .allow_any_origin()
         .allow_methods(&[Method::GET]);
 
-    warp::serve(api_doc.or(swagger_ui).or(udf::handlers().await.with(cors)))
-        .run((Ipv4Addr::UNSPECIFIED, port))
-        .await
+    warp::serve(
+        api_doc
+            .or(swagger_ui)
+            .or(default::handlers().await)
+            .or(udf::handlers().await.with(cors)),
+    )
+    .run((Ipv4Addr::UNSPECIFIED, port))
+    .await
 }
 
 async fn serve_swagger(
