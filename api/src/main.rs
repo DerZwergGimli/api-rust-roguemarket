@@ -1,5 +1,4 @@
 mod endpoints;
-use crate::endpoints::todo;
 use crate::endpoints::udf::udf;
 use endpoints::udf::udf_config_t;
 use endpoints::udf::udf_history_t;
@@ -83,14 +82,9 @@ async fn main() {
         .allow_any_origin()
         .allow_methods(&[Method::GET]);
 
-    warp::serve(
-        api_doc
-            .or(swagger_ui)
-            .or(udf::handlers().await.with(cors))
-            .or(todo::handlers()),
-    )
-    .run((Ipv4Addr::UNSPECIFIED, port))
-    .await
+    warp::serve(api_doc.or(swagger_ui).or(udf::handlers().await.with(cors)))
+        .run((Ipv4Addr::UNSPECIFIED, port))
+        .await
 }
 
 async fn serve_swagger(
