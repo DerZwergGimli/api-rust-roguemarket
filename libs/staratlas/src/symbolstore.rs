@@ -92,8 +92,8 @@ impl BuilderSymbolStore {
                 asset_type: "nft".to_string(),
                 sesstion: "24x7".to_string(),
                 timezone: "UTC".to_string(),
-                minmovement: 0.0001,
-                minmov: 0.001,
+                minmovement: 0.0,
+                minmov: 1.0,
                 minmovement2: 0.0,
                 minmov2: 0.0,
                 supported_resolutions: vec![
@@ -136,7 +136,7 @@ impl BuilderSymbolStore {
                     symbol: format!("{}{}", asset.symbol.clone(), currency.name.clone()),
                     mint: asset.mint.clone(),
                     pair_mint: currency.mint.clone(),
-                    pricescale: 10,
+                    pricescale: 1000000,
                 })
             })
         });

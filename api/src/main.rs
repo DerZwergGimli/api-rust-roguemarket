@@ -4,7 +4,7 @@ use crate::endpoints::udf::udf;
 use endpoints::udf::udf_config_t;
 use endpoints::udf::udf_history_t;
 use endpoints::udf::udf_search_t;
-use endpoints::udf::udf_symbolInfo_t;
+use endpoints::udf::udf_symbol_info_t;
 use endpoints::udf::udf_symbols_t;
 use log::info;
 use std::{env, net::Ipv4Addr, sync::Arc};
@@ -47,7 +47,7 @@ async fn main() {
     udf_config_t::UdfConfig,
     udf_config_t::Exchange,
     udf_config_t::SymbolsType,
-    udf_symbolInfo_t::UdfSymbolInfo,
+    udf_symbol_info_t::UdfSymbolInfo,
     udf_search_t::UdfSearchSymbol,
     udf_history_t::UdfHistory)
     ),

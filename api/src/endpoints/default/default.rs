@@ -1,6 +1,6 @@
 use crate::endpoints::udf::udf_error_t::{Status, UdfError};
 use crate::endpoints::udf::{udf_config_t, udf_history_t, udf_symbols_t};
-use crate::endpoints::udf::{udf_search_t, udf_symbolInfo_t};
+use crate::endpoints::udf::{udf_search_t, udf_symbol_info_t};
 use crate::udf_config_t::{Exchange, SymbolsType};
 use log::info;
 use mongo::mongodb::{find_udf_trade_next, find_udf_trades, MongoDBConnection};
