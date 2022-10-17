@@ -71,6 +71,10 @@ async fn main() {
         }
     }
 
+    let root = warp::path::end()
+        .and(warp::get())
+        .map(|| warp::reply::with_status("Hello there!\nPlease visit: /docs", StatusCode::OK));
+
     let api_doc = warp::path("api-doc.json")
         .and(warp::get())
         .map(|| warp::reply::json(&ApiDoc::openapi()));
@@ -93,7 +97,7 @@ async fn main() {
         .allow_methods(&[Method::GET]);
 
     warp::serve(
-        api_doc
+        root.or(api_doc)
             .or(swagger_ui)
             .or(default::handlers().await)
             .or(udf::handlers().await.with(cors)),
