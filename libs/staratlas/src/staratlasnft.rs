@@ -1,4 +1,7 @@
 use serde::{Deserialize, Serialize};
+use std::str::FromStr;
+use strum_macros::Display;
+use strum_macros::EnumString;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct StarAtlasNft {
@@ -153,7 +156,7 @@ pub struct Msrp {
     pub currency_symbol: QuotePair,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Display, Serialize, Deserialize, PartialEq, Clone, Copy)]
 pub enum Category {
     #[serde(rename = "access")]
     Access,

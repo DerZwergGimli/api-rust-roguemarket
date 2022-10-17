@@ -31,7 +31,7 @@ pub struct Exchange {
     pub symbol: String,
     pub name: String,
     pub description: String,
-    pub asset_type: String,
+    pub asset_type: Vec<String>,
     pub sesstion: String,
     pub timezone: String,
     pub minmovement: f64,
@@ -89,7 +89,7 @@ impl BuilderSymbolStore {
                 symbol: "GM".to_string(),
                 name: "GalacticMarket".to_string(),
                 description: "StarAtlas GalacticMarket".to_string(),
-                asset_type: "nft".to_string(),
+                asset_type: vec!["nft".to_string()],
                 sesstion: "24x7".to_string(),
                 timezone: "Etc/UTC".to_string(),
                 minmovement: 0.0,
@@ -126,8 +126,17 @@ impl BuilderSymbolStore {
         };
         symbol_store.currencies = self.create_currencies();
 
+        let mut item_types = Vec::new();
         data.iter().for_each(|asset| {
             symbol_store.currencies.iter().for_each(|currency| {
+                if !item_types
+                    .clone()
+                    .into_iter()
+                    .any(|i| i == format!("{:?}", asset.attributes.item_type))
+                {
+                    item_types.push(format!("{:?}", asset.attributes.item_type))
+                }
+
                 symbol_store.assets.push(Asset {
                     asset_name: asset.symbol.clone(),
                     pair_name: currency.name.clone(),
@@ -140,6 +149,7 @@ impl BuilderSymbolStore {
                 })
             })
         });
+        symbol_store.exchange.asset_type = item_types;
         return symbol_store;
     }
 }

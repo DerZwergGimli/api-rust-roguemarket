@@ -178,16 +178,28 @@ responses(
 )
 )]
 pub async fn get_config(store: SymbolStore) -> Result<impl Reply, Infallible> {
+    let mut all_symbols = Vec::new();
+
+    store
+        .exchange
+        .clone()
+        .asset_type
+        .into_iter()
+        .for_each(|asset_type| {
+            all_symbols.push(SymbolsType {
+                value: asset_type.to_string(),
+                name: asset_type.to_string(),
+            })
+        });
+
     let config = udf_config_t::UdfConfig {
         exchanges: vec![Exchange {
             value: store.exchange.clone().symbol,
             name: store.exchange.clone().name,
             desc: store.exchange.clone().description,
         }],
-        symbols_types: vec![SymbolsType {
-            value: store.exchange.clone().asset_type,
-            name: "StarAtlas Assets".to_string(),
-        }],
+
+        symbols_types: all_symbols,
         supported_resolutions: store.exchange.clone().supported_resolutions,
         supports_search: store.exchange.clone().supports_search,
         supports_group_request: store.exchange.clone().supports_group_request,
@@ -243,7 +255,7 @@ pub async fn get_symbol_info(store: SymbolStore) -> Result<impl Reply, Infallibl
             .collect(),
         exchange: store.exchange.clone().name,
         listed_exchange: store.exchange.clone().name,
-        udf_symbol_info_type: store.exchange.clone().asset_type,
+        udf_symbol_info_type: store.exchange.clone().asset_type[0].clone(),
         currency_code: store
             .assets
             .clone()
@@ -350,7 +362,7 @@ pub async fn get_search(store: SymbolStore, query: SearchParams) -> Result<impl 
             description: asset.clone().description,
             exchange: store.exchange.clone().symbol,
             ticker: asset.clone().symbol,
-            udf_symbol_type: store.exchange.clone().asset_type,
+            udf_symbol_type: store.exchange.clone().asset_type[0].clone(),
         })
     });
 
