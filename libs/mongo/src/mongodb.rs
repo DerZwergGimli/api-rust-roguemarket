@@ -67,6 +67,7 @@ pub async fn find_udf_trades(
     resolution_sec: i64,
     countback: Option<u64>,
 ) -> Option<Vec<M_OHCLVT>> {
+    println!("TIME: {}", resolution_sec);
     let mut data: Vec<M_OHCLVT> = Vec::new();
     match countback {
         Some(count) => {

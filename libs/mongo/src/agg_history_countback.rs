@@ -6,7 +6,6 @@ pub fn get_history_aggregation_countback(
     countback: u64,
     resolution_minute: i64,
 ) -> Vec<Document> {
-    println!("{}", resolution_minute);
     [
         doc! {
             "$match": doc! {

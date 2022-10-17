@@ -362,7 +362,7 @@ pub async fn get_search(store: SymbolStore, query: SearchParams) -> Result<impl 
             description: asset.clone().description,
             exchange: store.exchange.clone().symbol,
             ticker: asset.clone().symbol,
-            udf_symbol_type: store.exchange.clone().asset_type[0].clone(),
+            udf_symbol_type: asset.clone().asset_type,
         })
     });
 
