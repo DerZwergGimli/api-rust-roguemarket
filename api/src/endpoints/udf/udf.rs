@@ -42,8 +42,8 @@ pub struct SymbolsParams {
 pub struct SearchParams {
     #[param(style = Form, example = "FOOD")]
     query: String,
-    #[param(rename = "type")]
-    stype: Option<String>,
+    #[serde(rename = "type")]
+    shipType: Option<String>,
     exchange: Option<String>,
     #[param(style = Form, example = "2")]
     limit: usize,
@@ -351,7 +351,12 @@ pub async fn get_search(store: SymbolStore, query: SearchParams) -> Result<impl 
     let filtered = store
         .assets
         .into_iter()
-        .filter(|asset| asset.symbol.contains(query.query.clone().as_str()))
+        .filter(|asset| {
+            asset.symbol.contains(query.query.clone().as_str())
+                && asset
+                    .asset_type
+                    .contains(query.shipType.clone().unwrap_or("".to_string()).as_str())
+        })
         .collect::<Vec<_>>();
 
     let mut search: Vec<udf_search_t::UdfSearchSymbol> = Vec::new();
