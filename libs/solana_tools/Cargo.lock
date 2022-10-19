@@ -3346,6 +3346,7 @@ name = "staratlas"
 version = "0.1.0"
 dependencies = [
  "helper",
+ "log",
  "reqwest",
  "serde",
  "serde_json",

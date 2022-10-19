@@ -34,6 +34,7 @@ async fn main() {
     paths(
     default::get_info,
     default::get_last,
+    default::get_signature,
     udf::get_home,
     udf::get_time,
     udf::get_config,

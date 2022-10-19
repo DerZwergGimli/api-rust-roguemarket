@@ -1,4 +1,5 @@
 use crate::staratlasnft::StarAtlasNft;
+use log::info;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -65,6 +66,8 @@ impl BuilderSymbolStore {
             .await
             .unwrap();
         self.create_currencies();
+
+        info!("SA Store initalized!");
         self.map_data(data)
     }
 

@@ -1,8 +1,9 @@
 use crate::agg_history::get_history_aggregation;
 use crate::agg_history_countback::get_history_aggregation_countback;
 use crate::agg_next::get_history_aggregation_next;
+use crate::agg_signature::get_signature_aggregation;
 use futures::stream::{StreamExt, TryStreamExt};
-use log::warn;
+use log::{info, warn};
 use mongodb::bson::{doc, Bson, Document};
 use mongodb::options::{ClientOptions, IndexOptions};
 use mongodb::{bson, Client, Collection, Database, IndexModel};
@@ -37,6 +38,8 @@ impl MongoDBConnection {
         collection.create_index(model_sig, None).await;
         collection.create_index(model_sym, None).await;
         collection.create_index(model_ts, None).await;
+
+        info!("DB Connected!");
 
         MongoDBConnection {
             client,
@@ -118,6 +121,24 @@ pub async fn find_udf_trade_next(
 ) -> Option<DBTrade> {
     match collection
         .aggregate(get_history_aggregation_next(symbol, next), None)
+        .await
+    {
+        Ok(mut cursor) => {
+            while let Some(doc) = cursor.try_next().await.unwrap() {
+                return Some(bson::from_document::<DBTrade>(doc).unwrap());
+            }
+            None
+        }
+        Err(_) => None,
+    }
+}
+
+pub async fn find_by_signature(
+    collection: Collection<DBTrade>,
+    signature: String,
+) -> Option<DBTrade> {
+    match collection
+        .aggregate(get_signature_aggregation(signature), None)
         .await
     {
         Ok(mut cursor) => {

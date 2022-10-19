@@ -13,3 +13,4 @@ tokio = { version = "1", features = ["full"] }
 helper = { path = "../helper" }
 strum = "0.24"
 strum_macros = "0.24"
+log = "0.4"

@@ -3,11 +3,12 @@ use crate::endpoints::udf::{udf_config_t, udf_history_t, udf_symbols_t};
 use crate::endpoints::udf::{udf_search_t, udf_symbol_info_t};
 use crate::udf_config_t::{Exchange, SymbolsType};
 use log::info;
-use mongo::mongodb::{find_udf_trade_next, find_udf_trades, MongoDBConnection};
+use mongo::mongodb::{find_by_signature, find_udf_trade_next, find_udf_trades, MongoDBConnection};
 use mongodb::bson::Document;
 use mongodb::Collection;
 use serde::{Deserialize, Serialize};
 use staratlas::symbolstore::{BuilderSymbolStore, SymbolStore};
+use std::future::Future;
 use std::time::{SystemTime, UNIX_EPOCH};
 use std::{
     convert::Infallible,
@@ -29,14 +30,20 @@ pub struct DefaultLastParams {
     #[param(style = Form, example = "FOODATLAS")]
     symbol: Option<String>,
 }
+
+#[derive(Debug, Deserialize, IntoParams)]
+#[into_params(parameter_in = Query)]
+pub struct DefaultSignatureParams {
+    address: String,
+}
 //endregion
 
 //region HANDLERS
 pub async fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone
 {
-    /*let mongo_db =
-            MongoDBConnection::new(env::var("MONGOURL").expect("NO MONGOURL").as_str()).await;
-    */
+    let mongo_db =
+        MongoDBConnection::new(env::var("MONGOURL").expect("NO MONGOURL").as_str()).await;
+
     let home = warp::path!("info")
         .and(warp::get())
         .and(warp::path::end())
@@ -48,7 +55,20 @@ pub async fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp:
         .and(warp::query::<DefaultLastParams>())
         .and_then(get_last);
 
-    home.or(info)
+    let signature = warp::path!("signature")
+        .and(warp::get())
+        .and(warp::path::end())
+        .and(with_mongo_store(mongo_db.collection.clone()))
+        .and(warp::query::<DefaultSignatureParams>())
+        .and_then(get_signature);
+
+    home.or(info).or(signature)
+}
+
+fn with_mongo_store(
+    store: Collection<DBTrade>,
+) -> impl Filter<Extract = (Collection<DBTrade>,), Error = Infallible> + Clone {
+    warp::any().map(move || store.clone())
 }
 
 //endregion
@@ -68,9 +88,9 @@ pub async fn get_info() -> Result<impl Reply, Infallible> {
     Ok(warp::reply::with_status(message, StatusCode::OK))
 }
 
-/// Get Last Trade
+/// Get last trade
 ///
-/// Responses with a last Trade for a given symbol - NOT IMPLEMENTED.
+/// Responses with a last trade for a given symbol - NOT IMPLEMENTED.
 #[utoipa::path(
 get,
 path = "/last",
@@ -82,4 +102,31 @@ responses(
 pub async fn get_last(query: DefaultLastParams) -> Result<impl Reply, Infallible> {
     let message = "NOT IMPLEMENTED".to_string();
     Ok(warp::reply::with_status(message, StatusCode::OK))
+}
+
+/// Get trade by signature
+///
+/// Responses with a trade for a given signature - NOT IMPLEMENTED.
+#[utoipa::path(
+get,
+path = "/signature",
+params(DefaultSignatureParams),
+responses(
+(status = 200, description = "Response: Time successful", body = Object)
+)
+)]
+pub async fn get_signature(
+    trades: Collection<DBTrade>,
+    query: DefaultSignatureParams,
+) -> Result<impl Reply, Infallible> {
+    match find_by_signature(trades.clone(), query.address.clone()).await {
+        Some(data) => {
+            return Ok(warp::reply::json(&data));
+        }
+        _ => {
+            /// A placeholder for a future error handling.
+            let error = "Error".to_string();
+            return Ok(warp::reply::json(&error));
+        }
+    };
 }
