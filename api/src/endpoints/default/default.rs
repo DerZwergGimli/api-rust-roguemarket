@@ -112,7 +112,7 @@ get,
 path = "/signature",
 params(DefaultSignatureParams),
 responses(
-(status = 200, description = "Response: Time successful", body = Object)
+(status = 200, description = "Response: Time successful", body = String)
 )
 )]
 pub async fn get_signature(
