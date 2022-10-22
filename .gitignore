@@ -2,3 +2,6 @@
 /**/target/
 /worker/.env
 /docker-compose.yaml
+/worker-js/.env
+/worker-js/build/
+/worker-js/node_modules/
