@@ -157,6 +157,10 @@ async function fetch_and_map_task(
           (element) => element.name == "processInitializeSell"
         );
 
+        if (!d) {
+          d = parsed?.find((element) => element.name == "processInitializeBuy");
+        }
+
         const currency_mint = d.accounts
           .find((account: any) => account.name == "receiveMint")
           ?.pubkey.toString();
