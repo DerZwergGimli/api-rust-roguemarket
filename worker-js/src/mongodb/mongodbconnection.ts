@@ -42,10 +42,10 @@ export async function connectToDatabase() {
   await unmappedExchange.createIndex({ signature: 1 }, { unique: true });
 
   await processExchange.createIndex({ symbol: 1 }, { unique: false });
-  await counterExchange.createIndex({ symbol: 1 }, { unique: true });
-  await createExchange.createIndex({ symbol: 1 }, { unique: true });
-  await cancelExchange.createIndex({ symbol: 1 }, { unique: true });
-  await unmappedExchange.createIndex({ symbol: 1 }, { unique: true });
+  await counterExchange.createIndex({ symbol: 1 }, { unique: false });
+  await createExchange.createIndex({ symbol: 1 }, { unique: false });
+  await cancelExchange.createIndex({ symbol: 1 }, { unique: false });
+  await unmappedExchange.createIndex({ symbol: 1 }, { unique: false });
 
   collections.processExchange = processExchange;
   collections.counterExchange = counterExchange;

@@ -98,10 +98,6 @@ async function fetch_and_map_task(
 
     stats.total = transactionList.length;
 
-    let signatureList = transactionList.map(
-      (transaction) => transaction.signature
-    );
-
     for (const transaction of transactionList) {
       const parsed = await txParser.parseTransaction(
         solanaConnection,
@@ -116,7 +112,85 @@ async function fetch_and_map_task(
         symbol: "none",
       };
 
-      switch (parsed?.[0].name ?? "") {
+      if (parsed?.find((element) => element.name == "processExchange")) {
+        //region MAP
+        let d: any = parsed?.find(
+          (element) => element.name == "processExchange"
+        );
+
+        const currency_mint = d?.accounts
+          .find((account: any) => account.name == "currencyMint")
+          ?.pubkey.toString();
+        const asset_mint = d?.accounts
+          .find((account: any) => account.name == "assetMint")
+          ?.pubkey.toString();
+
+        db_data.size = parseInt(d?.args.purchaseQuantity.toString());
+        db_data.price = parseInt(d?.args.expectedPrice.toString());
+        db_data.symbol =
+          localStoreInstance.symbolsStore.find(
+            (symbol) =>
+              symbol.mint === asset_mint && symbol.pair?.mint === currency_mint
+          )?.symbol_pair ?? "not-found";
+        //endregion
+        await collections.processExchange
+          ?.insertOne(db_data)
+          .then(() => stats.written_to_db++)
+          .catch((err) => {
+            if (err.code != 11000) throw err;
+          });
+        stats.exchanges++;
+      } else if (parsed?.find((element) => element.name == "processCancel")) {
+        //region MAP
+        let d: any = parsed?.find((element) => element.name == "processCancel");
+        //endregion
+        await collections.cancelExchange
+          ?.insertOne(db_data)
+          .then(() => stats.written_to_db++)
+          .catch((err) => {
+            if (err.code != 11000) throw err;
+          });
+        stats.cancels++;
+      } else if (parsed?.find((element) => element.name == "createAccount")) {
+        //region MAP
+        let d: any = parsed?.find(
+          (element) => element.name == "processInitializeSell"
+        );
+
+        const currency_mint = d.accounts
+          .find((account: any) => account.name == "receiveMint")
+          ?.pubkey.toString();
+        const asset_mint = d.accounts
+          .find((account: any) => account.name == "depositMint")
+          ?.pubkey.toString();
+
+        db_data.size = parseInt(d.args.originationQty.toString());
+        db_data.price = parseInt(d.args.price.toString());
+        db_data.symbol =
+          localStoreInstance.symbolsStore.find(
+            (symbol) =>
+              symbol.mint === asset_mint && symbol.pair?.mint === currency_mint
+          )?.symbol_pair ?? "not-found";
+        //endregion
+
+        await collections.createExchange
+          ?.insertOne(db_data)
+          .then(() => stats.written_to_db++)
+          .catch((err) => {
+            if (err.code != 11000) throw err;
+          });
+        stats.creates++;
+      } else {
+        await collections.unmappedExchange
+          ?.insertOne(db_data)
+          .then(() => stats.written_to_db++)
+          .catch((err) => {
+            if (err.code != 11000) throw err;
+          });
+        stats.unmapped++;
+      }
+
+      /*switch (parsed?.[0].name ?? "") {
         case "processExchange": {
           //region MAP
           let d = parsed?.[0] as any;
@@ -138,6 +212,7 @@ async function fetch_and_map_task(
             )?.symbol_pair ?? "not-found";
           //endregion
           await collections.processExchange?.insertOne(db_data).catch((err) => {
+            stats.written_to_db--;
             if (err.code != 11000) throw err;
           });
           stats.exchanges++;
@@ -165,6 +240,7 @@ async function fetch_and_map_task(
           //endregion
 
           await collections.counterExchange?.insertOne(db_data).catch((err) => {
+            stats.written_to_db--;
             if (err.code != 11000) throw err;
           });
           stats.counter++;
@@ -192,6 +268,7 @@ async function fetch_and_map_task(
           //endregion
 
           await collections.createExchange?.insertOne(db_data).catch((err) => {
+            stats.written_to_db--;
             if (err.code != 11000) throw err;
           });
           stats.creates++;
@@ -217,6 +294,7 @@ async function fetch_and_map_task(
           //endregion
 
           await collections.cancelExchange?.insertOne(db_data).catch((err) => {
+            stats.written_to_db--;
             if (err.code != 11000) throw err;
           });
           stats.cancels++;
@@ -226,24 +304,15 @@ async function fetch_and_map_task(
           await collections.unmappedExchange
             ?.insertOne(db_data)
             .catch((err) => {
+              stats.written_to_db--;
               if (err.code != 11000) throw err;
             });
           stats.direct++;
           break;
         }
         default: {
-          await collections.unmappedExchange
-            ?.insertOne(db_data)
-            .then(() => stats.written_to_db++)
-            .catch((err) => {
-              if (err.code != 11000) throw err;
-            });
-          stats.unmapped++;
-          break;
         }
-      }
-      stats.written_to_db++;
-      transaction.blockTime;
+      }*/
       last_signature = transaction.signature;
       last_timestamp = transaction.blockTime ?? 0;
     }
