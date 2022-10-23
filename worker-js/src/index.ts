@@ -82,6 +82,7 @@ async function fetch_and_map_task(
     written_to_db: 0,
   };
 
+  try {
   const txParser = new SolanaParser([
     {
       idl: getGmIDL(program_pubKey) as unknown as Idl,
@@ -187,10 +188,15 @@ async function fetch_and_map_task(
     last_timestamp = transaction.blockTime ?? 0;
   }
 
+
   console.log(
     `${process.env.MODE}: total=${stats.total}, exchanges=${stats.exchanges}, counter=${stats.counter}, created=${stats.creates}, canceled=${stats.cancels}, direct=${stats.direct} unmapped=${stats.unmapped} written_to_db=${stats.written_to_db}`
   );
   console.log(`${last_signature} - ${new Date(last_timestamp * 1000)}`);
 
   return last_signature;
+  }
+  catch (err) {
+    return before ? before : until ?? "";
+  }
 }
