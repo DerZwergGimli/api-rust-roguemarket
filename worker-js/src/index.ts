@@ -199,7 +199,7 @@ async function fetch_and_map_task(
         }
         case "processCancel": {
           //region MAP
-          let d = parsed?.[2] as any;
+          let d = parsed?.[0] as any;
 
           const currency_mint = d.accounts
             .find((account: any) => account.name == "receiveMint")
