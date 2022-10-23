@@ -14,6 +14,7 @@ pub struct MongoDBConnection {
     client: Client,
     db: Database,
     pub collection: Collection<DBTrade>,
+    pub collection_processExchange: Collection<DBTrade>,
 }
 
 impl MongoDBConnection {
@@ -32,8 +33,9 @@ impl MongoDBConnection {
         let model_ts = IndexModel::builder().keys(doc! {"timestamp": 1}).build();
 
         let client = Client::with_options(client_options).expect("Error connecting to Database");
-        let db = client.database("galacticMarket");
+        let db = client.database("trades_GM");
         let collection = db.collection::<DBTrade>("trades");
+        let collection_processExchange = db.collection("processExchange");
 
         collection.create_index(model_sig, None).await;
         collection.create_index(model_sym, None).await;
@@ -45,6 +47,7 @@ impl MongoDBConnection {
             client,
             db,
             collection,
+            collection_processExchange,
         }
     }
 

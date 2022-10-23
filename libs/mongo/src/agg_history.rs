@@ -32,18 +32,8 @@ pub fn get_history_aggregation(
                         ]
                     }
                 },
-                "price": doc! {
-                    "$divide": [
-                    {
-                        "$sum": "$exchange.currency_amount"
-                    }, {
-                        "$sum": "$exchange.token_amount"
-                    }
-                    ]
-                    },
-                "volume": doc! {
-                    "$sum": "$exchange.token_amount"
-                }
+                "price": "$price",
+                "volume": "$size"
             }
         },
         doc! {

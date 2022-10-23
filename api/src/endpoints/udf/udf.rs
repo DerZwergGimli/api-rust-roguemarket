@@ -107,7 +107,9 @@ pub async fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp:
     let history = warp::path!("udf" / "history")
         .and(warp::get())
         .and(warp::path::end())
-        .and(with_mongo_store(mongo_db.collection.clone()))
+        .and(with_mongo_store(
+            mongo_db.collection_processExchange.clone(),
+        ))
         .and(warp::query::<HistoryParams>())
         .and_then(get_history);
 
