@@ -32,16 +32,15 @@ const execute = async () => {
   await localStoreInstance.init();
   await connectToDatabase();
 
+  let last_signature: string | undefined = process.env.LASTSIG ?? undefined;
   switch (process.env.MODE) {
     case "sync": {
-      let last_signature = undefined;
       while (true) {
         last_signature = await fetch_and_map_task(last_signature, undefined);
         await sleeper(parseInt(process.env.SLEEP ?? "10000"));
       }
     }
     default: {
-      let last_signature: string | undefined = undefined;
 
       while (true) {
         last_signature = await fetch_and_map_task(undefined, last_signature);
