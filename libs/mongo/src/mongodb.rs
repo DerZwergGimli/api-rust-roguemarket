@@ -15,6 +15,7 @@ pub struct MongoDBConnection {
     db: Database,
     pub collection: Collection<DBTrade>,
     pub collection_processExchange: Collection<DBTrade>,
+    pub collection_processExchange_tmp: Collection<Document>,
 }
 
 impl MongoDBConnection {
@@ -36,6 +37,7 @@ impl MongoDBConnection {
         let db = client.database("trades_GM");
         let collection = db.collection::<DBTrade>("trades");
         let collection_processExchange = db.collection("processExchange");
+        let collection_processExchange_tmp = db.collection("processExchange"); //TODO: Remove this again
 
         collection.create_index(model_sig, None).await;
         collection.create_index(model_sym, None).await;
@@ -48,6 +50,7 @@ impl MongoDBConnection {
             db,
             collection,
             collection_processExchange,
+            collection_processExchange_tmp,
         }
     }
 
@@ -137,16 +140,16 @@ pub async fn find_udf_trade_next(
 }
 
 pub async fn find_by_signature(
-    collection: Collection<DBTrade>,
+    collection: Collection<Document>,
     signature: String,
-) -> Option<DBTrade> {
+) -> Option<Document> {
     match collection
         .aggregate(get_signature_aggregation(signature), None)
         .await
     {
         Ok(mut cursor) => {
             while let Some(doc) = cursor.try_next().await.unwrap() {
-                return Some(bson::from_document::<DBTrade>(doc).unwrap());
+                return Some(bson::from_document::<Document>(doc).unwrap());
             }
             None
         }

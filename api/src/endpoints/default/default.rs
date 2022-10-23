@@ -58,7 +58,9 @@ pub async fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp:
     let signature = warp::path!("signature")
         .and(warp::get())
         .and(warp::path::end())
-        .and(with_mongo_store(mongo_db.collection.clone()))
+        .and(with_mongo_store(
+            mongo_db.collection_processExchange_tmp.clone(),
+        ))
         .and(warp::query::<DefaultSignatureParams>())
         .and_then(get_signature);
 
@@ -66,8 +68,8 @@ pub async fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp:
 }
 
 fn with_mongo_store(
-    store: Collection<DBTrade>,
-) -> impl Filter<Extract = (Collection<DBTrade>,), Error = Infallible> + Clone {
+    store: Collection<Document>,
+) -> impl Filter<Extract = (Collection<Document>,), Error = Infallible> + Clone {
     warp::any().map(move || store.clone())
 }
 
@@ -116,7 +118,7 @@ responses(
 )
 )]
 pub async fn get_signature(
-    trades: Collection<DBTrade>,
+    trades: Collection<Document>,
     query: DefaultSignatureParams,
 ) -> Result<impl Reply, Infallible> {
     match find_by_signature(trades.clone(), query.address.clone()).await {
