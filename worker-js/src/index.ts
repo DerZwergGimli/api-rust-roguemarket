@@ -43,7 +43,7 @@ const execute = async () => {
     default: {
 
       while (true) {
-        last_signature = await fetch_and_map_task(undefined, last_signature);
+        last_signature = await fetch_and_map_task(undefined, undefined);
         await sleeper(parseInt(process.env.SLEEP ?? "10000"));
       }
       /*solanaConnection.onProgramAccountChange(
