@@ -98,7 +98,7 @@ pub async fn get_info() -> Result<impl Reply, Infallible> {
 
 /// Get last trade
 ///
-/// Responses with a last trade for a given symbol.
+/// Responses with a last trade for a given symbol. [max. 100]
 #[utoipa::path(
 get,
 path = "/last",
