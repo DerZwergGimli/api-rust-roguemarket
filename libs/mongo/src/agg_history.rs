@@ -32,7 +32,17 @@ pub fn get_history_aggregation(
                         ]
                     }
                 },
-                "price": "$price",
+                "price": doc! {
+                "$multiply": [
+                    "$price",
+                    doc! {
+                        "$pow": [
+                            10,
+                            -8
+                        ]
+                    }
+                ]
+                },
                 "volume": "$size"
             }
         },
