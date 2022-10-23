@@ -84,7 +84,7 @@ async function fetch_and_map_task(
   let transactionList = await solanaConnection.getSignaturesForAddress(
     program_pubKey,
     {
-      limit: 10,
+      limit: parseInt(process.env.LIMIT ?? "10"),
       before: before,
       until: until,
     }
