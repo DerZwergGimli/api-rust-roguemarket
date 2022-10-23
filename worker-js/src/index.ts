@@ -21,7 +21,8 @@ interface Stats {
 }
 
 const solanaConnection = new Connection(
-  process.env.RPC ?? "https://api.mainnet-beta.solana.com", {commitment: "finalized"}
+  process.env.RPC ?? "https://api.mainnet-beta.solana.com",
+  { commitment: "finalized" }
 );
 const program_pubKey = new PublicKey(
   "traderDnaR5w6Tcoi3NFm53i48FTDNbGjBSZwWXDRrg"
@@ -41,7 +42,6 @@ const execute = async () => {
       }
     }
     default: {
-
       while (true) {
         last_signature = await fetch_and_map_task(undefined, undefined);
         await sleeper(parseInt(process.env.SLEEP ?? "10000"));
@@ -54,8 +54,6 @@ const execute = async () => {
         },
         "finalized"
       );*/
-
-
     }
   }
 };
@@ -82,120 +80,182 @@ async function fetch_and_map_task(
   };
 
   try {
-  const txParser = new SolanaParser([
-    {
-      idl: getGmIDL(program_pubKey) as unknown as Idl,
-      programId: program_pubKey.toString(),
-    },
-  ]);
+    const txParser = new SolanaParser([
+      {
+        idl: getGmIDL(program_pubKey) as unknown as Idl,
+        programId: program_pubKey.toString(),
+      },
+    ]);
 
-  let transactionList = await solanaConnection.getSignaturesForAddress(
-    program_pubKey,
-    {
-      limit: parseInt(process.env.LIMIT ?? "10"),
-      before: before,
-      until: until,
-    }
-  );
-
-  stats.total = transactionList.length;
-
-  let signatureList = transactionList.map(
-    (transaction) => transaction.signature
-  );
-
-  for (const transaction of transactionList) {
-    const parsed = await txParser.parseTransaction(
-      solanaConnection,
-      transaction.signature,
-      false
+    let transactionList = await solanaConnection.getSignaturesForAddress(
+      program_pubKey,
+      {
+        limit: parseInt(process.env.LIMIT ?? "10"),
+        before: before,
+        until: until,
+      }
     );
 
-    const db_data: IDBObject = {
-      signature: transaction.signature,
-      timestamp: transaction.blockTime,
-      data: JSON.parse(JSON.stringify(parsed)),
-      symbol: "none",
-    };
+    stats.total = transactionList.length;
 
-    switch (parsed?.[0].name ?? "") {
-      case "processExchange": {
-        const currency_mint = parsed?.[0].accounts
-          .find((account) => account.name == "currencyMint")
-          ?.pubkey.toString();
-        const asset_mint = parsed?.[0].accounts
-          .find((account) => account.name == "assetMint")
-          ?.pubkey.toString();
+    let signatureList = transactionList.map(
+      (transaction) => transaction.signature
+    );
 
-        let d = parsed?.[0].args as any;
-        db_data.size = parseInt(d.purchaseQuantity.toString());
-        db_data.price = parseInt(d.expectedPrice.toString());
-        db_data.symbol =
-          localStoreInstance.symbolsStore.find(
-            (symbol) =>
-              symbol.mint === asset_mint && symbol.pair?.mint === currency_mint
-          )?.symbol_pair ?? "not-found";
+    for (const transaction of transactionList) {
+      const parsed = await txParser.parseTransaction(
+        solanaConnection,
+        transaction.signature,
+        false
+      );
 
-        await collections.processExchange?.insertOne(db_data).catch((err) => {
-          if (err.code != 11000) throw err;
-        });
-        stats.exchanges++;
-        break;
-      }
-      case "initializeOpenOrdersCounter": {
-        await collections.counterExchange?.insertOne(db_data).catch((err) => {
-          if (err.code != 11000) throw err;
-        });
-        stats.counter++;
-        break;
-      }
-      case "createAccount": {
-        await collections.createExchange?.insertOne(db_data).catch((err) => {
-          if (err.code != 11000) throw err;
-        });
-        stats.creates++;
-        break;
-      }
-      case "processCancel": {
-        await collections.cancelExchange?.insertOne(db_data).catch((err) => {
-          if (err.code != 11000) throw err;
-        });
-        stats.cancels++;
-        break;
-      }
-      case "createAssociatedTokenAccount": {
-        await collections.cancelExchange?.insertOne(db_data).catch((err) => {
-          if (err.code != 11000) throw err;
-        });
-        stats.direct++;
-        break;
-      }
-      default: {
-        await collections.unmappedExchange
-          ?.insertOne(db_data)
-          .then(() => stats.written_to_db++)
-          .catch((err) => {
+      const db_data: IDBObject = {
+        signature: transaction.signature,
+        timestamp: transaction.blockTime,
+        data: JSON.parse(JSON.stringify(parsed)),
+        symbol: "none",
+      };
+
+      switch (parsed?.[0].name ?? "") {
+        case "processExchange": {
+          //region MAP
+          let d = parsed?.[0] as any;
+
+          const currency_mint = d.accounts
+            .find((account: any) => account.name == "currencyMint")
+            ?.pubkey.toString();
+          const asset_mint = d.accounts
+            .find((account: any) => account.name == "assetMint")
+            ?.pubkey.toString();
+
+          db_data.size = parseInt(d.args.purchaseQuantity.toString());
+          db_data.price = parseInt(d.args.expectedPrice.toString());
+          db_data.symbol =
+            localStoreInstance.symbolsStore.find(
+              (symbol) =>
+                symbol.mint === asset_mint &&
+                symbol.pair?.mint === currency_mint
+            )?.symbol_pair ?? "not-found";
+          //endregion
+          await collections.processExchange?.insertOne(db_data).catch((err) => {
             if (err.code != 11000) throw err;
           });
-        stats.unmapped++;
-        break;
+          stats.exchanges++;
+          break;
+        }
+        case "initializeOpenOrdersCounter": {
+          //region MAP
+          let d = parsed?.[2] as any;
+
+          const currency_mint = d.accounts
+            .find((account: any) => account.name == "currencyMint")
+            ?.pubkey.toString();
+          const asset_mint = d.accounts
+            .find((account: any) => account.name == "assetMint")
+            ?.pubkey.toString();
+
+          db_data.size = parseInt(d.args.originationQty.toString());
+          db_data.price = parseInt(d.args.price.toString());
+          db_data.symbol =
+            localStoreInstance.symbolsStore.find(
+              (symbol) =>
+                symbol.mint === asset_mint &&
+                symbol.pair?.mint === currency_mint
+            )?.symbol_pair ?? "not-found";
+          //endregion
+
+          await collections.counterExchange?.insertOne(db_data).catch((err) => {
+            if (err.code != 11000) throw err;
+          });
+          stats.counter++;
+          break;
+        }
+        case "createAccount": {
+          //region MAP
+          let d = parsed?.[1] as any;
+
+          const currency_mint = d.accounts
+            .find((account: any) => account.name == "currencyMint")
+            ?.pubkey.toString();
+          const asset_mint = d.accounts
+            .find((account: any) => account.name == "assetMint")
+            ?.pubkey.toString();
+
+          db_data.size = parseInt(d.args.originationQty.toString());
+          db_data.price = parseInt(d.args.price.toString());
+          db_data.symbol =
+            localStoreInstance.symbolsStore.find(
+              (symbol) =>
+                symbol.mint === asset_mint &&
+                symbol.pair?.mint === currency_mint
+            )?.symbol_pair ?? "not-found";
+          //endregion
+
+          await collections.createExchange?.insertOne(db_data).catch((err) => {
+            if (err.code != 11000) throw err;
+          });
+          stats.creates++;
+          break;
+        }
+        case "processCancel": {
+          //region MAP
+          let d = parsed?.[0] as any;
+
+          const currency_mint = d.accounts
+            .find((account: any) => account.name == "currencyMint")
+            ?.pubkey.toString();
+          const asset_mint = d.accounts
+            .find((account: any) => account.name == "assetMint")
+            ?.pubkey.toString();
+
+          db_data.symbol =
+            localStoreInstance.symbolsStore.find(
+              (symbol) =>
+                symbol.mint === asset_mint &&
+                symbol.pair?.mint === currency_mint
+            )?.symbol_pair ?? "not-found";
+          //endregion
+
+          await collections.cancelExchange?.insertOne(db_data).catch((err) => {
+            if (err.code != 11000) throw err;
+          });
+          stats.cancels++;
+          break;
+        }
+        case "createAssociatedTokenAccount": {
+          await collections.unmappedExchange
+            ?.insertOne(db_data)
+            .catch((err) => {
+              if (err.code != 11000) throw err;
+            });
+          stats.direct++;
+          break;
+        }
+        default: {
+          await collections.unmappedExchange
+            ?.insertOne(db_data)
+            .then(() => stats.written_to_db++)
+            .catch((err) => {
+              if (err.code != 11000) throw err;
+            });
+          stats.unmapped++;
+          break;
+        }
       }
+      stats.written_to_db++;
+      transaction.blockTime;
+      last_signature = transaction.signature;
+      last_timestamp = transaction.blockTime ?? 0;
     }
-    stats.written_to_db++;
-    transaction.blockTime;
-    last_signature = transaction.signature;
-    last_timestamp = transaction.blockTime ?? 0;
-  }
 
+    console.log(
+      `${process.env.MODE}: total=${stats.total}, exchanges=${stats.exchanges}, counter=${stats.counter}, created=${stats.creates}, canceled=${stats.cancels}, direct=${stats.direct} unmapped=${stats.unmapped} written_to_db=${stats.written_to_db}`
+    );
+    console.log(`${last_signature} - ${new Date(last_timestamp * 1000)}`);
 
-  console.log(
-    `${process.env.MODE}: total=${stats.total}, exchanges=${stats.exchanges}, counter=${stats.counter}, created=${stats.creates}, canceled=${stats.cancels}, direct=${stats.direct} unmapped=${stats.unmapped} written_to_db=${stats.written_to_db}`
-  );
-  console.log(`${last_signature} - ${new Date(last_timestamp * 1000)}`);
-
-  return last_signature;
-  }
-  catch (err) {
+    return last_signature;
+  } catch (err) {
+    console.error(err);
     return before ? before : until ?? "";
   }
 }
