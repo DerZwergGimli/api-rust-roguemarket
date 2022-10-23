@@ -21,7 +21,8 @@ interface Stats {
 }
 
 const solanaConnection = new Connection(
-  process.env.RPC ?? "https://api.mainnet-beta.solana.com"
+  process.env.RPC ?? "https://api.mainnet-beta.solana.com",
+    {wsEndpoint: process.env.WSS ?? "wss://api.mainnet-beta.solana.com"}
 );
 const program_pubKey = new PublicKey(
   "traderDnaR5w6Tcoi3NFm53i48FTDNbGjBSZwWXDRrg"
