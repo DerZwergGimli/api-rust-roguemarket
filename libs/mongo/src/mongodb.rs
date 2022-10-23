@@ -2,6 +2,8 @@ use crate::agg_history::get_history_aggregation;
 use crate::agg_history_countback::get_history_aggregation_countback;
 use crate::agg_next::get_history_aggregation_next;
 use crate::agg_signature::get_signature_aggregation;
+use crate::agg_symbol::get_by_symbol_aggreation;
+
 use futures::stream::{StreamExt, TryStreamExt};
 use log::{info, warn};
 use mongodb::bson::{doc, Bson, Document};
@@ -152,6 +154,26 @@ pub async fn find_by_signature(
                 return Some(bson::from_document::<Document>(doc).unwrap());
             }
             None
+        }
+        Err(_) => None,
+    }
+}
+
+pub async fn find_by_symbol(
+    collection: Collection<Document>,
+    symbol: String,
+    limit: Option<i64>,
+) -> Option<Vec<Document>> {
+    let mut data: Vec<Document> = Vec::new();
+    match collection
+        .aggregate(get_by_symbol_aggreation(symbol, limit), None)
+        .await
+    {
+        Ok(mut cursor) => {
+            while let Some(doc) = cursor.try_next().await.unwrap() {
+                data.push(bson::from_document(doc).unwrap());
+            }
+            return Some(data);
         }
         Err(_) => None,
     }
