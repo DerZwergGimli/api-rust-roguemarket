@@ -148,10 +148,10 @@ async function fetch_and_map_task(
           let d = parsed?.[2] as any;
 
           const currency_mint = d.accounts
-            .find((account: any) => account.name == "currencyMint")
+            .find((account: any) => account.name == "receiveMint")
             ?.pubkey.toString();
           const asset_mint = d.accounts
-            .find((account: any) => account.name == "assetMint")
+            .find((account: any) => account.name == "receiveMint")
             ?.pubkey.toString();
 
           db_data.size = parseInt(d.args.originationQty.toString());
@@ -175,10 +175,10 @@ async function fetch_and_map_task(
           let d = parsed?.[1] as any;
 
           const currency_mint = d.accounts
-            .find((account: any) => account.name == "currencyMint")
+            .find((account: any) => account.name == "receiveMint")
             ?.pubkey.toString();
           const asset_mint = d.accounts
-            .find((account: any) => account.name == "assetMint")
+            .find((account: any) => account.name == "depositMint")
             ?.pubkey.toString();
 
           db_data.size = parseInt(d.args.originationQty.toString());
@@ -199,13 +199,13 @@ async function fetch_and_map_task(
         }
         case "processCancel": {
           //region MAP
-          let d = parsed?.[0] as any;
+          let d = parsed?.[2] as any;
 
           const currency_mint = d.accounts
-            .find((account: any) => account.name == "currencyMint")
+            .find((account: any) => account.name == "receiveMint")
             ?.pubkey.toString();
           const asset_mint = d.accounts
-            .find((account: any) => account.name == "assetMint")
+            .find((account: any) => account.name == "depositMint")
             ?.pubkey.toString();
 
           db_data.symbol =
