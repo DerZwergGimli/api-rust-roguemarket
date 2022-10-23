@@ -42,13 +42,21 @@ const execute = async () => {
     }
     default: {
       let last_signature: string | undefined = undefined;
-      await solanaConnection.onProgramAccountChange(
+
+      while (true) {
+        last_signature = await fetch_and_map_task(undefined, last_signature);
+        await sleeper(parseInt(process.env.SLEEP ?? "10000"));
+      }
+      /*solanaConnection.onProgramAccountChange(
         program_pubKey,
         async (account, context) => {
+          console.log(account)
           last_signature = await fetch_and_map_task(undefined, last_signature);
         },
         "finalized"
-      );
+      );*/
+
+
     }
   }
 };
