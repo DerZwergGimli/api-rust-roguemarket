@@ -4,7 +4,7 @@ pub fn get_history_aggregation_next(symbol: String, next: u64) -> Vec<Document> 
     [
         doc! {
             "$match":  {
-                "symbol": symbol
+                "pair": symbol
             }
         },
         doc! {

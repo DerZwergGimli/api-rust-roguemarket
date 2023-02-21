@@ -16,8 +16,8 @@ pub struct MongoDBConnection {
     client: Client,
     db: Database,
     pub collection: Collection<DBTrade>,
-    pub collection_processExchange: Collection<DBTrade>,
-    pub collection_processExchange_tmp: Collection<Document>,
+    // pub collection_processExchange: Collection<DBTrade>,
+    pub collection_as_doc: Collection<Document>,
 }
 
 impl MongoDBConnection {
@@ -27,23 +27,22 @@ impl MongoDBConnection {
             .expect("Error while setting Database options");
         client_options.app_name = Some("DBRustConnection".to_string());
 
-        let options = IndexOptions::builder().unique(true).build();
-        let model_sig = IndexModel::builder()
-            .keys(doc! {"signature": 1})
-            .options(options)
-            .build();
-        let model_sym = IndexModel::builder().keys(doc! {"symbol": 1}).build();
-        let model_ts = IndexModel::builder().keys(doc! {"timestamp": 1}).build();
+        // let options = IndexOptions::builder().unique(true).build();
+        // let model_sig = IndexModel::builder()
+        //     .keys(doc! {"signature": 1})
+        //     .options(options)
+        //     .build();
+        // let model_sym = IndexModel::builder().keys(doc! {"symbol": 1}).build();
+        // let model_ts = IndexModel::builder().keys(doc! {"timestamp": 1}).build();
 
         let client = Client::with_options(client_options).expect("Error connecting to Database");
-        let db = client.database("trades_GM");
-        let collection = db.collection::<DBTrade>("trades");
-        let collection_processExchange = db.collection("processExchange");
-        let collection_processExchange_tmp = db.collection("processExchange"); //TODO: Remove this again
+        let db = client.database("test");
+        let collection = db.collection::<DBTrade>("Exchange");
+        let collection_as_doc = db.collection::<Document>("Exchange");
 
-        collection.create_index(model_sig, None).await;
-        collection.create_index(model_sym, None).await;
-        collection.create_index(model_ts, None).await;
+        // collection.create_index(model_sig, None).await;
+        // collection.create_index(model_sym, None).await;
+        // collection.create_index(model_ts, None).await;
 
         info!("DB Connected!");
 
@@ -51,8 +50,9 @@ impl MongoDBConnection {
             client,
             db,
             collection,
-            collection_processExchange,
-            collection_processExchange_tmp,
+            collection_as_doc
+            // collection_processExchange,
+            // collection_processExchange_tmp,
         }
     }
 

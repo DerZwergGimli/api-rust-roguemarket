@@ -8,12 +8,18 @@ pub fn get_by_symbol_aggreation(symbol: String, limit: Option<i64>) -> Vec<Docum
     [
         doc! {
             "$match": doc! {
-                "symbol": symbol
+                "pair": symbol
             }
         },
         doc! {
             "$limit": max
         },
+        doc! {
+        "$unset": [
+            "__v",
+            "_id"
+            ]
+        }
     ]
     .to_vec()
 }

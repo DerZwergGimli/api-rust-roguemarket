@@ -56,7 +56,7 @@ pub async fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp:
         .and(warp::get())
         .and(warp::path::end())
         .and(with_mongo_store(
-            mongo_db.collection_processExchange_tmp.clone(),
+            mongo_db.collection_as_doc.clone(),
         ))
         .and(warp::query::<DefaultLastParams>())
         .and_then(get_last);
@@ -65,7 +65,7 @@ pub async fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp:
         .and(warp::get())
         .and(warp::path::end())
         .and(with_mongo_store(
-            mongo_db.collection_processExchange_tmp.clone(),
+            mongo_db.collection_as_doc.clone(),
         ))
         .and(warp::query::<DefaultSignatureParams>())
         .and_then(get_signature);

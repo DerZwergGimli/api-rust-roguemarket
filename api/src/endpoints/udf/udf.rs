@@ -108,7 +108,7 @@ pub async fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp:
         .and(warp::get())
         .and(warp::path::end())
         .and(with_mongo_store(
-            mongo_db.collection_processExchange.clone(),
+            mongo_db.collection.clone(),
         ))
         .and(warp::query::<HistoryParams>())
         .and_then(get_history);

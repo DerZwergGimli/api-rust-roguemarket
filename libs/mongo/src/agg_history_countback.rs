@@ -9,7 +9,7 @@ pub fn get_history_aggregation_countback(
     [
         doc! {
             "$match": doc! {
-                "symbol": symbol
+                "pair": symbol
             }
         },
         doc! {

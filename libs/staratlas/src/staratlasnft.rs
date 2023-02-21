@@ -4,7 +4,7 @@ use strum_macros::Display;
 use strum_macros::EnumString;
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct StarAtlasNft {
+pub struct StarAtlasNft{
     #[serde(rename = "_id")]
     pub id: String,
     pub deactivated: bool,
@@ -26,12 +26,14 @@ pub struct StarAtlasNft {
     pub primary_sales: Vec<PrimarySale>,
     #[serde(rename = "updatedAt")]
     pub updated_at: String,
-    pub collection: Collection,
+    pub collection: Option<Collection>,
     pub slots: Option<Slots>,
     #[serde(rename = "id")]
     pub star_atlas_nft_id: String,
     #[serde(rename = "createdAt")]
     pub created_at: Option<String>,
+    #[serde(rename = "__v")]
+    pub v: Option<i64>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -46,10 +48,10 @@ pub struct Airdrop {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Attributes {
     #[serde(rename = "itemType")]
-    pub item_type: Category,
+    pub item_type: ItemType,
     pub tier: Option<i64>,
     pub class: String,
-    pub category: Category,
+    pub category: Option<String>,
     pub score: Option<i64>,
     pub rarity: Rarity,
     pub musician: Option<String>,
@@ -62,6 +64,10 @@ pub struct Attributes {
     pub unit_width: Option<f64>,
     #[serde(rename = "unitHeight")]
     pub unit_height: Option<f64>,
+    #[serde(rename = "seriesName")]
+    pub series_name: Option<String>,
+    pub episode: Option<i64>,
+    pub edition: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -104,7 +110,7 @@ pub struct PrimarySale {
     #[serde(rename = "_id")]
     pub id: Option<String>,
     pub supply: Option<i64>,
-    pub price: Option<i64>,
+    pub price: Option<f64>,
     #[serde(rename = "isMinted")]
     pub is_minted: Option<bool>,
     #[serde(rename = "isListed")]
@@ -142,11 +148,14 @@ pub struct Slot {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct TradeSettings {
     #[serde(rename = "expireTime")]
-    pub expire_time: Option<i64>,
+    pub expire_time: Option<ETime>,
     #[serde(rename = "saleTime")]
-    pub sale_time: Option<i64>,
+    pub sale_time: Option<ETime>,
     pub vwap: f64,
     pub msrp: Option<Msrp>,
+    #[serde(rename = "saleType")]
+    pub sale_type: Option<String>,
+    pub limited: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -156,24 +165,25 @@ pub struct Msrp {
     pub currency_symbol: QuotePair,
 }
 
-#[derive(Debug, Display, Serialize, Deserialize, PartialEq, Clone, Copy)]
-pub enum Category {
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ETime {
+    Integer(i64),
+    String(String),
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub enum ItemType {
     #[serde(rename = "access")]
     Access,
     #[serde(rename = "collectible")]
     Collectible,
-    #[serde(rename = "cosmetic")]
-    Cosmetic,
-    #[serde(rename = "crew")]
-    Crew,
-    #[serde(rename = "equipment")]
-    Equipment,
-    #[serde(rename = "rebirth")]
-    Rebirth,
     #[serde(rename = "resource")]
     Resource,
     #[serde(rename = "ship")]
     Ship,
+    #[serde(rename = "story")]
+    Story,
     #[serde(rename = "structure")]
     Structure,
 }
@@ -204,12 +214,16 @@ pub enum Family {
 pub enum QuotePair {
     #[serde(rename = "ATLAS")]
     Atlas,
+    #[serde(rename = "SOL")]
+    Sol,
     #[serde(rename = "USDC")]
     Usdc,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub enum SerumProgramId {
+    #[serde(rename = "srmv4uTCPF81hWDaPyEN2mLZ8XbvzuEM6LsAxR8NpjU")]
+    Srmv4UTcpf81HWDaPyEn2MLz8XbvzuEm6LsAxR8NpjU,
     #[serde(rename = "9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")]
     The9XQeWvG816BUx9EPjHmaT23YvVm2ZWbrrpZb9PusVFin,
 }
@@ -238,6 +252,8 @@ pub enum Size {
     SizeXxSmall,
     #[serde(rename = "small")]
     Small,
+    #[serde(rename = "titan")]
+    Titan,
     #[serde(rename = "x-small")]
     XSmall,
     #[serde(rename = "xx-small")]
