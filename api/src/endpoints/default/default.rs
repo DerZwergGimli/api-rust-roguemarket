@@ -26,19 +26,7 @@ use warp::sse::reply;
 use warp::{hyper::StatusCode, Filter, Reply};
 
 //region PARAMS
-#[derive(Debug, Deserialize, IntoParams)]
-#[into_params(parameter_in = Query)]
-pub struct DefaultLastParams {
-    #[param(style = Form, example = "FOODATLAS")]
-    symbol: String,
-    limit: Option<i64>,
-}
 
-#[derive(Debug, Deserialize, IntoParams)]
-#[into_params(parameter_in = Query)]
-pub struct DefaultSignatureParams {
-    address: String,
-}
 //endregion
 
 //region HANDLERS
@@ -52,33 +40,10 @@ pub async fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp:
         .and(warp::path::end())
         .and_then(get_info);
 
-    let info = warp::path!("last")
-        .and(warp::get())
-        .and(warp::path::end())
-        .and(with_mongo_store(
-            mongo_db.collection_as_doc.clone(),
-        ))
-        .and(warp::query::<DefaultLastParams>())
-        .and_then(get_last);
 
-    let signature = warp::path!("signature")
-        .and(warp::get())
-        .and(warp::path::end())
-        .and(with_mongo_store(
-            mongo_db.collection_as_doc.clone(),
-        ))
-        .and(warp::query::<DefaultSignatureParams>())
-        .and_then(get_signature);
 
-    home.or(info).or(signature)
+    home
 }
-
-fn with_mongo_store(
-    store: Collection<Document>,
-) -> impl Filter<Extract = (Collection<Document>,), Error = Infallible> + Clone {
-    warp::any().map(move || store.clone())
-}
-
 //endregion
 
 /// Info
@@ -96,56 +61,3 @@ pub async fn get_info() -> Result<impl Reply, Infallible> {
     Ok(warp::reply::with_status(message, StatusCode::OK))
 }
 
-/// Get last trade
-///
-/// Responses with a last trade for a given symbol. [max. 100]
-#[utoipa::path(
-get,
-path = "/last",
-params(DefaultLastParams),
-responses(
-(status = 200, description = "Response: Time successful", body = String)
-)
-)]
-pub async fn get_last(
-    trades: Collection<Document>,
-    query: DefaultLastParams,
-) -> Result<impl Reply, Infallible> {
-    match find_by_symbol(trades.clone(), query.symbol.clone(), query.limit.clone()).await {
-        Some(data) => {
-            return Ok(warp::reply::json(&data));
-        }
-        _ => {
-            /// A placeholder for a future error handling.
-            let error = "Error".to_string();
-            return Ok(warp::reply::json(&error));
-        }
-    };
-}
-
-/// Get trade by signature
-///
-/// Responses with a trade for a given signature.
-#[utoipa::path(
-get,
-path = "/signature",
-params(DefaultSignatureParams),
-responses(
-(status = 200, description = "Response: Time successful", body = String)
-)
-)]
-pub async fn get_signature(
-    trades: Collection<Document>,
-    query: DefaultSignatureParams,
-) -> Result<impl Reply, Infallible> {
-    match find_by_signature(trades.clone(), query.address.clone()).await {
-        Some(data) => {
-            return Ok(warp::reply::json(&data));
-        }
-        _ => {
-            /// A placeholder for a future error handling.
-            let error = "Error".to_string();
-            return Ok(warp::reply::json(&error));
-        }
-    };
-}

@@ -1,5 +1,6 @@
 mod endpoints;
 use crate::endpoints::default::default;
+use crate::endpoints::trades::trades;
 use crate::endpoints::udf::udf;
 use endpoints::udf::udf_config_t;
 use endpoints::udf::udf_history_t;
@@ -33,8 +34,8 @@ async fn main() {
     #[openapi(
     paths(
     default::get_info,
-    default::get_last,
-    default::get_signature,
+    trades::get_last,
+    trades::get_signature,
     udf::get_home,
     udf::get_time,
     udf::get_config,

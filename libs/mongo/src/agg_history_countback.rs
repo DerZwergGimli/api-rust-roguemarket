@@ -29,17 +29,7 @@ pub fn get_history_aggregation_countback(
                         ]
                     }
                 },
-                "price": doc! {
-                "$multiply": [
-                    "$price",
-                    doc! {
-                        "$pow": [
-                            10,
-                            -8
-                        ]
-                    }
-                ]
-                },
+                "price": "$price",
                 "volume": "$size"
             }
         },
