@@ -62,7 +62,7 @@ pub struct HistoryParams {
 //endregion
 
 //region HANDLERS
-pub async fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone
+pub async fn handlers() -> impl Filter<Extract=impl warp::Reply, Error=warp::Rejection> + Clone
 {
     let store_sa = BuilderSymbolStore::new().init().await;
     let mongo_db =
@@ -123,13 +123,13 @@ pub async fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp:
 
 fn with_sa_store(
     store: SymbolStore,
-) -> impl Filter<Extract = (SymbolStore,), Error = Infallible> + Clone {
+) -> impl Filter<Extract=(SymbolStore, ), Error=Infallible> + Clone {
     warp::any().map(move || store.clone())
 }
 
 fn with_mongo_store(
     store: Collection<DBTrade>,
-) -> impl Filter<Extract = (Collection<DBTrade>,), Error = Infallible> + Clone {
+) -> impl Filter<Extract=(Collection<DBTrade>, ), Error=Infallible> + Clone {
     warp::any().map(move || store.clone())
 }
 //endregion
@@ -295,7 +295,7 @@ path = "/udf/symbols",
 params(SymbolsParams),
 responses(
 (status = 200, description = "Response: SymbolInfo successful", body = [UdfSymbolInfo]),
-(status = 404, description = "Todo not found to delete")
+(status = 404, description = "Nothing found")
 )
 )]
 pub async fn get_symbols(
@@ -356,8 +356,8 @@ pub async fn get_search(store: SymbolStore, query: SearchParams) -> Result<impl 
         .filter(|asset| {
             asset.symbol.contains(query.query.clone().as_str())
                 && asset
-                    .asset_type
-                    .contains(query.shipType.clone().unwrap_or("".to_string()).as_str())
+                .asset_type
+                .contains(query.shipType.clone().unwrap_or("".to_string()).as_str())
         })
         .collect::<Vec<_>>();
 
@@ -423,7 +423,7 @@ pub async fn get_history(
             .unwrap(),
         query.countback,
     )
-    .await
+        .await
     {
         Some(data) => {
             if (data.len() > 0) {

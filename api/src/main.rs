@@ -2,6 +2,7 @@ mod endpoints;
 
 use crate::endpoints::default::default;
 use crate::endpoints::trades::trades;
+use crate::endpoints::trades::trades_t;
 use crate::endpoints::udf::udf;
 use crate::endpoints::stats::stats;
 use endpoints::udf::udf_config_t;
@@ -52,6 +53,7 @@ async fn main() {
     ),
     components(
     schemas(
+    trades_t::TradesResponse,
     udf_config_t::UdfConfig,
     udf_config_t::Exchange,
     udf_config_t::SymbolsType,
