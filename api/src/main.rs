@@ -111,10 +111,10 @@ async fn main() {
     warp::serve(
         root.or(api_doc)
             .or(swagger_ui)
-            .or(default::handlers().await)
-            .or(udf::handlers().await.with(cors))
-            .or(stats::handlers().await)
-            .or(trades::handlers().await),
+            .or(default::handlers().await.with(cors.clone()))
+            .or(udf::handlers().await.with(cors.clone()))
+            .or(stats::handlers().await.with(cors.clone()))
+            .or(trades::handlers().await.with(cors)),
     )
         .run((Ipv4Addr::UNSPECIFIED, port))
         .await
