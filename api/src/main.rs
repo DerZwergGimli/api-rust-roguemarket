@@ -65,7 +65,8 @@ async fn main() {
     tags(
     (name = "default", description = "Default Data endpoints"),
     (name = "udf", description = "UDF compatible endpoints"),
-    (name = "stats", description = "Stats endpoints")
+    (name = "stats", description = "Stats endpoints"),
+    (name = "trades", description = "Trade endpoints")
     )
     )]
     struct ApiDoc;
