@@ -3,6 +3,9 @@ use crate::agg_history_countback::get_history_aggregation_countback;
 use crate::agg_next::get_history_aggregation_next;
 use crate::agg_signature::get_signature_aggregation;
 use crate::agg_symbol::get_by_symbol_aggreation;
+use crate::agg_get_last_or_first::get_last_or_first_aggregation;
+use crate::agg_address::get_address_aggregation;
+use crate::agg_mint::get_mint_aggregation;
 
 use futures::stream::{StreamExt, TryStreamExt};
 use log::{info, warn};
@@ -50,7 +53,7 @@ impl MongoDBConnection {
             client,
             db,
             collection,
-            collection_as_doc
+            collection_as_doc,
             // collection_processExchange,
             // collection_processExchange_tmp,
         }
@@ -174,6 +177,69 @@ pub async fn find_by_symbol(
                 data.push(bson::from_document(doc).unwrap());
             }
             return Some(data);
+        }
+        Err(_) => None,
+    }
+}
+
+pub async fn find_by_address(
+    collection: Collection<Document>,
+    address: String,
+    limit: Option<i64>,
+) -> Option<Vec<Document>> {
+    let mut data: Vec<Document> = Vec::new();
+    match collection
+        .aggregate(get_address_aggregation(address, limit), None)
+        .await
+    {
+        Ok(mut cursor) => {
+            while let Some(doc) = cursor.try_next().await.unwrap() {
+                data.push(bson::from_document(doc).unwrap());
+            }
+            return Some(data);
+        }
+        Err(_) => None,
+    }
+}
+
+pub async fn find_by_mint(
+    collection: Collection<Document>,
+    mint: String,
+    limit: Option<i64>,
+) -> Option<Vec<Document>> {
+    let mut data: Vec<Document> = Vec::new();
+    match collection
+        .aggregate(get_mint_aggregation(mint, limit), None)
+        .await
+    {
+        Ok(mut cursor) => {
+            while let Some(doc) = cursor.try_next().await.unwrap() {
+                data.push(bson::from_document(doc).unwrap());
+            }
+            return Some(data);
+        }
+        Err(_) => None,
+    }
+}
+
+pub async fn find_last_or_frist(
+    collection: Collection<DBTrade>,
+    is_last: bool,
+) -> Option<Document> {
+    let mut direction = -1;
+    if is_last {
+        direction = 1;
+    };
+
+    match collection
+        .aggregate(get_last_or_first_aggregation(direction), None)
+        .await
+    {
+        Ok(mut cursor) => {
+            while let Some(doc) = cursor.try_next().await.unwrap() {
+                return Some(bson::from_document::<Document>(doc).unwrap());
+            }
+            None
         }
         Err(_) => None,
     }

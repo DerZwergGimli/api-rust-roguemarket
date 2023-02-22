@@ -1,7 +1,9 @@
 mod endpoints;
+
 use crate::endpoints::default::default;
 use crate::endpoints::trades::trades;
 use crate::endpoints::udf::udf;
+use crate::endpoints::stats::stats;
 use endpoints::udf::udf_config_t;
 use endpoints::udf::udf_history_t;
 use endpoints::udf::udf_search_t;
@@ -36,6 +38,8 @@ async fn main() {
     default::get_info,
     trades::get_last,
     trades::get_signature,
+    trades::get_address,
+    trades::get_mint,
     udf::get_home,
     udf::get_time,
     udf::get_config,
@@ -43,6 +47,8 @@ async fn main() {
     udf::get_symbols,
     udf::get_search,
     udf::get_history,
+    stats::get_last_timestamp,
+    stats::get_first_timestamp,
     ),
     components(
     schemas(
@@ -53,10 +59,11 @@ async fn main() {
     udf_search_t::UdfSearchSymbol,
     udf_history_t::UdfHistory)
     ),
-    modifiers(&SecurityAddon),
+    modifiers(& SecurityAddon),
     tags(
     (name = "default", description = "Default Data endpoints"),
-    (name = "udf", description = "UDF compatible endpoints")
+    (name = "udf", description = "UDF compatible endpoints"),
+    (name = "stats", description = "Stats endpoints")
     )
     )]
     struct ApiDoc;
@@ -102,10 +109,12 @@ async fn main() {
         root.or(api_doc)
             .or(swagger_ui)
             .or(default::handlers().await)
-            .or(udf::handlers().await.with(cors)),
+            .or(udf::handlers().await.with(cors))
+            .or(stats::handlers().await)
+            .or(trades::handlers().await),
     )
-    .run((Ipv4Addr::UNSPECIFIED, port))
-    .await
+        .run((Ipv4Addr::UNSPECIFIED, port))
+        .await
 }
 
 async fn serve_swagger(
