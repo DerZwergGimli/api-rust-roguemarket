@@ -7,6 +7,8 @@ RUN useradd -m -s /bin/bash linuxbrew && \
 
 USER linuxbrew
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+brew install streamingfast/tap/substreams
+
 
 USER root
 ENV PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"
