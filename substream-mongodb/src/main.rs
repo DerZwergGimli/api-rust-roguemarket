@@ -115,7 +115,7 @@ async fn main() -> Result<(), Error> {
             },
         }
     }
-    sleep(Duration::from_secs(env::args().nth(7).unwrap_or("0".to_string()).parse::<u64>().unwrap()));
+    sleep(Duration::from_millis(env::args().nth(7).unwrap_or("0".to_string()).parse::<u64>().unwrap()));
     Ok(())
 }
 
