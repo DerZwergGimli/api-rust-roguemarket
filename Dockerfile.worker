@@ -3,14 +3,20 @@ WORKDIR build
 RUN apt update && apt install libssl-dev pkg-config cmake curl bash build-essential curl file git ruby-full locales --no-install-recommends -y
 
 # Install brew and substreams
-RUN useradd -m -s /bin/bash linuxbrew && \
-    echo 'linuxbrew ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers
-
+RUN apt-get update && \
+    apt-get install -y -q --allow-unauthenticated \
+    git \
+    sudo
+RUN useradd -m -s /bin/zsh linuxbrew && \
+    usermod -aG sudo linuxbrew &&  \
+    mkdir -p /home/linuxbrew/.linuxbrew && \
+    chown -R linuxbrew: /home/linuxbrew/.linuxbrew
 USER linuxbrew
-RUN /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+RUN /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
 USER root
-ENV PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"
+RUN chown -R $CONTAINER_USER: /home/linuxbrew/.linuxbrew
+
 RUN brew install bufbuild/buf/buf
 RUN brew --version
 RUN brew install streamingfast/tap/substreams
