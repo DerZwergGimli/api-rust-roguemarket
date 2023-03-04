@@ -2,37 +2,15 @@ FROM rust:latest AS builder
 WORKDIR build
 RUN apt update && apt install libssl-dev pkg-config cmake curl bash build-essential curl file git ruby-full locales --no-install-recommends -y
 
-# Install brew and substreams
-RUN apt-get update && \
-    apt-get install -y -q --allow-unauthenticated \
-    git \
-    sudo
-RUN useradd -m -s /bin/zsh linuxbrew && \
-    usermod -aG sudo linuxbrew &&  \
-    mkdir -p /home/linuxbrew/.linuxbrew && \
-    chown -R linuxbrew: /home/linuxbrew/.linuxbrew
-USER linuxbrew
-RUN /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-
-USER root
-RUN chown -R $CONTAINER_USER: /home/linuxbrew/.linuxbrew
-
-RUN (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/linuxbrew/.zprofile
-RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-RUN brew --version
-RUN brew install bufbuild/buf/buf
-RUN brew install streamingfast/tap/substreams
-
+## Copy files for build
 COPY . .
 
-RUN cd ./substream-sa && make package
 RUN cd ./substream-mongodb && cargo build --release
 
 
 FROM debian:bullseye
 COPY --from=builder build/substream-mongodb/target/release/substream-mongodb ./
-COPY --from=builder build/substream-sa/substreams.spkg ./
+COPY --from=builder build/substream-mongodb/substreams.spkg ./
 RUN apt update && apt install -y libssl-dev openssl ca-certificates
 RUN openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem -subj "/C=GE/ST=London/L=London/O=Global Security/OU=IT Department/CN=example.com"
 ENTRYPOINT [ "./substream-mongodb" ]
