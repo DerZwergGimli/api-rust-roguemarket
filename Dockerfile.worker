@@ -6,7 +6,7 @@ RUN useradd -m -s /bin/bash linuxbrew && \
     echo 'linuxbrew ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers
 
 USER linuxbrew
-RUN sh -c "$(curl -fsSL raw.githubusercontent.com/Homebrew/install/master/install.sh))"
+RUN sh -c "$(curl -fsSL raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 brew install streamingfast/tap/substreams
 
 
