@@ -7,7 +7,7 @@ RUN useradd -m -s /bin/bash linuxbrew && \
 
 USER linuxbrew
 RUN /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-RUN brew install streamingfast/tap/substreams
+RUN /bin/bash brew install streamingfast/tap/substreams
 
 
 USER root
