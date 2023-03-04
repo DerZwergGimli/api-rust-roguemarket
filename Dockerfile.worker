@@ -17,6 +17,9 @@ RUN /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/instal
 USER root
 RUN chown -R $CONTAINER_USER: /home/linuxbrew/.linuxbrew
 
+RUN (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/linuxbrew/.zprofile
+RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
 RUN brew --version
 RUN brew install bufbuild/buf/buf
 RUN brew install streamingfast/tap/substreams
