@@ -19,8 +19,8 @@ struct SubstreamsCursor {
     cursor_value: String,
 }
 
-pub async fn database_connect() -> Result<Client, Error> {
-    let mut client_options = ClientOptions::parse("mongodb://root:root@localhost:27017").await?;
+pub async fn database_connect(url: String) -> Result<Client, Error> {
+    let mut client_options = ClientOptions::parse(url).await?;
 
     client_options.app_name = Some("rust-substream-writer".to_string());
     match Client::with_options(client_options) {

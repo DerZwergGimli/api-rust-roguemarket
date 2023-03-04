@@ -32,14 +32,15 @@ use crate::trade_t::SATrade;
 #[tokio::main]
 async fn main() -> Result<(), Error> {
     env_logger::init();
-    let endpoint_url = env::args().nth(1).expect("please provide a <endpoint_url>");
-    let package_file = env::args().nth(2).expect("please provide a <package_file>");
-    let module_name = env::args().nth(3).expect("please provide a <module_name>");
-    let database_name = env::args().nth(4).expect("please provide a <database>");
-    let start_block = env::args().nth(5).expect("please provide a <start_block>").parse::<i64>().unwrap_or(179432144);
-    let stop_block = env::args().nth(6).expect("please provide a <stop_block>").parse::<u64>().unwrap_or(179432145);
+    let mongo_url = env::args().nth(1).expect("please provide a <mongo_url>");
+    let endpoint_url = env::args().nth(2).expect("please provide a <endpoint_url>");
+    let package_file = env::args().nth(3).expect("please provide a <package_file>");
+    let module_name = env::args().nth(4).expect("please provide a <module_name>");
+    let database_name = env::args().nth(5).expect("please provide a <database>");
+    let start_block = env::args().nth(6).expect("please provide a <start_block>").parse::<i64>().unwrap_or(179432144);
+    let stop_block = env::args().nth(7).expect("please provide a <stop_block>").parse::<u64>().unwrap_or(179432145);
 
-    let database = database_connect().await?.database(database_name.as_str());
+    let database = database_connect(mongo_url).await?.database(database_name.as_str());
 
     let symbol_store = BuilderSymbolStore::new().init().await;
 
