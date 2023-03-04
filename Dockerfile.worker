@@ -12,7 +12,7 @@ USER root
 ENV PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"
 
 
-RUN /bin/bash brew install streamingfast/tap/substreams
+RUN brew install streamingfast/tap/substreams
 COPY . .
 
 RUN cd ./substream-sa && make package
