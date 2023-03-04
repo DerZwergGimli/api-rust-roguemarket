@@ -1,4 +1,4 @@
-name: deploy-to-dockerhub[API]
+name: deploy-to-dockerhub[WORKER]
 
 on:
   push:
