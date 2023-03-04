@@ -3,7 +3,7 @@ WORKDIR build
 RUN apt update && apt install -y libssl-dev pkg-config
 COPY . .
 
-RUN cd worker && cargo build --release
+RUN cd substream-mongodb && cargo build --release
 
 
 FROM debian:bullseye
