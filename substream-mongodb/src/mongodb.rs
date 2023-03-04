@@ -8,6 +8,8 @@ use mongodb::results::{InsertOneResult, UpdateResult};
 use tokio::macros;
 use crate::pb::database::{DatabaseChanges, TableChange};
 use serde::{Deserialize, Serialize};
+use progress_bar::*;
+
 
 #[derive(Debug, Serialize, Deserialize)]
 struct SubstreamsCursor {
@@ -65,18 +67,38 @@ pub async fn database_create(db: Database, element: TableChange) -> Result<(), E
 }
 
 pub async fn database_cursor_create(db: Database, cursor_name: String, cursor_value: Option<String>) -> Result<(), Error> {
+    let cursor_db = match cursor_value {
+        Some(cursor_str) => {
+            SubstreamsCursor {
+                cursor_name,
+                cursor_value: cursor_str,
+            }
+        }
+        _ => {
+            SubstreamsCursor {
+                cursor_name,
+                cursor_value: "".to_string(),
+            }
+        }
+    };
+
+    let collection = db.collection::<SubstreamsCursor>("_cursor");
+    match collection.insert_one(cursor_db, None).await? {
+        InsertOneResult { .. } => {
+            Ok(())
+        }
+        _ => {
+            Err(anyhow!("Error inserting doc"))
+        }
+    }
+}
+
+pub async fn database_cursor_update(db: Database, cursor_name: String, cursor_value: Option<String>) -> Result<(), Error> {
     return match cursor_value.unwrap() {
         cursor_str => {
             let collection = db.collection::<SubstreamsCursor>("_cursor");
-            let db_cursor = SubstreamsCursor {
-                cursor_name,
-                cursor_value: cursor_str,
-            };
-
-
-            match collection.insert_one(db_cursor, None).await? {
-                InsertOneResult { .. } => {
-                    info!("Cursor written!");
+            match collection.update_one(doc! {"cursor_name": cursor_name}, doc! {"$set": {"cursor_value": cursor_str}}, None).await? {
+                UpdateResult { .. } => {
                     Ok(())
                 }
                 _ => {

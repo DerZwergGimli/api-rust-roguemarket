@@ -1182,6 +1182,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "progress_bar"
+version = "1.0.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2c8e8843722ce55deb442e7d6476a97c081b8485ea2807b031d160f592f99037"
+dependencies = [
+ "lazy_static",
+]
+
+[[package]]
 name = "prost"
 version = "0.10.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1640,6 +1649,7 @@ dependencies = [
  "http",
  "log",
  "mongodb",
+ "progress_bar",
  "prost",
  "prost-types",
  "serde",
