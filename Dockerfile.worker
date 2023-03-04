@@ -5,6 +5,7 @@ RUN apt update && apt install -y libssl-dev pkg-config cmake
 RUN LINK=$(curl -s https://api.github.com/repos/streamingfast/substreams/releases/latest | awk '/download.url.*linux/ {print $2}' | sed 's/"//g')
 RUN curl -L  $LINK  | tar zxf -
 
+
 COPY . .
 
 RUN cd ./substream-sa && make package
