@@ -2,7 +2,7 @@ FROM rust:latest AS builder
 WORKDIR build
 RUN apt update && apt install libssl-dev pkg-config cmake curl bash build-essential curl file git ruby-full locales --no-install-recommends -y
 
-RUN useradd -m -s /bin/bash linuxbrew && \
+RUN useradd -m -s /bin/sh linuxbrew && \
     echo 'linuxbrew ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers
 
 USER linuxbrew
