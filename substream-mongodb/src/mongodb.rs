@@ -9,6 +9,8 @@ use tokio::macros;
 use crate::pb::database::{DatabaseChanges, TableChange};
 use serde::{Deserialize, Serialize};
 use progress_bar::*;
+use staratlas::symbolstore::SymbolStore;
+use crate::trade_t::SATrade;
 
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -32,9 +34,10 @@ pub async fn database_connect() -> Result<Client, Error> {
     }
 }
 
-pub async fn database_create(db: Database, element: TableChange) -> Result<(), Error> {
+pub async fn database_create(db: Database, element: SATrade, table_name: String) -> Result<(), Error> {
+
     //Make sure unique key is set
-    let collection = db.collection::<Document>(element.table.as_str());
+    let collection = db.collection::<SATrade>(table_name.as_str());
     let index_model = IndexModel::builder()
         .keys(doc! {"signature": 1})
         .options(IndexOptions::builder().unique(true).build())
@@ -44,19 +47,14 @@ pub async fn database_create(db: Database, element: TableChange) -> Result<(), E
 
 
     let signature_exists = match collection.find_one(doc! {
-            "signature": element.pk.clone(),
+            "signature": element.clone().signature,
       }, None).await? {
         None => { false }
         Some(cursor) => { true }
     };
 
     if !signature_exists {
-        let mut doc = doc! {};
-        doc.insert("signature", element.pk);
-        for field in element.fields {
-            doc.insert(field.name, field.new_value);
-        }
-        match collection.insert_one(doc, None).await {
+        match collection.insert_one(element, None).await {
             Ok(InsertOneResult { .. }) => {
                 info!("inserted!");
             }

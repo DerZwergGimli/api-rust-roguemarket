@@ -20,6 +20,8 @@ async-stream = "0.3"
 mongodb = "2.4.0"
 serde = "1.0.152"
 progress_bar = "1.0.3"
+staratlas = { path = "../libs/staratlas" }
+
 
 [build-dependencies]
 tonic-build = { version = "0.7.2", features = ["prost"] }

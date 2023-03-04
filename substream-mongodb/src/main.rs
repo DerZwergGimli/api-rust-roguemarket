@@ -1,11 +1,16 @@
+extern crate core;
+
 mod pb;
 mod substreams;
 mod substreams_stream;
 mod mongodb;
+mod trade_t;
 
 use std::{env, fs};
 use std::os::unix::raw::ino_t;
 use std::sync::Arc;
+use std::thread::sleep;
+use std::time::Duration;
 use anyhow::{Context, Error, format_err};
 use log::{error, info, warn};
 use prost::{DecodeError};
@@ -14,6 +19,7 @@ use crate::pb::substreams::module_output::Data::MapOutput;
 use crate::pb::substreams::{BlockScopedData, Request, StoreDeltas};
 use crate::pb::substreams::module_output::Data;
 use prost::Message;
+use staratlas::symbolstore::{Asset, BuilderSymbolStore, SymbolStore};
 use crate::mongodb::{database_connect, database_create, database_cursor_update, database_cursor_get, database_cursor_create};
 use crate::pb::substreams::stream_client::StreamClient;
 use crate::pb::substreams::Package;
@@ -21,6 +27,7 @@ use crate::substreams::SubstreamsEndpoint;
 use crate::substreams_stream::{BlockResponse, SubstreamsStream};
 use crate::pb::database::{DatabaseChanges, TableChange};
 use crate::pb::database::table_change::Operation;
+use crate::trade_t::SATrade;
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
@@ -29,10 +36,13 @@ async fn main() -> Result<(), Error> {
     let package_file = env::args().nth(2).expect("please provide a <package_file>");
     let module_name = env::args().nth(3).expect("please provide a <module_name>");
     let database_name = env::args().nth(4).expect("please provide a <database>");
+    let start_block = env::args().nth(5).expect("please provide a <start_block>").parse::<i64>().unwrap_or(179432144);
+    let stop_block = env::args().nth(6).expect("please provide a <stop_block>").parse::<u64>().unwrap_or(179432145);
 
     let database = database_connect().await?.database(database_name.as_str());
-    let start_block = 179432144;
-    let stop_block = 179433145;
+
+    let symbol_store = BuilderSymbolStore::new().init().await;
+
 
     let token_env = env::var("SUBSTREAMS_API_TOKEN").expect("please set env with: SUBSTREAMS_API_TOKEN");
     let mut token: Option<String> = None;
@@ -40,7 +50,7 @@ async fn main() -> Result<(), Error> {
         token = Some(token_env);
     }
     info!("> Staring!");
-    info!("endpoint_url={:?}\npackage_file{:?}\nmodule_name={:?}", endpoint_url, &package_file, &module_name);
+    info!("endpoint_url={:?}\npackage_file{:?}\nmodule_name={:?}\nstart-block={:}\nstop-block={:}", endpoint_url, &package_file, &module_name, start_block, stop_block);
 
     let package = read_package(&package_file)?;
     let endpoint = Arc::new(SubstreamsEndpoint::new(&endpoint_url, token).await?);
@@ -83,7 +93,8 @@ async fn main() -> Result<(), Error> {
                                         warn!("operation not supported")
                                     }
                                     Operation::Create => {
-                                        database_create(database.clone(), table_changed).await?
+                                        let mapped = map_trade_to_struct(table_changed, symbol_store.clone())?;
+                                        database_create(database.clone(), mapped, "trades".to_string()).await?
                                     }
                                     Operation::Update => {
                                         warn!("operation not supported")
@@ -104,8 +115,10 @@ async fn main() -> Result<(), Error> {
             },
         }
     }
+    sleep(Duration::from_secs(env::args().nth(7).unwrap_or("0".to_string()).parse::<u64>().unwrap()));
     Ok(())
 }
+
 
 pub fn decode<T: std::default::Default + prost::Message>(buf: &Vec<u8>) -> Result<T, DecodeError> {
     ::prost::Message::decode(&buf[..])
@@ -116,7 +129,6 @@ fn read_package(file: &str) -> Result<Package, anyhow::Error> {
     let content = std::fs::read(file).context(format_err!("read package {}", file))?;
     Package::decode(content.as_ref()).context("decode command")
 }
-
 
 fn extract_database_changes_from_map(data: BlockScopedData, module_name: &String) -> Result<DatabaseChanges, Error> {
     let output = data
@@ -142,3 +154,27 @@ fn extract_database_changes_from_map(data: BlockScopedData, module_name: &String
     }
 }
 
+fn map_trade_to_struct(table_change: TableChange, symbol_store: SymbolStore) -> Result<SATrade, Error> {
+    println!("{:?}", table_change.fields);
+
+    let mut trade = SATrade {
+        symbol: "-none-".to_string(),
+        signature: table_change.clone().pk,
+        block: table_change.clone().fields.into_iter().find(|t| { t.name.contains("block") }).unwrap().new_value.parse().unwrap_or(0),
+        timestamp: table_change.clone().fields.into_iter().find(|t| { t.name == "timestamp" }).ok_or("timestamp").unwrap().new_value.parse().unwrap_or(0),
+        order_taker: table_change.clone().fields.into_iter().find(|t| { t.name == "order_taker" }).ok_or("order_taker").unwrap().new_value,
+        currency_mint: table_change.clone().fields.into_iter().find(|t| { t.name == "currency_mint" }).ok_or("currency_mint").unwrap().new_value,
+        asset_mint: table_change.clone().fields.into_iter().find(|t| { t.name == "asset_mint" }).ok_or("asset_mint").unwrap().new_value,
+        order_initializer: table_change.clone().fields.into_iter().find(|t| { t.name == "order_initializer" }).ok_or("order_initializer").unwrap().new_value,
+        asset_change: table_change.clone().fields.into_iter().find(|t| { t.name == "asset_change" }).ok_or("asset_change").unwrap().new_value.parse().unwrap_or(0.0),
+        market_fee: table_change.clone().fields.into_iter().find(|t| { t.name == "market_fee" }).ok_or("market_fee").unwrap().new_value.parse().unwrap_or(0.0),
+        total_cost: table_change.clone().fields.into_iter().find(|t| { t.name == "total_cost" }).ok_or("total_cost").unwrap().new_value.parse().unwrap_or(0.0),
+    };
+
+    match symbol_store.assets.into_iter().find(|asset| { asset.mint == trade.asset_mint && asset.pair_mint == trade.currency_mint }) {
+        None => {}
+        Some(symbol) => { trade.symbol = symbol.symbol }
+    }
+
+    return Ok(trade);
+}
