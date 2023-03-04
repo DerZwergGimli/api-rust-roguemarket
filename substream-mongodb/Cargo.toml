@@ -1,0 +1,24 @@
+[package]
+name = "substreams-mongodb"
+version = "0.1.0"
+edition = "2021"
+description = "Substreams for Ethereum tokens"
+
+[dependencies]
+env_logger = "0.10.0"
+log = "0.4.17"
+anyhow = "1.0.69"
+prost = "0.10.4"
+prost-types = "0.10.1"
+http = "0.2.3"
+tonic = { version = "0.7.1", features = ["tls-roots"] }
+tokio = { version = "1.0", features = ["macros", "rt-multi-thread"] }
+tokio-stream = { version = "0.1", features = ["net"] }
+futures03 = { version = "0.3.1", package = "futures", features = ["compat"] }
+tokio-retry = "0.3.0"
+async-stream = "0.3"
+mongodb = "2.4.0"
+serde = "1.0.152"
+[build-dependencies]
+tonic-build = { version = "0.7.2", features = ["prost"] }
+

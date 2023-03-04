@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package sa.trade.v1;
+
+
+message ProcessExchanges {
+  repeated ProcessExchange process_exchanges = 1;
+}
+
+message ProcessExchange {
+  string signature = 1;
+  uint64 block = 2;
+  int64 timestamp = 3;
+  string order_taker = 5;
+  string currency_mint = 6;
+  string asset_mint = 7;
+  string order_initializer = 8;
+  string asset_change = 9;
+  string market_fee = 10;
+  string total_cost = 11;
+}

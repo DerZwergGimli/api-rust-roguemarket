@@ -1,0 +1,9 @@
+[submodule "substream-mongodb/substreams"]
+	path = substream-mongodb/substreams
+	url = https://github.com/streamingfast/substreams.git
+[submodule "substream-mongodb/dependencies/substreams"]
+	path = substream-mongodb/dependencies/substreams
+	url = https://github.com/streamingfast/substreams.git
+[submodule "substream-mongodb/dependencies/substreams-database-change"]
+	path = substream-mongodb/dependencies/substreams-database-change
+	url = https://github.com/streamingfast/substreams-database-change
