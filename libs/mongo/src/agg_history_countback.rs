@@ -30,7 +30,7 @@ pub fn get_history_aggregation_countback(
                         ]
                     }
                 },
-              "price": "$total_cost",
+                "price": "$total_cost",
                 "volume": "$asset_change"
             }
         },

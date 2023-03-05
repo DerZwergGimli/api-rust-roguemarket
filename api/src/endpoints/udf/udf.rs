@@ -426,7 +426,7 @@ pub async fn get_history(
         .await
     {
         Some(data) => {
-            if (data.len() > 0) {
+            if data.len() > 0 {
                 history.s = "ok".to_string();
                 history.o = data.clone().into_iter().map(|d| d.open).collect();
                 history.h = data.clone().into_iter().map(|d| d.high).collect();
@@ -439,27 +439,27 @@ pub async fn get_history(
         _ => {}
     };
 
-    if (history.t.len() > 0) {
+    return if history.t.len() > 0 {
         info!("found");
-        return Ok(warp::reply::json(&history));
+        Ok(warp::reply::json(&history))
     } else {
-        return match find_udf_trade_next(trades, query.symbol, query.to.unwrap_or_default()).await {
+        match find_udf_trade_next(trades, query.symbol, query.to.unwrap_or_default()).await {
             Some(data) => {
                 info!("no-data");
-                return Ok(warp::reply::json(&UdfError {
+                Ok(warp::reply::json(&UdfError {
                     s: Status::no_data,
                     errmsg: "No data found".to_string(),
                     nextTime: Some(data.timestamp),
-                }));
+                }))
             }
             None => {
                 info!("error");
-                return Ok(warp::reply::json(&UdfError {
+                Ok(warp::reply::json(&UdfError {
                     s: Status::no_data,
                     errmsg: "No data found".to_string(),
                     nextTime: None,
-                }));
+                }))
             }
-        };
-    }
+        }
+    };
 }
