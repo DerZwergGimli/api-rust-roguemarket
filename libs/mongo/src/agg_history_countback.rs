@@ -5,18 +5,18 @@ pub fn get_history_aggregation_countback(
     symbol: String,
     to: u64,
     countback: u64,
-    resolution_minute: i64,
+    resultion_second: i64,
 ) -> Vec<Document> {
     [
         doc! {
             "$match": doc! {
-                "pair": symbol
+                "symbol": symbol
             }
         },
         doc! {
             "$match": doc! {
                 "timestamp": doc! {
-                    "$lt": to as i64,
+                    "$lte": to as i64,
                 }
             }
         },
@@ -40,8 +40,8 @@ pub fn get_history_aggregation_countback(
                     "time": doc! {
                         "$dateTrunc": doc! {
                             "date": "$time",
-                            "unit": "minute",
-                            "binSize": resolution_minute
+                            "unit": "second",
+                            "binSize": resultion_second
                         }
                     }
                 },

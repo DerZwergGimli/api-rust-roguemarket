@@ -9,15 +9,15 @@ pub fn get_history_aggregation_next(symbol: String, next: u64) -> Vec<Document> 
             }
         },
         doc! {
-            "$sort":  {
-                "timestamp": -1
+            "$match":  {
+                "timestamp":  {
+                    "$lte": next as i64
+                }
             }
         },
         doc! {
-            "$match":  {
-                "timestamp":  {
-                    "$lt": next as i64
-                }
+        "$sort": doc! {
+            "timestamp": -1
             }
         },
         doc! {

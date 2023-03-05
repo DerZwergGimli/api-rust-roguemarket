@@ -445,13 +445,13 @@ pub async fn get_history(
         info!("found");
         Ok(warp::reply::json(&history))
     } else {
-        match find_udf_trade_next(trades, query.symbol, query.to.unwrap_or_default()).await {
+        match find_udf_trade_next(trades, query.symbol, query.from.unwrap_or_default()).await {
             Some(data) => {
                 info!("no-data");
                 let timestamp = data.get_i64("timestamp").unwrap_or_default();
                 Ok(warp::reply::json(&UdfError {
                     s: Status::no_data,
-                    errmsg: "No data found".to_string(),
+                    //errmsg: None,
                     nextTime: Some(timestamp),
                 }))
             }
@@ -459,7 +459,7 @@ pub async fn get_history(
                 info!("error");
                 Ok(warp::reply::json(&UdfError {
                     s: Status::no_data,
-                    errmsg: "No data found".to_string(),
+                    //errmsg: None,
                     nextTime: None,
                 }))
             }

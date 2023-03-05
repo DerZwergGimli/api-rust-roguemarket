@@ -77,7 +77,7 @@ pub async fn find_udf_trades(
         Some(count) => {
             match collection
                 .aggregate(
-                    get_history_aggregation_countback(symbol, to, count, resolution_sec),
+                    get_history_aggregation_countback(symbol, to, count * resolution_sec as u64, resolution_sec),
                     None,
                 )
                 .await
