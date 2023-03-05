@@ -177,8 +177,6 @@ fn extract_database_changes_from_map(data: BlockScopedData, module_name: &String
 }
 
 fn map_trade_to_struct(table_change: TableChange, symbol_store: SymbolStore) -> Result<SATrade, Error> {
-    println!("{:?}", table_change.fields);
-
     let mut trade = SATrade {
         symbol: "-none-".to_string(),
         signature: table_change.clone().pk,
