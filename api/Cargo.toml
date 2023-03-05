@@ -16,8 +16,9 @@ env_logger = "0.9.0"
 log = "0.4"
 futures = "0.3"
 #utoipa = "2.2.0"
-utoipa = {path = "../libs/utopia_temp/utoipa" }
+utoipa = { path = "../libs/utopia_temp/utoipa" }
 staratlas = { path = "../libs/staratlas" }
+substream-mongodb = { path = "../substream-mongodb" }
 types = { path = "../libs/types" }
 udf = { path = "../libs/udf" }
 mongodb = "2.3.0"

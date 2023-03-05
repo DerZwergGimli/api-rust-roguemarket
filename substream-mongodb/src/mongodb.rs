@@ -10,7 +10,7 @@ use crate::pb::database::{DatabaseChanges, TableChange};
 use serde::{Deserialize, Serialize};
 use progress_bar::*;
 use staratlas::symbolstore::SymbolStore;
-use crate::trade_t::SATrade;
+use types::trade_t::SATrade;
 
 
 #[derive(Debug, Serialize, Deserialize)]

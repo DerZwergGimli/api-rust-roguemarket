@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
+use utoipa::{IntoParams, ToSchema};
 
-
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, ToSchema, Clone)]
 pub struct SATrade {
     pub symbol: String,
     pub signature: String,

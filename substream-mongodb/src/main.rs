@@ -4,7 +4,7 @@ mod pb;
 mod substreams;
 mod substreams_stream;
 mod mongodb;
-mod trade_t;
+
 
 use reqwest::header;
 
@@ -24,6 +24,7 @@ use crate::pb::substreams::{BlockScopedData, Request, StoreDeltas};
 use crate::pb::substreams::module_output::Data;
 use prost::Message;
 use staratlas::symbolstore::{Asset, BuilderSymbolStore, SymbolStore};
+use types::trade_t::SATrade;
 use crate::mongodb::{database_connect, database_create, database_cursor_update, database_cursor_get, database_cursor_create};
 use crate::pb::substreams::stream_client::StreamClient;
 use crate::pb::substreams::Package;
@@ -31,7 +32,7 @@ use crate::substreams::SubstreamsEndpoint;
 use crate::substreams_stream::{BlockResponse, SubstreamsStream};
 use crate::pb::database::{DatabaseChanges, TableChange};
 use crate::pb::database::table_change::Operation;
-use crate::trade_t::SATrade;
+
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {

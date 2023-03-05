@@ -116,7 +116,7 @@ get,
 path = "/trades/last",
 params(DefaultLastParams),
 responses(
-(status = 200, description = "Response: Time successful", body = [TradesResponse])
+(status = 200, description = "Response: Time successful", body = [SATrade])
 )
 )]
 pub async fn get_last(
@@ -143,7 +143,7 @@ get,
 path = "/trades/signature",
 params(DefaultSignatureParams),
 responses(
-(status = 200, description = "Response: Time successful", body = [TradesResponse])
+(status = 200, description = "Response: Time successful", body = [SATrade])
 )
 )]
 pub async fn get_signature(
@@ -171,7 +171,7 @@ get,
 path = "/trades/address",
 params(DefaultAddressParams),
 responses(
-(status = 200, description = "Response: Time successful", body = [TradesResponse])
+(status = 200, description = "Response: Time successful", body = [SATrade])
 )
 )]
 pub async fn get_address(
@@ -199,7 +199,7 @@ get,
 path = "/trades/mint",
 params(DefaultMintParams),
 responses(
-(status = 200, description = "Response: Time successful", body = [TradesResponse])
+(status = 200, description = "Response: Time successful", body = [SATrade])
 )
 )]
 pub async fn get_mint(

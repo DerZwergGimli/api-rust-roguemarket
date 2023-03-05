@@ -23,6 +23,7 @@ progress_bar = "1.0.3"
 staratlas = { path = "../libs/staratlas" }
 reqwest = "0.11.14"
 json = "0.12.4"
+types = { path = "../libs/types" }
 
 [build-dependencies]
 tonic-build = { version = "0.7.2", features = ["prost"] }
