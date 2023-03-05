@@ -16,7 +16,7 @@ pub fn get_history_aggregation_countback(
         doc! {
             "$match": doc! {
                 "timestamp": doc! {
-                    "$lte": to as i64,
+                    "$lt": to as i64,
                 }
             }
         },
@@ -30,7 +30,7 @@ pub fn get_history_aggregation_countback(
                         ]
                     }
                 },
-                "price": "$total_cost",
+                "price": {"$divide": ["$total_cost", "$asset_change"]},
                 "volume": "$asset_change"
             }
         },

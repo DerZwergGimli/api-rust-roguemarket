@@ -33,7 +33,7 @@ pub fn get_history_aggregation(
                         ]
                     }
                 },
-                "price": "$total_cost",
+                "price": {"$divide": ["$total_cost", "$asset_change"]},
                 "volume": "$asset_change"
             }
         },
