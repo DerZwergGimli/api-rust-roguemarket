@@ -40,18 +40,17 @@ async fn main() -> Result<(), Error> {
     let start_block = env::args().nth(6).expect("please provide a <start_block>").parse::<i64>().unwrap_or(179432144);
     let stop_block = env::args().nth(7).expect("please provide a <stop_block>").parse::<u64>().unwrap_or(179432145);
 
-    let database = database_connect(mongo_url).await?.database(database_name.as_str());
-
-    let symbol_store = BuilderSymbolStore::new().init().await;
-
-
     let token_env = env::var("SUBSTREAMS_API_TOKEN").expect("please set env with: SUBSTREAMS_API_TOKEN");
     let mut token: Option<String> = None;
     if token_env.len() > 0 {
         token = Some(token_env);
     }
     info!("> Staring!");
-    info!("mongo_url={:?}\nendpoint_url={:?}\npackage_file{:?}\nmodule_name={:?}\nstart-block={:}\nstop-block={:}", mongo_url, endpoint_url, &package_file, &module_name, start_block, stop_block);
+    info!("mongo_url={:?}\nendpoint_url={:?}\npackage_file{:?}\nmodule_name={:?}\nstart-block={:}\nstop-block={:}", mongo_url.clone(), endpoint_url, &package_file, &module_name, start_block, stop_block);
+
+    let database = database_connect(mongo_url).await?.database(database_name.as_str());
+    let symbol_store = BuilderSymbolStore::new().init().await;
+
 
     let package = read_package(&package_file)?;
     let endpoint = Arc::new(SubstreamsEndpoint::new(&endpoint_url, token).await?);
@@ -116,7 +115,7 @@ async fn main() -> Result<(), Error> {
             },
         }
     }
-    sleep(Duration::from_millis(env::args().nth(7).unwrap_or("0".to_string()).parse::<u64>().unwrap()));
+    sleep(Duration::from_millis(env::args().nth(8).unwrap_or("0".to_string()).parse::<u64>().unwrap()));
     Ok(())
 }
 
