@@ -55,7 +55,7 @@ async fn main() -> Result<(), Error> {
 
 
     let package = read_package(&package_file)?;
-    let endpoint = Arc::new(SubstreamsEndpoint::new(&endpoint_url, token).await?);
+    let endpoint = Arc::new(SubstreamsEndpoint::new(&endpoint_url, token.clone()).await?);
 
 
     let cursor = database_cursor_get(database.clone(), module_name.clone()).await;

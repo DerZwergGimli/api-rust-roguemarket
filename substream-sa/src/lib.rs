@@ -118,6 +118,7 @@ fn map_sa_trades(blk: sol::v1::Block) -> Result<pb::trade::ProcessExchanges, Err
 fn db_sa_trades(blk: sol::v1::Block) -> Result<DatabaseChanges, Error> {
     log::info!("db_sa_trades");
 
+    substreams::register_panic_hook();
     let mut process_exchanges = vec![];
     for trx in blk.transactions {
         if let Some(meta) = trx.meta {
@@ -168,7 +169,6 @@ fn db_sa_trades(blk: sol::v1::Block) -> Result<DatabaseChanges, Error> {
     }
 
 
-    substreams::register_panic_hook();
     let mut database_changes: DatabaseChanges = Default::default();
 
     for exchange in process_exchanges {

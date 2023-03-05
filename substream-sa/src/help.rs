@@ -4,15 +4,15 @@ pub fn calc_token_balance_change(meta: &TransactionStatusMeta, currency_mint: St
     (meta.clone().post_token_balances
         .into_iter()
         .find(|tb| { tb.mint == currency_mint && tb.owner == order_initializer })
-        .unwrap()
+        .unwrap_or_default()
         .ui_token_amount
-        .unwrap()
+        .unwrap_or_default()
         .ui_amount -
         meta.clone().pre_token_balances
             .into_iter()
             .find(|tb| { tb.mint == currency_mint && tb.owner == order_initializer })
-            .unwrap()
+            .unwrap_or_default()
             .ui_token_amount
-            .unwrap()
+            .unwrap_or_default()
             .ui_amount).abs()
 }
