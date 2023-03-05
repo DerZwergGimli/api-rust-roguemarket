@@ -8,4 +8,5 @@ RUST_LOG=info cargo run \
   db_sa_trades \
   trades \
   179432144 \
-  179432145
+  179432145 \
+  1000
