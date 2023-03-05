@@ -21,7 +21,8 @@ mongodb = "2.4.0"
 serde = "1.0.152"
 progress_bar = "1.0.3"
 staratlas = { path = "../libs/staratlas" }
-
+reqwest = "0.11.14"
+json = "0.12.4"
 
 [build-dependencies]
 tonic-build = { version = "0.7.2", features = ["prost"] }

@@ -6,12 +6,16 @@ mod substreams_stream;
 mod mongodb;
 mod trade_t;
 
+use reqwest::header;
+
 use std::{env, fs};
 use std::os::unix::raw::ino_t;
 use std::sync::Arc;
 use std::thread::sleep;
 use std::time::Duration;
 use anyhow::{Context, Error, format_err};
+use json::object;
+
 use log::{error, info, warn};
 use prost::{DecodeError};
 use tokio_stream::StreamExt;
@@ -40,11 +44,9 @@ async fn main() -> Result<(), Error> {
     let start_block = env::args().nth(6).expect("please provide a <start_block>").parse::<i64>().unwrap_or(179432144);
     let stop_block = env::args().nth(7).expect("please provide a <stop_block>").parse::<u64>().unwrap_or(179432145);
 
-    let token_env = env::var("SUBSTREAMS_API_TOKEN").expect("please set env with: SUBSTREAMS_API_TOKEN");
-    let mut token: Option<String> = None;
-    if token_env.len() > 0 {
-        token = Some(token_env);
-    }
+
+    let mut token: Option<String> = request_token(env::var("STREAMINGFAST_KEY").expect("please set env with: STREAMINGFAST_KEY")).await;
+
     info!("> Staring!");
     info!("mongo_url={:?}\nendpoint_url={:?}\npackage_file{:?}\nmodule_name={:?}\nstart-block={:}\nstop-block={:}", mongo_url.clone(), endpoint_url, &package_file, &module_name, start_block, stop_block);
 
@@ -119,6 +121,26 @@ async fn main() -> Result<(), Error> {
     Ok(())
 }
 
+async fn request_token(key: String) -> Option<String> {
+    let mut headers = header::HeaderMap::new();
+    headers.insert("Content-Type", "application/x-www-form-urlencoded".parse().unwrap());
+
+    let client = reqwest::Client::new();
+    let res = client.post("https://auth.streamingfast.io/v1/auth/issue")
+        .headers(headers)
+        .body(object! {"api_key": key}.to_string())
+        .send()
+        .await.unwrap()
+        .text().await.unwrap();
+
+    let json_response = json::parse(res.clone().as_str()).expect("Error parsing response!");
+
+
+    let d = json_response["token"].to_string();
+    println!("res={:?}", res.clone());
+
+    Some(d)
+}
 
 pub fn decode<T: std::default::Default + prost::Message>(buf: &Vec<u8>) -> Result<T, DecodeError> {
     ::prost::Message::decode(&buf[..])
