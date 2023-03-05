@@ -51,7 +51,7 @@ async fn main() -> Result<(), Error> {
         token = Some(token_env);
     }
     info!("> Staring!");
-    info!("endpoint_url={:?}\npackage_file{:?}\nmodule_name={:?}\nstart-block={:}\nstop-block={:}", endpoint_url, &package_file, &module_name, start_block, stop_block);
+    info!("mongo_url={:?}\nendpoint_url={:?}\npackage_file{:?}\nmodule_name={:?}\nstart-block={:}\nstop-block={:}", mongo_url, endpoint_url, &package_file, &module_name, start_block, stop_block);
 
     let package = read_package(&package_file)?;
     let endpoint = Arc::new(SubstreamsEndpoint::new(&endpoint_url, token).await?);
