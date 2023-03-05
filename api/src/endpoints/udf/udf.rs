@@ -52,12 +52,13 @@ pub struct SearchParams {
 #[derive(Debug, Deserialize, IntoParams)]
 #[into_params(parameter_in = Query)]
 pub struct HistoryParams {
-    #[param(style = Form, example = "FOOD")]
+    #[param(style = Form, example = "FOODATLAS")]
     symbol: String,
     from: Option<u64>,
     to: Option<u64>,
     resolution: Option<String>,
     countback: Option<u64>,
+    currencyCode: Option<String>,
 }
 //endregion
 
@@ -108,7 +109,7 @@ pub async fn handlers() -> impl Filter<Extract=impl warp::Reply, Error=warp::Rej
         .and(warp::get())
         .and(warp::path::end())
         .and(with_mongo_store(
-            mongo_db.collection.clone(),
+            mongo_db.collection_as_doc.clone(),
         ))
         .and(warp::query::<HistoryParams>())
         .and_then(get_history);
@@ -128,8 +129,8 @@ fn with_sa_store(
 }
 
 fn with_mongo_store(
-    store: Collection<DBTrade>,
-) -> impl Filter<Extract=(Collection<DBTrade>, ), Error=Infallible> + Clone {
+    store: Collection<Document>,
+) -> impl Filter<Extract=(Collection<Document>, ), Error=Infallible> + Clone {
     warp::any().map(move || store.clone())
 }
 //endregion
@@ -401,7 +402,7 @@ responses(
 )
 )]
 pub async fn get_history(
-    trades: Collection<DBTrade>,
+    trades: Collection<Document>,
     query: HistoryParams,
 ) -> Result<impl Reply, Infallible> {
     let mut history = udf_history_t::UdfHistory {
@@ -413,6 +414,7 @@ pub async fn get_history(
         l: vec![],
         v: vec![],
     };
+
 
     match find_udf_trades(
         trades.clone(),
@@ -446,10 +448,11 @@ pub async fn get_history(
         match find_udf_trade_next(trades, query.symbol, query.to.unwrap_or_default()).await {
             Some(data) => {
                 info!("no-data");
+                let timestamp = data.get_i64("timestamp").unwrap_or_default();
                 Ok(warp::reply::json(&UdfError {
                     s: Status::no_data,
                     errmsg: "No data found".to_string(),
-                    nextTime: Some(data.timestamp),
+                    nextTime: Some(timestamp),
                 }))
             }
             None => {

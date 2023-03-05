@@ -64,7 +64,7 @@ fn with_mongo_store_stats(
 get,
 path = "/stats/last_timestamp",
 responses(
-(status = 200, description = "Get time successfully", body = [String])
+(status = 200, description = "Get time successfully", body = [SATrade])
 )
 )]
 pub async fn get_last_timestamp(trades: Collection<DBTrade>) -> Result<impl Reply, Infallible> {
@@ -89,7 +89,7 @@ pub async fn get_last_timestamp(trades: Collection<DBTrade>) -> Result<impl Repl
 get,
 path = "/stats/first_timestamp",
 responses(
-(status = 200, description = "Get time successfully", body = [String])
+(status = 200, description = "Get time successfully", body = [SATrade])
 )
 )]
 pub async fn get_first_timestamp(trades: Collection<DBTrade>) -> Result<impl Reply, Infallible> {

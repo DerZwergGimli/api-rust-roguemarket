@@ -31,23 +31,12 @@ impl MongoDBConnection {
             .expect("Error while setting Database options");
         client_options.app_name = Some("DBRustConnection".to_string());
 
-        // let options = IndexOptions::builder().unique(true).build();
-        // let model_sig = IndexModel::builder()
-        //     .keys(doc! {"signature": 1})
-        //     .options(options)
-        //     .build();
-        // let model_sym = IndexModel::builder().keys(doc! {"symbol": 1}).build();
-        // let model_ts = IndexModel::builder().keys(doc! {"timestamp": 1}).build();
 
         let client = Client::with_options(client_options).expect("Error connecting to Database");
         let db = client.database(env::var("MONGODB").unwrap().as_str());
 
         let collection = db.collection::<DBTrade>(env::var("MONGOTABLE").unwrap().as_str());
         let collection_as_doc = db.collection::<Document>(env::var("MONGOTABLE").unwrap().as_str());
-
-        // collection.create_index(model_sig, None).await;
-        // collection.create_index(model_sym, None).await;
-        // collection.create_index(model_ts, None).await;
 
         info!("DB Connected!");
 
@@ -56,8 +45,7 @@ impl MongoDBConnection {
             db,
             collection,
             collection_as_doc,
-            // collection_processExchange,
-            // collection_processExchange_tmp,
+
         }
     }
 
@@ -76,7 +64,7 @@ impl MongoDBConnection {
 }
 
 pub async fn find_udf_trades(
-    collection: Collection<DBTrade>,
+    collection: Collection<Document>,
     symbol: String,
     from: u64,
     to: u64,
@@ -128,17 +116,17 @@ pub async fn find_udf_trades(
 }
 
 pub async fn find_udf_trade_next(
-    collection: Collection<DBTrade>,
+    collection: Collection<Document>,
     symbol: String,
     next: u64,
-) -> Option<DBTrade> {
+) -> Option<Document> {
     match collection
         .aggregate(get_history_aggregation_next(symbol, next), None)
         .await
     {
         Ok(mut cursor) => {
             while let Some(doc) = cursor.try_next().await.unwrap() {
-                return Some(bson::from_document::<DBTrade>(doc).unwrap());
+                return Some(bson::from_document::<Document>(doc).unwrap());
             }
             None
         }
