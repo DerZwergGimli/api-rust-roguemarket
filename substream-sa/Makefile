@@ -28,11 +28,11 @@ run_db_out_sol: build
 
 .PHONY: map_sa_trades
 map_sa_trades: build
-	substreams run -e mainnet.sol.streamingfast.io:443 substreams.yaml map_sa_trades --start-block 179432144 --stop-block 179432145
+	substreams run -e mainnet.sol.streamingfast.io:443 substreams.yaml map_sa_trades --start-block 159433267 --stop-block 0
 
 .PHONY: run_db_out_sa
 run_db_out_sa: build
-	substreams run -e mainnet.sol.streamingfast.io:443 substreams.yaml db_sa_trades --start-block 159433265 --stop-block 179432145
+	substreams run -e mainnet.sol.streamingfast.io:443 substreams.yaml db_sa_trades --start-block 159433267 --stop-block 0
 
 
 .PHONY: package
