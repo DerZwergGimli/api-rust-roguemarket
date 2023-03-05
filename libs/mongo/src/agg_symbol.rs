@@ -1,5 +1,6 @@
 use mongodb::bson::doc;
 use mongodb::bson::Document;
+
 pub fn get_by_symbol_aggreation(symbol: String, limit: Option<i64>) -> Vec<Document> {
     let mut max = limit.unwrap_or(1);
     if max > 100 {
@@ -8,7 +9,7 @@ pub fn get_by_symbol_aggreation(symbol: String, limit: Option<i64>) -> Vec<Docum
     [
         doc! {
             "$match": doc! {
-                "pair": symbol
+                "symbol": symbol
             }
         },
         doc! {
@@ -21,5 +22,5 @@ pub fn get_by_symbol_aggreation(symbol: String, limit: Option<i64>) -> Vec<Docum
             ]
         }
     ]
-    .to_vec()
+        .to_vec()
 }

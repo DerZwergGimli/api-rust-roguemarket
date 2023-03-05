@@ -1,10 +1,11 @@
 use mongodb::bson::doc;
 use mongodb::bson::Document;
+
 pub fn get_history_aggregation_next(symbol: String, next: u64) -> Vec<Document> {
     [
         doc! {
             "$match":  {
-                "pair": symbol
+                "symbol": symbol
             }
         },
         doc! {
@@ -23,5 +24,5 @@ pub fn get_history_aggregation_next(symbol: String, next: u64) -> Vec<Document> 
             "$limit": 1
         },
     ]
-    .to_vec()
+        .to_vec()
 }

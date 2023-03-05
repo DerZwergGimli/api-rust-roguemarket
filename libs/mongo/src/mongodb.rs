@@ -1,3 +1,4 @@
+use std::env;
 use crate::agg_history::get_history_aggregation;
 use crate::agg_history_countback::get_history_aggregation_countback;
 use crate::agg_next::get_history_aggregation_next;
@@ -39,9 +40,10 @@ impl MongoDBConnection {
         // let model_ts = IndexModel::builder().keys(doc! {"timestamp": 1}).build();
 
         let client = Client::with_options(client_options).expect("Error connecting to Database");
-        let db = client.database("test");
-        let collection = db.collection::<DBTrade>("Exchange");
-        let collection_as_doc = db.collection::<Document>("Exchange");
+        let db = client.database(env::var("MONGODB").unwrap().as_str());
+
+        let collection = db.collection::<DBTrade>(env::var("MONGOTABLE").unwrap().as_str());
+        let collection_as_doc = db.collection::<Document>(env::var("MONGOTABLE").unwrap().as_str());
 
         // collection.create_index(model_sig, None).await;
         // collection.create_index(model_sym, None).await;

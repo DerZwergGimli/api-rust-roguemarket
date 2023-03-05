@@ -1,5 +1,6 @@
 use mongodb::bson::doc;
 use mongodb::bson::Document;
+
 pub fn get_history_aggregation(
     symbol: String,
     from: u64,
@@ -9,7 +10,7 @@ pub fn get_history_aggregation(
     [
         doc! {
             "$match": doc! {
-                "pair": symbol
+                "symbol": symbol
             }
         },
         doc! {
@@ -32,8 +33,8 @@ pub fn get_history_aggregation(
                         ]
                     }
                 },
-                "price": "$price",
-                "volume": "$size"
+                "price": "$total_cost",
+                "volume": "$asset_change"
             }
         },
         doc! {
@@ -68,5 +69,5 @@ pub fn get_history_aggregation(
             }
         },
     ]
-    .to_vec()
+        .to_vec()
 }

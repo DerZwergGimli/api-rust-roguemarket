@@ -1,5 +1,6 @@
 use mongodb::bson::doc;
 use mongodb::bson::Document;
+
 pub fn get_history_aggregation_countback(
     symbol: String,
     to: u64,
@@ -29,8 +30,8 @@ pub fn get_history_aggregation_countback(
                         ]
                     }
                 },
-                "price": "$price",
-                "volume": "$size"
+              "price": "$total_cost",
+                "volume": "$asset_change"
             }
         },
         doc! {
@@ -68,5 +69,5 @@ pub fn get_history_aggregation_countback(
             "$limit": countback as i64
         },
     ]
-    .to_vec()
+        .to_vec()
 }

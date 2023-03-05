@@ -14,12 +14,12 @@ pub fn get_mint_aggregation(
         "$match": doc! {
             "$or": [
                 doc! {
-                    "assetMint": doc! {
+                    "asset_mint": doc! {
                         "$regex": mint.clone()
                     }
                 },
                 doc! {
-                    "currencyMint": doc! {
+                    "currency_mint": doc! {
                         "$regex": mint
                     }
                 }

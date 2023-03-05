@@ -14,12 +14,12 @@ pub fn get_address_aggregation(
         "$match": doc! {
             "$or": [
                 doc! {
-                    "orderTaker": doc! {
+                    "order_taker": doc! {
                         "$regex": address.clone()
                     }
                 },
                 doc! {
-                    "orderInitializer": doc! {
+                    "order_initializer": doc! {
                         "$regex": address
                     }
                 }
