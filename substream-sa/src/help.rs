@@ -16,3 +16,8 @@ pub fn calc_token_balance_change(meta: &TransactionStatusMeta, currency_mint: St
             .unwrap_or_default()
             .ui_amount).abs()
 }
+
+
+pub fn db_change_create(value: &str) -> (&str, &str) {
+    return (value, value);
+}

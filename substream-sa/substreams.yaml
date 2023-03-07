@@ -4,15 +4,10 @@ package:
   version: v0.4.0
 
 imports:
-  #sol: https://github.com/streamingfast/sf-solana/releases/download/v0.1.0/solana-v0.1.0.spkg
   database_change: https://github.com/streamingfast/substreams-database-change/releases/download/v0.1.0/substreams-database-change-v0.1.0.spkg
-  #entities_change: https://github.com/streamingfast/substreams-entity-change/releases/download/v0.2.0/substreams-entity-change-v0.2.0.spkg
-  #sink_files: https://github.com/streamingfast/substreams-sink-files/releases/download/v0.2.0/substreams-sink-files-v0.2.0.spkg
-  sink_files: https://github.com/streamingfast/substreams-sink-files/releases/download/v0.2.0/substreams-sink-files-v0.2.0.spkg
 
 protobuf:
   files:
-    - block_meta.proto
     - staratlas_instruction.proto
   importPaths:
     - ./proto
@@ -23,48 +18,43 @@ binaries:
     file: ./target/wasm32-unknown-unknown/release/substreams.wasm
 
 modules:
-  # ------------- example using ETH --------------------- #
-  - name: db_out_eth
-    kind: map
-    inputs:
-      - source: sf.ethereum.type.v2.Block
-    output:
-      type: proto:sf.substreams.database.v1.DatabaseChanges
-  #   type: proto:substreams.database.v1.DatabaseChanges
-
-  - name: jsonl_out_eth
-    kind: map
-    inputs:
-      - source: sf.ethereum.type.v2.Block
-    output:
-      type: proto:sf.substreams.sink.files.v1.Lines
-  #   type: proto:substreams.database.v1.DatabaseChanges
-
-
-  # ------------- example using SOL --------------------- #
-  - name: db_out_sol
-    kind: map
-    inputs:
-      - source: sf.solana.type.v1.Block
-    output:
-      type: proto:sf.substreams.database.v1.DatabaseChanges
-      #type: proto:substreams.database.v1.DatabaseChanges
-  - name: jsonl_out_sol
-    kind: map
-    inputs:
-      - source: sf.ethereum.type.v2.Block
-    output:
-      type: proto:sf.substreams.sink.files.v1.Lines
-
   - name: map_sa_trades
     kind: map
+    initialBlock: 159433267
     inputs:
       - source: sf.solana.type.v1.Block
     output:
       type: proto:sa.trade.v1.ProcessExchanges
 
+  - name: store_sa_trades
+    kind: store
+    updatePolicy: set
+    valueType: proto:sa.trade.v1.ProcessExchanges
+    inputs:
+      - map: map_sa_trades
+
+  - name: db_out
+    kind: map
+    inputs:
+      - map: map_sa_trades
+    output:
+      type: proto:sf.substreams.database.v1.DatabaseChanges
+
+
+
+  - name: sa_trades_db_out
+    kind: map
+    initialBlock: 159433267
+    inputs:
+      - source: sf.substreams.v1.Clock
+      - store: store_sa_trades
+        mode: get
+    output:
+      type: proto:sf.substreams.database.v1.DatabaseChanges
+
   - name: db_sa_trades
     kind: map
+    initialBlock: 159433267
     inputs:
       - source: sf.solana.type.v1.Block
     output:

@@ -58,10 +58,10 @@ async fn main() -> Result<(), Error> {
     let package = read_package(&package_file)?;
     let endpoint = Arc::new(SubstreamsEndpoint::new(&endpoint_url, token.clone()).await?);
 
-
-    let cursor = database_cursor_get(database.clone(), module_name.clone()).await;
+    let cursor_name = module_name.clone() + start_block.clone().to_string().as_str();
+    let cursor = database_cursor_get(database.clone(), cursor_name.clone()).await;
     info!("cursor={:?}", cursor.clone());
-    database_cursor_create(database.clone(), module_name.clone().to_string(), cursor.clone()).await?;
+    database_cursor_create(database.clone(), cursor_name.clone(), cursor.clone()).await?;
 
 
     let mut stream = SubstreamsStream::new(
@@ -108,7 +108,7 @@ async fn main() -> Result<(), Error> {
                                 }
                             }
                             //Update cursor
-                            database_cursor_update(database.clone(), module_name.clone().to_string(), cursor.clone()).await?;
+                            database_cursor_update(database.clone(), cursor_name.clone(), cursor.clone()).await?;
                         }
                         Err(error) => {
                             error!("not correct module");
@@ -140,7 +140,7 @@ async fn request_token(key: String) -> Option<String> {
     let d = json_response["token"].to_string();
     println!("res={:?}", res.clone());
 
-    Some(d)
+    Some(d.clone())
 }
 
 pub fn decode<T: std::default::Default + prost::Message>(buf: &Vec<u8>) -> Result<T, DecodeError> {

@@ -5,63 +5,23 @@ mod option;
 
 use serde_json::json;
 use substreams::errors::Error;
-use substreams::log;
+use substreams::{log, proto};
+use substreams::store::{StoreGet, StoreGetProto, StoreSet, StoreSetProto};
 use substreams_database_change::pb::database::{DatabaseChanges, TableChange};
 use substreams_database_change::pb::database::table_change::Operation;
 use substreams_ethereum::pb::eth;
 use substreams_solana::pb::sol;
-use pb::sinkfiles::Lines;
+
 use substreams::Hex;
-use crate::help::calc_token_balance_change;
+use crate::help::{calc_token_balance_change, db_change_create};
 use crate::sa_instruction::MarketplaceInstruction;
+use substreams::store::StoreNew;
+use crate::pb::trade::ProcessExchange;
 
-#[substreams::handlers::map]
-pub fn db_out_eth(blk: eth::v2::Block) -> Result<DatabaseChanges, Error> {
-    log::info!("db_out_eth");
-
-    substreams::register_panic_hook();
-    let mut database_changes: DatabaseChanges = Default::default();
-    database_changes.push_change("test", "pk_test", 0, Operation::Create)
-        .change("key1", ("previous1", "value1"))
-        .change("key3", ("previous1", "value1"))
-        .change("key4", ("previous1", "value1"))
-        .change("key2", ("previous2", "value2"));
-
-    return Ok(database_changes);
-}
-
-#[substreams::handlers::map]
-fn jsonl_out_eth(block: eth::v2::Block) -> Result<Lines, substreams::errors::Error> {
-    let header = block.header.as_ref().unwrap();
-
-    Ok(pb::sinkfiles::Lines {
-        lines: vec![json!({
-            "number": block.number,
-            "hash": Hex(&block.hash).to_string(),
-            "parent_hash": Hex(&header.parent_hash).to_string(),
-            "timestamp": header.timestamp.as_ref().unwrap().to_string()
-        })
-            .to_string()],
-    })
-}
-
-#[substreams::handlers::map]
-pub fn db_out_sol(blk: sol::v1::Block) -> Result<DatabaseChanges, Error> {
-    log::info!("db_out_sol");
-
-    substreams::register_panic_hook();
-    let mut database_changes: DatabaseChanges = Default::default();
-    database_changes.push_change("test", "pk_test", 0, Operation::Create)
-        .change("key1", ("previous1", "value1"))
-        .change("key3", ("previous1", "value1"))
-        .change("key4", ("previous1", "value1"))
-        .change("key2", ("previous2", "value2"));
-
-    return Ok(database_changes);
-}
 
 #[substreams::handlers::map]
 fn map_sa_trades(blk: sol::v1::Block) -> Result<pb::trade::ProcessExchanges, Error> {
+    log::info!("map_sa_trades");
     let mut process_exchanges = vec![];
     for trx in blk.transactions {
         if let Some(meta) = trx.meta {
@@ -113,6 +73,40 @@ fn map_sa_trades(blk: sol::v1::Block) -> Result<pb::trade::ProcessExchanges, Err
 
     return Ok(pb::trade::ProcessExchanges { process_exchanges });
 }
+
+#[substreams::handlers::store]
+fn store_sa_trades(exchanges: pb::trade::ProcessExchanges, output: StoreSetProto<pb::trade::ProcessExchange>) {
+    log::info!("store_sa_trades");
+
+    for exchange in exchanges.process_exchanges {
+        output.set(exchange.clone().block, exchange.clone().signature, &exchange);
+    }
+}
+
+#[substreams::handlers::map]
+fn db_out(exchanges: pb::trade::ProcessExchanges) -> Result<DatabaseChanges, Error> {
+    log::info!("db_sa_trades");
+
+    substreams::register_panic_hook();
+
+
+    let mut database_changes: DatabaseChanges = Default::default();
+
+    for exchange in exchanges.process_exchanges {
+        database_changes.push_change("trade", exchange.signature.as_str(), 0, Operation::Create)
+            .change("block", db_change_create(format!("{:}", exchange.block).as_str()))
+            .change("timestamp", db_change_create(format!("{:}", exchange.timestamp).as_str()))
+            .change("order_taker", db_change_create(format!("{:}", exchange.order_taker).as_str()))
+            .change("currency_mint", db_change_create(format!("{:}", exchange.currency_mint).as_str()))
+            .change("asset_mint", db_change_create(format!("{:}", exchange.asset_mint).as_str()))
+            .change("order_initializer", db_change_create(format!("{:}", exchange.order_initializer).as_str()))
+            .change("asset_change", db_change_create(format!("{:}", exchange.asset_change).as_str()))
+            .change("market_fee", db_change_create(format!("{:}", exchange.market_fee).as_str()))
+            .change("total_cost", db_change_create(format!("{:}", exchange.total_cost).as_str()));
+    }
+    return Ok(database_changes);
+}
+
 
 #[substreams::handlers::map]
 fn db_sa_trades(blk: sol::v1::Block) -> Result<DatabaseChanges, Error> {
@@ -186,6 +180,29 @@ fn db_sa_trades(blk: sol::v1::Block) -> Result<DatabaseChanges, Error> {
     return Ok(database_changes);
 }
 
-fn db_change_create(value: &str) -> (&str, &str) {
-    return (value, value);
+#[substreams::handlers::map]
+fn sa_trades_db_out(blk: sol::v1::Block, store: StoreGetProto<pb::trade::ProcessExchange>) -> Result<DatabaseChanges, Error> {
+    log::info!("sa_trades_db_out");
+    let mut database_changes: DatabaseChanges = Default::default();
+
+    for trx in blk.transactions {
+        for transaction in trx.transaction {
+            match store.get_last(bs58::encode(transaction.signatures[0].as_slice()).into_string()) {
+                None => { continue; }
+                Some(exchange) => {
+                    database_changes.push_change("trade", exchange.signature.as_str(), 0, Operation::Create)
+                        .change("block", db_change_create(format!("{:}", exchange.block).as_str()))
+                        .change("timestamp", db_change_create(format!("{:}", exchange.timestamp).as_str()))
+                        .change("order_taker", db_change_create(format!("{:}", exchange.order_taker).as_str()))
+                        .change("currency_mint", db_change_create(format!("{:}", exchange.currency_mint).as_str()))
+                        .change("asset_mint", db_change_create(format!("{:}", exchange.asset_mint).as_str()))
+                        .change("order_initializer", db_change_create(format!("{:}", exchange.order_initializer).as_str()))
+                        .change("asset_change", db_change_create(format!("{:}", exchange.asset_change).as_str()))
+                        .change("market_fee", db_change_create(format!("{:}", exchange.market_fee).as_str()))
+                        .change("total_cost", db_change_create(format!("{:}", exchange.total_cost).as_str()));
+                }
+            }
+        }
+    }
+    return Ok(database_changes);
 }
