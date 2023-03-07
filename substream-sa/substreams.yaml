@@ -54,7 +54,6 @@ modules:
 
   - name: db_sa_trades
     kind: map
-    initialBlock: 159433267
     inputs:
       - source: sf.solana.type.v1.Block
     output:
