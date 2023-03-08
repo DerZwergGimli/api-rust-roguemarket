@@ -32,6 +32,9 @@ pub enum MarketplaceInstruction<'a> {
     ProcessInitializeSell,
 
     InitializeOpenOrdersCounter,
+    InitializeMarketplace,
+
+    RegisterCurrency,
 
     ProcessCancel,
 
@@ -53,6 +56,10 @@ impl<'a> MarketplaceInstruction<'a> {
                 log::info!("[Instruction] ProcessInitializeSell");
                 Self::ProcessInitializeSell {}
             }
+            47 => {
+                log::info!("[Instruction] InitializeMarketplace");
+                Self::InitializeMarketplace {}
+            }
             85 => {
                 log::info!("[Instruction] ProcessCancel");
                 Self::ProcessCancel {}
@@ -69,10 +76,14 @@ impl<'a> MarketplaceInstruction<'a> {
                 log::info!("[Instruction] InitializeOpenOrdersCounter");
                 Self::InitializeOpenOrdersCounter
             }
+            247 => {
+                log::info!("[Instruction] RegisterCurrency");
+                Self::RegisterCurrency
+            }
 
             _ => {
                 log::info!("tag={:?}", tag);
-                log::info!("invdaild marketplace instruction");
+                log::info!("invalid marketplace instruction");
                 return Err(Error::Unexpected(format!("Invalid marketplace instruction")));
             }
         })

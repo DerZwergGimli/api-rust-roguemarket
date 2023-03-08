@@ -7,6 +7,6 @@ RUST_LOG=info cargo run \
   ../substream-sa/substreams.spkg \
   db_sa_trades \
   trades \
-  159433267 \
+  139433266 \
   0 \
   1000

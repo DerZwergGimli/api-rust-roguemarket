@@ -20,7 +20,7 @@ binaries:
 modules:
   - name: map_sa_trades
     kind: map
-    initialBlock: 159433267
+    initialBlock: 142318158
     inputs:
       - source: sf.solana.type.v1.Block
     output:
@@ -28,27 +28,24 @@ modules:
 
   - name: store_sa_trades
     kind: store
+    initialBlock: 142318158
     updatePolicy: set
     valueType: proto:sa.trade.v1.ProcessExchanges
     inputs:
-      - map: map_sa_trades
+      - source: sf.solana.type.v1.Block
 
   - name: db_out
     kind: map
+    initialBlock: 142318158
     inputs:
       - map: map_sa_trades
     output:
       type: proto:sf.substreams.database.v1.DatabaseChanges
 
-
-
   - name: sa_trades_db_out
     kind: map
-    initialBlock: 159433267
     inputs:
-      - source: sf.substreams.v1.Clock
       - store: store_sa_trades
-        mode: get
     output:
       type: proto:sf.substreams.database.v1.DatabaseChanges
 
