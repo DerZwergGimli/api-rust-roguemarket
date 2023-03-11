@@ -1,15 +1,16 @@
 use anyhow::{anyhow, Error};
 use async_stream::try_stream;
-use futures03::{Stream, StreamExt};
+
 use std::{
     pin::Pin,
     sync::Arc,
     task::{Context, Poll},
     time::Duration,
 };
+use futures::Stream;
 use tokio::time::sleep;
 use tokio_retry::strategy::ExponentialBackoff;
-
+use futures::StreamExt;
 use crate::{
     substreams::SubstreamsEndpoint,
 };
@@ -18,7 +19,7 @@ use crate::pb::substreams::{BlockScopedData, Modules, Request, Response};
 use crate::pb::substreams::response::Message;
 
 pub struct SubstreamsStream {
-    stream: Pin<Box<dyn Stream<Item = Result<BlockResponse, Error>> + Send>>,
+    stream: Pin<Box<dyn Stream<Item=Result<BlockResponse, Error>> + Send>>,
 }
 
 impl SubstreamsStream {
@@ -50,7 +51,7 @@ fn stream_blocks(
     module_name: String,
     start_block_num: i64,
     stop_block_num: u64,
-) -> impl Stream<Item = Result<BlockResponse, Error>> {
+) -> impl Stream<Item=Result<BlockResponse, Error>> {
     let mut latest_cursor = cursor.unwrap_or_else(|| "".to_string());
 
     let request = Request {

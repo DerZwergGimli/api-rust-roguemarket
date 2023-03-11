@@ -20,7 +20,6 @@ binaries:
 modules:
   - name: map_sa_trades
     kind: map
-    initialBlock: 142318158
     inputs:
       - source: sf.solana.type.v1.Block
     output:

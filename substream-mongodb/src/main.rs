@@ -5,17 +5,16 @@ mod substreams;
 mod substreams_stream;
 mod mongodb;
 
-
 use reqwest::header;
-
-use std::{env, fs};
+use std::{env, fs, thread};
 use std::os::unix::raw::ino_t;
 use std::sync::Arc;
 use std::thread::sleep;
 use std::time::Duration;
+use ::mongodb::Database;
 use anyhow::{Context, Error, format_err};
-use json::object;
 
+use json::object;
 use log::{error, info, warn};
 use prost::{DecodeError};
 use tokio_stream::StreamExt;
@@ -24,6 +23,7 @@ use crate::pb::substreams::{BlockScopedData, Request, StoreDeltas};
 use crate::pb::substreams::module_output::Data;
 use prost::Message;
 use staratlas::symbolstore::{Asset, BuilderSymbolStore, SymbolStore};
+use tokio::sync::Mutex;
 use types::trade_t::SATrade;
 use crate::mongodb::{database_connect, database_create, database_cursor_update, database_cursor_get, database_cursor_create};
 use crate::pb::substreams::stream_client::StreamClient;
@@ -32,33 +32,147 @@ use crate::substreams::SubstreamsEndpoint;
 use crate::substreams_stream::{BlockResponse, SubstreamsStream};
 use crate::pb::database::{DatabaseChanges, TableChange};
 use crate::pb::database::table_change::Operation;
+use tokio::task;
+use async_scoped;
+use indicatif::{MultiProgress, ProgressBar, ProgressStyle};
+
+
+#[derive(Debug, Clone)]
+struct AppData {
+    mongo_url: String,
+    endpoint_url: String,
+    package_file: String,
+    module_name: String,
+    database_name: String,
+    start_block: i64,
+    stop_block: u64,
+    thread_count: u64,
+    database: Option<Database>,
+    symbol_store: Option<SymbolStore>,
+    package: Package,
+    multi_pg: MultiProgress,
+    progress_main: ProgressBar,
+}
 
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
     env_logger::init();
-    let mongo_url = env::args().nth(1).expect("please provide a <mongo_url>");
-    let endpoint_url = env::args().nth(2).expect("please provide a <endpoint_url>");
-    let package_file = env::args().nth(3).expect("please provide a <package_file>");
-    let module_name = env::args().nth(4).expect("please provide a <module_name>");
-    let database_name = env::args().nth(5).expect("please provide a <database>");
-    let start_block = env::args().nth(6).expect("please provide a <start_block>").parse::<i64>().unwrap_or(179432144);
-    let stop_block = env::args().nth(7).expect("please provide a <stop_block>").parse::<u64>().unwrap_or(179432145);
+    let mut app_data = AppData {
+        mongo_url: env::args().nth(1).expect("please provide a <mongo_url>"),
+        endpoint_url: env::args().nth(2).expect("please provide a <endpoint_url>"),
+        package_file: env::args().nth(3).expect("please provide a <package_file>"),
+        module_name: env::args().nth(4).expect("please provide a <module_name>"),
+        database_name: env::args().nth(5).expect("please provide a <database>"),
+        start_block: env::args().nth(6).expect("please provide a <start_block>").parse::<i64>().unwrap_or(0),
+        stop_block: env::args().nth(7).expect("please provide a <stop_block>").parse::<u64>().unwrap_or(0),
+        thread_count: env::args().nth(8).expect("may provide a <thread_count> - this is set to 0 else!").parse::<u64>().unwrap_or(0),
+        database: None,
+        symbol_store: None,
+        package: Default::default(),
+        multi_pg: Default::default(),
+        progress_main: (ProgressBar::new(0)),
+    };
+    if app_data.thread_count == 0 {
+        app_data.thread_count = 1;
+    }
+
+    //Setup Progress
+    let sty = ProgressStyle::with_template(
+        "[{elapsed_precise}] {bar:40.cyan/blue} {pos:>7}/{len:7} {msg}",
+    )
+        .unwrap()
+        .progress_chars("##-");
+    app_data.multi_pg = MultiProgress::new();
+    app_data.progress_main = app_data.multi_pg.add(ProgressBar::new(app_data.thread_count));
+    app_data.progress_main.set_style(sty.clone());
+    app_data.progress_main.set_message("total  ");
+    app_data.progress_main.tick();
 
 
     let mut token: Option<String> = request_token(env::var("STREAMINGFAST_KEY").expect("please set env with: STREAMINGFAST_KEY")).await;
 
     info!("> Staring!");
-    info!("mongo_url={:?}\nendpoint_url={:?}\npackage_file{:?}\nmodule_name={:?}\nstart-block={:}\nstop-block={:}", mongo_url.clone(), endpoint_url, &package_file, &module_name, start_block, stop_block);
+    info!("{:?}", app_data.clone());
+    //Connect DATABASE
+    app_data.database = Some((database_connect(app_data.clone().mongo_url.to_string()).await?.database(app_data.clone().database_name.as_str())));
+    app_data.symbol_store = Some(BuilderSymbolStore::new().init().await);
 
-    let database = database_connect(mongo_url).await?.database(database_name.as_str());
-    let symbol_store = BuilderSymbolStore::new().init().await;
+    //Read provided SF config
+    app_data.package = read_package(&app_data.clone().package_file)?;
+    let endpoint = Arc::new(SubstreamsEndpoint::new(&app_data.clone().endpoint_url, token.clone()).await?);
 
 
-    let package = read_package(&package_file)?;
-    let endpoint = Arc::new(SubstreamsEndpoint::new(&endpoint_url, token.clone()).await?);
+    let app_data_arc = Arc::new((
+        app_data.clone()
+    ));
 
-    let cursor_name = module_name.clone() + start_block.clone().to_string().as_str();
+    //Spawn up Threads
+    info!("...Starting in parallel work mode! With {:} Threads", app_data.clone().thread_count);
+    std::panic::catch_unwind(|| {}).unwrap();
+
+    let range: i64 = (app_data.clone().stop_block - app_data.clone().start_block as u64) as i64;
+    if range < 0 {
+        panic!("Please provide a valid block-range");
+    }
+    let range_block = range.abs() / app_data.clone().thread_count as i64;
+
+
+    let mut threads = vec![];
+    for t in 0..app_data.clone().thread_count {
+        info!("Staring Thread_{:}", t);
+        let app_data_ = Arc::clone(&app_data_arc);
+        let endpoint_ = Arc::clone(&endpoint);
+        let package = read_package(&app_data.clone().package_file)?;
+
+        threads.push(tokio::spawn(async move {
+            run_substream(
+                t as usize,
+                (app_data_.clone().start_block + range_block * t as i64) as u64,
+                (app_data_.clone().start_block + range_block + range_block * t as i64) as u64,
+                app_data_.clone(),
+                app_data_.database.clone().unwrap(),
+                app_data_.symbol_store.clone().unwrap(),
+                package.clone(),
+                endpoint_.clone()).await.expect("TODO: panic message");
+        }
+        ))
+    };
+
+    let results = futures::future::join_all(threads).await;
+    let mut errors = Vec::new();
+
+    for result in results {
+        if let Err(error) = result {
+            errors.push(error);
+        }
+    }
+
+    // Handle any errors that occurred during execution
+    if !errors.is_empty() {
+        for error in errors {
+            eprintln!("Error occurred: {:?}", error);
+        }
+    }
+
+    // for t in threads {
+    //     tokio::join!(t);
+    // }
+
+
+    Ok(())
+}
+
+
+async fn run_substream(task_index: usize,
+                       start: u64,
+                       stop: u64,
+                       app_data: Arc<AppData>,
+                       database: Database,
+                       symbol_store: SymbolStore,
+                       package: Package,
+                       endpoint: Arc<SubstreamsEndpoint>) -> Result<(), Error> {
+    let cursor_name = app_data.module_name.clone().to_owned() + app_data.start_block.clone().to_string().as_str();
     let cursor = database_cursor_get(database.clone(), cursor_name.clone()).await;
     info!("cursor={:?}", cursor.clone());
     database_cursor_create(database.clone(), cursor_name.clone(), cursor.clone()).await?;
@@ -68,27 +182,40 @@ async fn main() -> Result<(), Error> {
         endpoint.clone(),
         cursor.clone(),
         package.modules.clone(),
-        module_name.clone().to_string(),
-        start_block,
-        stop_block,
+        app_data.module_name.clone().to_string(),
+        start as i64,
+        stop,
     );
 
-    info!("> Setup completed!");
+
+    let progress_bar = app_data.multi_pg.insert_before(&app_data.progress_main, ProgressBar::new(stop - start));
+    let sty = ProgressStyle::with_template(
+        "[{elapsed_precise}] {bar:40.cyan/blue} {pos:>7}/{len:7} {msg}",
+    )
+        .unwrap()
+        .progress_chars("##-");
+
+    progress_bar.set_style(sty.clone());
 
     loop {
+        app_data.progress_main.tick();
+        progress_bar.set_message(format!("Task #{}", task_index));
         match stream.next().await {
             None => {
-                println!("Stream consumed");
+                //println!("Stream consumed");
+                sleep(Duration::from_secs(1));
+                progress_bar.finish();
                 break;
             }
-
             Some(event) => match event {
                 Err(_) => {
                     println!("Error");
+                    panic!("Error while handling stream?");
+                    //progress_bar.inc(1);
                 }
                 Ok(BlockResponse::New(data)) => {
                     let cursor = Some(data.cursor.clone());
-                    match extract_database_changes_from_map(data, &module_name) {
+                    match extract_database_changes_from_map(data.clone(), &app_data.module_name.to_owned()) {
                         Ok(DatabaseChanges { table_changes }) => {
                             for table_changed in table_changes {
                                 match table_changed.operation() {
@@ -97,7 +224,7 @@ async fn main() -> Result<(), Error> {
                                     }
                                     Operation::Create => {
                                         let mapped = map_trade_to_struct(table_changed, symbol_store.clone())?;
-                                        database_create(database.clone(), mapped, "trades".to_string()).await?
+                                        database_create(database.clone(), mapped, "trades".to_string()).await?;
                                     }
                                     Operation::Update => {
                                         warn!("operation not supported")
@@ -114,13 +241,17 @@ async fn main() -> Result<(), Error> {
                             error!("not correct module");
                         }
                     }
+                    progress_bar.inc(data.step as u64);
                 }
             },
         }
     }
+
+
     sleep(Duration::from_millis(env::args().nth(8).unwrap_or("0".to_string()).parse::<u64>().unwrap()));
     Ok(())
 }
+
 
 async fn request_token(key: String) -> Option<String> {
     let mut headers = header::HeaderMap::new();

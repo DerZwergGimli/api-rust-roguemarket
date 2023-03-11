@@ -14,7 +14,6 @@ http = "0.2.3"
 tonic = { version = "0.7.1", features = ["tls-roots"] }
 tokio = { version = "1.0", features = ["macros", "rt-multi-thread"] }
 tokio-stream = { version = "0.1", features = ["net"] }
-futures03 = { version = "0.3.1", package = "futures", features = ["compat"] }
 tokio-retry = "0.3.0"
 async-stream = "0.3"
 mongodb = "2.4.0"
@@ -24,7 +23,9 @@ staratlas = { path = "../libs/staratlas" }
 reqwest = "0.11.14"
 json = "0.12.4"
 types = { path = "../libs/types" }
-
+async-scoped = "0.7.1"
+indicatif = "0.17.3"
+futures = "0.3.26"
 [build-dependencies]
 tonic-build = { version = "0.7.2", features = ["prost"] }
 

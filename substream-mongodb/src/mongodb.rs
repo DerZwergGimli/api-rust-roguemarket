@@ -34,7 +34,7 @@ pub async fn database_connect(url: String) -> Result<Client, Error> {
     }
 }
 
-pub async fn database_create(db: Database, element: SATrade, table_name: String) -> Result<(), Error> {
+pub async fn database_create(db: Database, element: SATrade, table_name: String) -> Result<(u64), Error> {
 
     //Make sure unique key is set
     let collection = db.collection::<SATrade>(table_name.as_str());
@@ -56,12 +56,13 @@ pub async fn database_create(db: Database, element: SATrade, table_name: String)
     if !signature_exists {
         match collection.insert_one(element, None).await {
             Ok(InsertOneResult { .. }) => {
-                info!("inserted!");
+                //       info!("inserted!");
+                return Ok(1);
             }
             _ => { return Err(anyhow!("Error adding doc!")); }
         }
     }
-    Ok(())
+    Ok((0))
 }
 
 pub async fn database_cursor_create(db: Database, cursor_name: String, cursor_value: Option<String>) -> Result<(), Error> {
@@ -107,7 +108,7 @@ pub async fn database_cursor_update(db: Database, cursor_name: String, cursor_va
     };
 }
 
-pub async fn database_cursor_get(db: Database, cursor_name: String) -> Option<String> {
+pub async fn database_cursor_get(db: Database, cursor_name: String) -> Option<(String)> {
     let collection = db.collection::<SubstreamsCursor>("_cursor");
     match collection.find_one(doc! {
             "cursor_name": cursor_name
