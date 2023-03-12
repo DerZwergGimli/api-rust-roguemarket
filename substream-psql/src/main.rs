@@ -19,6 +19,7 @@ use tokio::task::{JoinHandle, JoinSet};
 use tokio::time::{sleep, Duration};
 use structopt::StructOpt;
 use crate::helper::{extract_database_changes_from_map, map_trade_to_struct, request_token, TaskStates, update_task_info};
+use diesel::r2d2::Pool;
 
 use crate::pb::database::DatabaseChanges;
 use crate::pb::database::table_change::Operation;
@@ -28,9 +29,11 @@ use crate::substreams::SubstreamsEndpoint;
 use crate::substreams_stream::{BlockResponse, SubstreamsStream};
 use diesel::prelude::*;
 use tokio_stream::StreamExt;
-use database_psql::connection::{create_cursor, create_or_update_trade_table, get_cursor, psql_connect, update_cursor};
+use database_psql::connection::create_psql_pool;
+use database_psql::db_cursors::{create_cursor, get_cursor, update_cursor};
+use database_psql::db_trades::create_or_update_trade_table;
 use database_psql::model::Cursor;
-
+use diesel::r2d2::ConnectionManager;
 
 #[derive(Debug, StructOpt)]
 struct Config {
@@ -63,7 +66,7 @@ async fn main() {
     info!("Config:\n {:?}", config);
 
 
-    let database = psql_connect();
+    let database = create_psql_pool();
     let symbol_store = Arc::new(BuilderSymbolStore::new().init().await);
     let mut token: Option<String> = request_token(env::var("STREAMINGFAST_KEY").expect("please set env with: STREAMINGFAST_KEY")).await;
     let endpoint = Arc::new(SubstreamsEndpoint::new(config.endpoint_url, token).await.unwrap());
@@ -153,9 +156,9 @@ async fn run_substream(
     pb_task: ProgressBar) -> usize {
     update_task_info(pb_task.clone(), task_index, TaskStates::CREATING);
 
+    let connection_pool: Pool<ConnectionManager<PgConnection>> = create_psql_pool();
 
-    let connection = &mut psql_connect();
-    let cursor_db = get_cursor(connection, format!("{}_{}_{}", module_name, range[0], range[1]));
+    let cursor_db = get_cursor(&mut connection_pool.get().expect("Error getting connection"), format!("{}_{}_{}", module_name, range[0], range[1]));
 
 
     let mut cursor: Option<String> = None;
@@ -167,7 +170,7 @@ async fn run_substream(
             value: None,
             block: None,
         };
-        create_cursor(connection, new_cursor);
+        create_cursor(&mut connection_pool.get().expect("Error getting connection"), new_cursor);
     }
 
     sleep(Duration::from_millis(2000)).await;
@@ -218,7 +221,7 @@ async fn run_substream(
                                     Operation::Create => {
                                         let mapped = map_trade_to_struct(table_changed, symbol_store.clone()).expect("Error unwrapping db data");
                                         let current_block = mapped.block as u64;
-                                        create_or_update_trade_table(connection, mapped);
+                                        create_or_update_trade_table(&mut connection_pool.get().expect("Error getting connection"), mapped);
 
                                         if range[1] > 0 {
                                             pb_task.set_position(current_block - range[0]);
@@ -240,7 +243,7 @@ async fn run_substream(
                                 value: cursor.clone(),
                                 block: Some(current_block as i64),
                             };
-                            update_cursor(connection, format!("{}_{}_{}", module_name, range[0], range[1]), new_cursor);
+                            update_cursor(&mut connection_pool.get().expect("Error getting connection"), format!("{}_{}_{}", module_name, range[0], range[1]), new_cursor);
                         }
                         Err(error) => {
                             error!("not correct module");
