@@ -11,6 +11,7 @@ use futures::Stream;
 use tokio::time::sleep;
 use tokio_retry::strategy::ExponentialBackoff;
 use futures::StreamExt;
+use log::info;
 use crate::{
     substreams::SubstreamsEndpoint,
 };
@@ -74,11 +75,11 @@ fn stream_blocks(
 
     try_stream! {
         loop {
-            println!("Blockstreams disconnected, connecting (endpoint {}, start block {}, cursor {})",
-                &endpoint,
-                start_block_num,
-                &latest_cursor
-            );
+            // info!("Blockstreams disconnected, connecting (endpoint {}, start block {}, cursor {})",
+            //     &endpoint,
+            //     start_block_num,
+            //     &latest_cursor
+            // );
 
             // We just reconnected, assume that we want to back off on errors
             skip_backoff = false;
@@ -87,7 +88,6 @@ fn stream_blocks(
 
             match result {
                 Ok(stream) => {
-                    println!("Blockstreams connected");
 
                     let mut expected_stream_end = stop_block_num != 0;
 
@@ -119,6 +119,7 @@ fn stream_blocks(
                                 // that cannot be decoded properly.
 
                                 expected_stream_end = true;
+                                panic!("Error while receiving stream!");
                                 break;
                             }
                         }

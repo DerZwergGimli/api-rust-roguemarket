@@ -27,8 +27,8 @@ async-scoped = "0.7.1"
 indicatif = "0.17.3"
 futures = "0.3.26"
 structopt = "0.3.26"
-diesel = { version = "2.0.0", features = ["postgres"] }
-
+diesel = { version = "2.0.3", features = ["postgres"] }
+database_psql = { path = "../libs/database_psql" }
 
 
 [build-dependencies]
