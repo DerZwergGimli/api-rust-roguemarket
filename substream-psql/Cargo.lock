@@ -2043,7 +2043,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "substream-mongodb"
+name = "substream-psql"
 version = "0.1.0"
 dependencies = [
  "anyhow",
