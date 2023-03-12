@@ -14,7 +14,7 @@ pub fn create_psql_pool() -> Pool<ConnectionManager<PgConnection>> {
 
     //Create
     let pool = Pool::builder()
-        .max_size(10)
+        .max_size(5)
         .build(connection_manager)
         .expect("Failed to create pool");
     pool
