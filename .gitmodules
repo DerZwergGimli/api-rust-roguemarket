@@ -7,3 +7,9 @@
 [submodule "substream-mongodb/dependencies/substreams-database-change"]
 	path = substream-mongodb/dependencies/substreams-database-change
 	url = https://github.com/streamingfast/substreams-database-change
+[submodule "substream-psql/dependencies/substreams-database-change"]
+	path = substream-psql/dependencies/substreams-database-change
+	url = https://github.com/streamingfast/substreams-database-change
+[submodule "substream-psql/dependencies/substreams"]
+	path = substream-psql/dependencies/substreams
+	url = https://github.com/streamingfast/substreams.git
