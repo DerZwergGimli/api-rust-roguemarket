@@ -5,6 +5,6 @@
 /worker-js/.env
 /worker-js/build/
 /worker-js/node_modules/
-/.env
+/**/.env
 /worker-js/package-lock.json
 /**/devel

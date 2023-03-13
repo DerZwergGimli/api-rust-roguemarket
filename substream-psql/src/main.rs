@@ -158,7 +158,6 @@ async fn run_substream(
     pb_task: ProgressBar) -> usize {
     update_task_info(pb_task.clone(), task_index, TaskStates::CREATING);
 
-
     let cursor_db = get_cursor(&mut connection_pool.get().expect("Error getting connection"), format!("{}_{}_{}", module_name, range[0], range[1]));
 
 
