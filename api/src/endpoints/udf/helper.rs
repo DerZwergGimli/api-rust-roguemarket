@@ -11,7 +11,7 @@ struct OHLC {
     volume: f64,
 }
 
-pub fn ohlc_converter(data: &[Trade], resolution_secounds: Option<i64>) -> UdfHistory {
+pub fn ohlc_converter(data: &[Trade], resolution_minute: Option<i64>) -> UdfHistory {
     let mut result = UdfHistory {
         s: "ok".to_string(),
         t: vec![],
@@ -26,7 +26,7 @@ pub fn ohlc_converter(data: &[Trade], resolution_secounds: Option<i64>) -> UdfHi
 
     for item in data {
         if let Some(ohlc) = &mut current_ohlc {
-            if item.timestamp >= ohlc.timestamp + resolution_secounds.unwrap_or(60) { // new minute
+            if item.timestamp >= ohlc.timestamp + resolution_minute.unwrap_or(60) { // new minute
                 result.t.push(ohlc.timestamp);
                 result.c.push(ohlc.close);
                 result.o.push(ohlc.open);
@@ -35,24 +35,24 @@ pub fn ohlc_converter(data: &[Trade], resolution_secounds: Option<i64>) -> UdfHi
                 result.v.push(ohlc.volume); // volume not supported
                 *ohlc = OHLC {
                     timestamp: item.timestamp,
-                    open: item.total_cost,
-                    high: item.total_cost,
-                    low: item.total_cost,
-                    close: item.total_cost,
+                    open: calc_price(item),
+                    high: calc_price(item),
+                    low: calc_price(item),
+                    close: calc_price(item),
                     volume: item.asset_change as f64,
                 };
             } else {
-                ohlc.high = ohlc.high.max(item.total_cost);
-                ohlc.low = ohlc.low.min(item.total_cost);
-                ohlc.close = item.total_cost;
+                ohlc.high = ohlc.high.max(calc_price(item));
+                ohlc.low = ohlc.low.min(calc_price(item));
+                ohlc.close = calc_price(item);
             }
         } else {
             current_ohlc = Some(OHLC {
                 timestamp: item.timestamp,
-                open: item.total_cost,
-                high: item.total_cost,
-                low: item.total_cost,
-                close: item.total_cost,
+                open: calc_price(item),
+                high: calc_price(item),
+                low: calc_price(item),
+                close: calc_price(item),
                 volume: item.asset_change as f64,
             });
         }
@@ -68,4 +68,8 @@ pub fn ohlc_converter(data: &[Trade], resolution_secounds: Option<i64>) -> UdfHi
     }
 
     result
+}
+
+fn calc_price(item: &Trade) -> f64 {
+    item.total_cost / item.asset_change as f64
 }

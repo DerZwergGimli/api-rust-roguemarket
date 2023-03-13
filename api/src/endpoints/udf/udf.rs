@@ -462,8 +462,8 @@ pub async fn get_history(
             errmsg: "No data found".to_string(),
         }))
     } else {
-        let timeframe_seconds = convert_udf_time_to_minute(query.resolution);
-        let ohcl_data = ohlc_converter(&cursor_db, timeframe_seconds);
+        let timeframe_minute = convert_udf_time_to_minute(query.resolution);
+        let ohcl_data = ohlc_converter(&cursor_db, timeframe_minute);
         Ok(warp::reply::json(&ohcl_data))
     };
 
