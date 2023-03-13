@@ -429,14 +429,14 @@ pub async fn get_history(
     if query.countback.unwrap_or_default() > 0 {
         cursor_db = trades
             .filter(symbol.like(query.symbol.clone())
-                .and(timestamp.gt(query.from.unwrap_or_default() as i64 - query.countback.unwrap_or_default() as i64))
                 .and(timestamp.lt(query.to.unwrap_or_default() as i64)))
+            .limit(query.countback.unwrap() as i64)
             .load::<Trade>(&mut db)
             .expect("Error loading cursors");
     } else {
         cursor_db = trades
             .filter(symbol.like(query.symbol.clone())
-                .and(timestamp.gt(query.from.unwrap_or_default() as i64))
+                .and(timestamp.ge(query.from.unwrap_or_default() as i64))
                 .and(timestamp.lt(query.to.unwrap_or_default() as i64)))
             .load::<Trade>(&mut db)
             .expect("Error loading cursors");
