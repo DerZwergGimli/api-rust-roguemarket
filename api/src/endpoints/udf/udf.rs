@@ -444,6 +444,18 @@ pub async fn get_history(
 
 
     return if cursor_db.is_empty() {
+        cursor_db = trades
+            .filter(symbol.like(query.symbol.clone())
+                .and(timestamp.lt(query.to.unwrap_or_default() as i64)))
+            .limit(1)
+            .load::<Trade>(&mut db)
+            .expect("Error loading cursors");
+        if !cursor_db.is_empty() {
+            return Ok(warp::reply::json(&UdfError {
+                s: Status::no_data,
+                nextTime: Some(cursor_db[0].timestamp),
+            }));
+        }
         warn!("There seems to be no data...");
         Ok(warp::reply::json(&StatsError {
             s: 1,
