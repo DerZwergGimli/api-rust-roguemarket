@@ -1,7 +1,10 @@
 use diesel::prelude::*;
-use crate::schema::*;
 
-#[derive(Queryable, Insertable, Debug)]
+use crate::schema::cursors;
+use crate::schema::trades;
+use serde::{Deserialize, Serialize};
+
+#[derive(Queryable, Insertable, Serialize, Deserialize, Debug)]
 //#[table_name = "cursors"]
 pub struct Cursor {
     pub id: String,
@@ -9,7 +12,7 @@ pub struct Cursor {
     pub block: Option<i64>,
 }
 
-#[derive(Queryable, Insertable, Debug)]
+#[derive(Queryable, Insertable, Serialize, Deserialize, Debug)]
 pub struct Trade {
     pub signature: String,
     pub symbol: String,

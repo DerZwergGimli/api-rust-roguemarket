@@ -66,7 +66,7 @@ async fn main() {
     info!("Config:\n {:?}", config);
 
 
-    let database = create_psql_pool();
+    let database_pool = (create_psql_pool());
     let symbol_store = Arc::new(BuilderSymbolStore::new().init().await);
     let mut token: Option<String> = request_token(env::var("STREAMINGFAST_KEY").expect("please set env with: STREAMINGFAST_KEY")).await;
     let endpoint = Arc::new(SubstreamsEndpoint::new(config.endpoint_url, token).await.unwrap());
@@ -122,6 +122,7 @@ async fn main() {
                                 range.clone(),
                                 config.package_file.clone(),
                                 config.module_name.clone(),
+                                database_pool.clone(),
                                 symbol_store.clone(),
                                 endpoint.clone(),
                                 pb_task));
@@ -151,12 +152,12 @@ async fn run_substream(
     range: Vec<u64>,
     package_name: String,
     module_name: String,
+    connection_pool: Pool<ConnectionManager<PgConnection>>,
     symbol_store: Arc<SymbolStore>,
     endpoint: Arc<SubstreamsEndpoint>,
     pb_task: ProgressBar) -> usize {
     update_task_info(pb_task.clone(), task_index, TaskStates::CREATING);
 
-    let connection_pool: Pool<ConnectionManager<PgConnection>> = create_psql_pool();
 
     let cursor_db = get_cursor(&mut connection_pool.get().expect("Error getting connection"), format!("{}_{}_{}", module_name, range[0], range[1]));
 

@@ -3,11 +3,8 @@ use crate::endpoints::udf::{udf_config_t, udf_history_t, udf_symbols_t};
 use crate::endpoints::udf::{udf_search_t, udf_symbol_info_t};
 use crate::udf_config_t::{Exchange, SymbolsType};
 use log::info;
-use mongo::mongodb::{
-    find_by_signature, find_by_symbol, find_udf_trade_next, find_udf_trades, MongoDBConnection,
-};
-use mongodb::bson::Document;
-use mongodb::Collection;
+
+
 use serde::{Deserialize, Serialize};
 use staratlas::symbolstore::{BuilderSymbolStore, SymbolStore};
 use std::future::Future;
@@ -24,22 +21,20 @@ use utoipa::openapi::SchemaFormat::DateTime;
 use utoipa::{IntoParams, ToSchema};
 use warp::sse::reply;
 use warp::{hyper::StatusCode, Filter, Reply};
+use database_psql::connection::create_psql_pool;
 
 //region PARAMS
 
 //endregion
 
 //region HANDLERS
-pub async fn handlers() -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone
+pub async fn handlers() -> impl Filter<Extract=impl warp::Reply, Error=warp::Rejection> + Clone
 {
-    let mongo_db =
-        MongoDBConnection::new(env::var("MONGOURL").expect("NO MONGOURL").as_str()).await;
-
+    let psql_pool = create_psql_pool();
     let home = warp::path!("info")
         .and(warp::get())
         .and(warp::path::end())
         .and_then(get_info);
-
 
 
     home

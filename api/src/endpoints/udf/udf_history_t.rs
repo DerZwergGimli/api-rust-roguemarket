@@ -11,3 +11,9 @@ pub struct UdfHistory {
     pub l: Vec<f64>,
     pub v: Vec<f64>,
 }
+
+struct Data {
+    timestamp: i64,
+    volume: i64,
+    price: f64,
+}

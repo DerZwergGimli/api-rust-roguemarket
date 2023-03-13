@@ -2,10 +2,9 @@ use crate::endpoints::udf::udf_error_t::{Status, UdfError};
 use crate::endpoints::udf::{udf_config_t, udf_history_t, udf_symbols_t};
 use crate::endpoints::udf::{udf_search_t, udf_symbol_info_t};
 use crate::udf_config_t::{Exchange, SymbolsType};
-use log::info;
-use mongo::mongodb::{find_udf_trade_next, find_udf_trades, MongoDBConnection};
-use mongodb::bson::Document;
-use mongodb::Collection;
+use log::{info, warn};
+use diesel::r2d2::{Pool, ConnectionManager};
+use diesel::PgConnection;
 use serde::{Deserialize, Serialize};
 use staratlas::symbolstore::{BuilderSymbolStore, SymbolStore};
 use std::time::{SystemTime, UNIX_EPOCH};
@@ -21,6 +20,11 @@ use utoipa::openapi::SchemaFormat::DateTime;
 use utoipa::{IntoParams, ToSchema};
 use warp::sse::reply;
 use warp::{hyper::StatusCode, Filter, Reply};
+use database_psql::connection::create_psql_pool;
+use crate::endpoints::stats::stats_error::StatsError;
+use crate::endpoints::udf::helper::ohlc_converter;
+use crate::helper::with_psql_store;
+
 
 //region PARAMS
 #[derive(Debug, Deserialize, IntoParams)]
@@ -33,14 +37,14 @@ pub struct SymbolInfoParams {
 #[derive(Debug, Deserialize, IntoParams)]
 #[into_params(parameter_in = Query)]
 pub struct SymbolsParams {
-    #[param(style = Form, example = "FOOD")]
+    #[param(style = Form, example = "FOODATLAS")]
     symbol: String,
 }
 
 #[derive(Debug, Deserialize, IntoParams)]
 #[into_params(parameter_in = Query)]
 pub struct SearchParams {
-    #[param(style = Form, example = "FOOD")]
+    #[param(style = Form, example = "SymbolsParams")]
     query: String,
     #[serde(rename = "type")]
     shipType: Option<String>,
@@ -54,7 +58,9 @@ pub struct SearchParams {
 pub struct HistoryParams {
     #[param(style = Form, example = "FOODATLAS")]
     symbol: String,
+    #[param(style = Form, example = "1677799981")]
     from: Option<u64>,
+    #[param(style = Form, example = "1678663981")]
     to: Option<u64>,
     resolution: Option<String>,
     countback: Option<u64>,
@@ -66,8 +72,7 @@ pub struct HistoryParams {
 pub async fn handlers() -> impl Filter<Extract=impl warp::Reply, Error=warp::Rejection> + Clone
 {
     let store_sa = BuilderSymbolStore::new().init().await;
-    let mongo_db =
-        MongoDBConnection::new(env::var("MONGOURL").expect("NO MONGOURL").as_str()).await;
+    let psql_pool = create_psql_pool();
 
     let home = warp::path!("udf")
         .and(warp::get())
@@ -108,9 +113,7 @@ pub async fn handlers() -> impl Filter<Extract=impl warp::Reply, Error=warp::Rej
     let history = warp::path!("udf" / "history")
         .and(warp::get())
         .and(warp::path::end())
-        .and(with_mongo_store(
-            mongo_db.collection_as_doc.clone(),
-        ))
+        .and(with_psql_store(psql_pool.clone()))
         .and(warp::query::<HistoryParams>())
         .and_then(get_history);
 
@@ -128,11 +131,12 @@ fn with_sa_store(
     warp::any().map(move || store.clone())
 }
 
-fn with_mongo_store(
-    store: Collection<Document>,
-) -> impl Filter<Extract=(Collection<Document>, ), Error=Infallible> + Clone {
-    warp::any().map(move || store.clone())
-}
+
+// fn with_mongo_store(
+//     store: Collection<Document>,
+// ) -> impl Filter<Extract=(Collection<Document>, ), Error=Infallible> + Clone {
+//     warp::any().map(move || store.clone())
+// }
 //endregion
 
 /// UDF Home
@@ -402,7 +406,7 @@ responses(
 )
 )]
 pub async fn get_history(
-    trades: Collection<Document>,
+    db_pool: Pool<ConnectionManager<PgConnection>>,
     query: HistoryParams,
 ) -> Result<impl Reply, Infallible> {
     let mut history = udf_history_t::UdfHistory {
@@ -415,54 +419,91 @@ pub async fn get_history(
         v: vec![],
     };
 
+    let mut db = db_pool.get().expect("Unable to get connection from pool!");
 
-    match find_udf_trades(
-        trades.clone(),
-        query.symbol.clone(),
-        query.from.unwrap_or_default(),
-        query.to.unwrap_or_default(),
-        convert_udf_time_to_minute(query.resolution.unwrap_or("3600".to_string()).as_str())
-            .unwrap(),
-        query.countback,
-    )
-        .await
-    {
-        Some(data) => {
-            if data.len() > 0 {
-                history.s = "ok".to_string();
-                history.o = data.clone().into_iter().map(|d| d.open).collect();
-                history.h = data.clone().into_iter().map(|d| d.high).collect();
-                history.c = data.clone().into_iter().map(|d| d.close).collect();
-                history.l = data.clone().into_iter().map(|d| d.low).collect();
-                history.v = data.clone().into_iter().map(|d| d.volume).collect();
-                history.t = data.clone().into_iter().map(|d| d.time_last).collect();
-            }
-        }
-        _ => {}
-    };
+    use diesel::prelude::*;
+    use database_psql::model::*;
+    use database_psql::schema::trades::dsl::*;
 
-    return if history.t.len() > 0 {
-        info!("found");
-        Ok(warp::reply::json(&history))
+    let mut cursor_db: Vec<Trade>;
+    if query.countback.unwrap_or_default() > 0 {
+        cursor_db = trades
+            .filter(symbol.like(query.symbol.clone())
+                .and(timestamp.gt(query.to.unwrap_or_default() as i64 - query.countback.unwrap_or_default() as i64))
+                .and(timestamp.lt(query.to.unwrap_or_default() as i64)))
+            .load::<Trade>(&mut db)
+            .expect("Error loading cursors");
     } else {
-        match find_udf_trade_next(trades, query.symbol, query.from.unwrap_or_default()).await {
-            Some(data) => {
-                info!("no-data");
-                let timestamp = data.get_i64("timestamp").unwrap_or_default();
-                Ok(warp::reply::json(&UdfError {
-                    s: Status::no_data,
-                    //errmsg: None,
-                    nextTime: Some(timestamp),
-                }))
-            }
-            None => {
-                info!("error");
-                Ok(warp::reply::json(&UdfError {
-                    s: Status::no_data,
-                    //errmsg: None,
-                    nextTime: None,
-                }))
-            }
-        }
+        cursor_db = trades
+            .filter(symbol.like(query.symbol.clone())
+                .and(timestamp.gt(query.from.unwrap_or_default() as i64))
+                .and(timestamp.lt(query.to.unwrap_or_default() as i64)))
+            .load::<Trade>(&mut db)
+            .expect("Error loading cursors");
+    }
+
+
+    return if cursor_db.is_empty() {
+        warn!("There seems to be no data...");
+        Ok(warp::reply::json(&StatsError {
+            s: 1,
+            errmsg: "No data found".to_string(),
+        }))
+    } else {
+        let timeframe_seconds = convert_udf_time_to_minute(query.resolution);
+        let ohcl_data = ohlc_converter(&cursor_db, timeframe_seconds);
+        Ok(warp::reply::json(&ohcl_data))
     };
+
+    //
+    //
+    // match find_udf_trades(
+    //     trades.clone(),
+    //     query.symbol.clone(),
+    //     query.from.unwrap_or_default(),
+    //     query.to.unwrap_or_default(),
+    //     convert_udf_time_to_minute(query.resolution.unwrap_or("3600".to_string()).as_str())
+    //         .unwrap(),
+    //     query.countback,
+    // )
+    //     .await
+    // {
+    //     Some(data) => {
+    //         if data.len() > 0 {
+    //             history.s = "ok".to_string();
+    //             history.o = data.clone().into_iter().map(|d| d.open).collect();
+    //             history.h = data.clone().into_iter().map(|d| d.high).collect();
+    //             history.c = data.clone().into_iter().map(|d| d.close).collect();
+    //             history.l = data.clone().into_iter().map(|d| d.low).collect();
+    //             history.v = data.clone().into_iter().map(|d| d.volume).collect();
+    //             history.t = data.clone().into_iter().map(|d| d.time_last).collect();
+    //         }
+    //     }
+    //     _ => {}
+    // };
+    //
+    // return if history.t.len() > 0 {
+    //     info!("found");
+    //     Ok(warp::reply::json(&history))
+    // } else {
+    //     match find_udf_trade_next(trades, query.symbol, query.from.unwrap_or_default()).await {
+    //         Some(data) => {
+    //             info!("no-data");
+    //             let timestamp = data.get_i64("timestamp").unwrap_or_default();
+    //             Ok(warp::reply::json(&UdfError {
+    //                 s: Status::no_data,
+    //                 //errmsg: None,
+    //                 nextTime: Some(timestamp),
+    //             }))
+    //         }
+    //         None => {
+    //             info!("error");
+    //             Ok(warp::reply::json(&UdfError {
+    //                 s: Status::no_data,
+    //                 //errmsg: None,
+    //                 nextTime: None,
+    //             }))
+    //         }
+    //     }
+    // };
 }

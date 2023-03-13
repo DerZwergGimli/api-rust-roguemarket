@@ -23,3 +23,4 @@ types = { path = "../libs/types" }
 udf = { path = "../libs/udf" }
 utoipa-swagger-ui = "2.0.1"
 chrono = "0.4.22"
+diesel = { version = "2.0.3", features = ["postgres", "r2d2"] }

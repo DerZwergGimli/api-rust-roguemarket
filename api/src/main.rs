@@ -1,4 +1,5 @@
 mod endpoints;
+mod helper;
 
 use crate::endpoints::default::default;
 use crate::endpoints::trades::trades;
@@ -26,6 +27,7 @@ use warp::{
     path::{FullPath, Tail},
     Filter, Rejection, Reply,
 };
+use database_psql::connection::create_psql_pool;
 
 #[tokio::main]
 async fn main() {

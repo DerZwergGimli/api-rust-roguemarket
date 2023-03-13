@@ -419,6 +419,7 @@ version = "0.1.0"
 dependencies = [
  "diesel",
  "r2d2",
+ "serde",
 ]
 
 [[package]]

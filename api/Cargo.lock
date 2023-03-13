@@ -8,6 +8,7 @@ version = "0.2.2"
 dependencies = [
  "chrono",
  "database_psql",
+ "diesel",
  "env_logger",
  "futures",
  "log",
@@ -234,6 +235,7 @@ version = "0.1.0"
 dependencies = [
  "diesel",
  "r2d2",
+ "serde",
 ]
 
 [[package]]

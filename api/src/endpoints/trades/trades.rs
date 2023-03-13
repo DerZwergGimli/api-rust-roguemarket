@@ -2,10 +2,8 @@ use crate::endpoints::udf::udf_error_t::{Status, UdfError};
 use crate::endpoints::udf::{udf_config_t, udf_history_t, udf_symbols_t};
 use crate::endpoints::udf::{udf_search_t, udf_symbol_info_t};
 use crate::udf_config_t::{Exchange, SymbolsType};
-use log::info;
-use mongo::mongodb::{find_by_address, find_by_mint, find_by_signature, find_by_symbol, find_udf_trade_next, find_udf_trades, MongoDBConnection};
-use mongodb::bson::Document;
-use mongodb::Collection;
+use log::{info, warn};
+
 use serde::{Deserialize, Serialize};
 use staratlas::symbolstore::{BuilderSymbolStore, SymbolStore};
 use std::future::Future;
@@ -15,6 +13,8 @@ use std::{
     env,
     sync::{Arc, Mutex},
 };
+use diesel::PgConnection;
+use diesel::r2d2::{ConnectionManager, Pool};
 use types::databasetrade::DBTrade;
 use types::m_ohclvt::M_OHCLVT;
 use udf::time_convert::convert_udf_time_to_minute;
@@ -22,6 +22,9 @@ use utoipa::openapi::SchemaFormat::DateTime;
 use utoipa::{IntoParams, ToSchema};
 use warp::sse::reply;
 use warp::{hyper::StatusCode, Filter, Reply};
+use database_psql::connection::create_psql_pool;
+use crate::endpoints::stats::stats_error::StatsError;
+use crate::helper::with_psql_store;
 
 //region PARAMS
 #[derive(Debug, Deserialize, IntoParams)]
@@ -36,6 +39,7 @@ pub struct DefaultLastParams {
 #[into_params(parameter_in = Query)]
 pub struct DefaultSignatureParams {
     signature: String,
+    limit: Option<i64>,
 }
 
 #[derive(Debug, Deserialize, IntoParams)]
@@ -57,53 +61,39 @@ pub struct DefaultMintParams {
 //region HANDLERS
 pub async fn handlers() -> impl Filter<Extract=impl warp::Reply, Error=warp::Rejection> + Clone
 {
-    let mongo_db =
-        MongoDBConnection::new(env::var("MONGOURL").expect("NO MONGOURL").as_str()).await;
+    let psql_pool = create_psql_pool();
 
     let info = warp::path!("trades" / "last")
         .and(warp::get())
         .and(warp::path::end())
-        .and(with_mongo_store(
-            mongo_db.collection_as_doc.clone(),
-        ))
+        .and(with_psql_store(psql_pool.clone()))
         .and(warp::query::<DefaultLastParams>())
         .and_then(get_last);
 
     let signature = warp::path!("trades" / "signature")
         .and(warp::get())
         .and(warp::path::end())
-        .and(with_mongo_store(
-            mongo_db.collection_as_doc.clone(),
-        ))
+        .and(with_psql_store(psql_pool.clone()))
         .and(warp::query::<DefaultSignatureParams>())
         .and_then(get_signature);
 
     let mint = warp::path!("trades" / "mint")
         .and(warp::get())
         .and(warp::path::end())
-        .and(with_mongo_store(
-            mongo_db.collection_as_doc.clone(),
-        ))
+        .and(with_psql_store(psql_pool.clone()))
         .and(warp::query::<DefaultMintParams>())
         .and_then(get_mint);
 
     let address = warp::path!("trades" / "address")
         .and(warp::get())
         .and(warp::path::end())
-        .and(with_mongo_store(
-            mongo_db.collection_as_doc.clone(),
-        ))
+        .and(with_psql_store(psql_pool.clone()))
         .and(warp::query::<DefaultAddressParams>())
         .and_then(get_address);
 
     info.or(signature).or(mint).or(address)
 }
 
-fn with_mongo_store(
-    store: Collection<Document>,
-) -> impl Filter<Extract=(Collection<Document>, ), Error=Infallible> + Clone {
-    warp::any().map(move || store.clone())
-}
 
 //endregion
 
@@ -120,18 +110,29 @@ responses(
 )
 )]
 pub async fn get_last(
-    trades: Collection<Document>,
+    db_pool: Pool<ConnectionManager<PgConnection>>,
     query: DefaultLastParams,
 ) -> Result<impl Reply, Infallible> {
-    return match find_by_symbol(trades.clone(), query.symbol.clone(), query.limit.clone()).await {
-        Some(data) => {
-            Ok(warp::reply::json(&data))
-        }
-        _ => {
-            /// A placeholder for a future error handling.
-            let error = "Error".to_string();
-            Ok(warp::reply::json(&error))
-        }
+    let mut db = db_pool.get().expect("Unable to get connection from pool!");
+
+    use diesel::prelude::*;
+    use database_psql::model::*;
+    use database_psql::schema::trades::dsl::*;
+
+    let cursor_db: Vec<Trade> = trades
+        .filter(symbol.like(query.symbol.clone()))
+        .limit(query.limit.unwrap_or(10))
+        .load::<Trade>(&mut db)
+        .expect("Error loading cursors");
+
+    return if cursor_db.is_empty() {
+        warn!("There seems to be no data...");
+        Ok(warp::reply::json(&StatsError {
+            s: 1,
+            errmsg: "No data found".to_string(),
+        }))
+    } else {
+        Ok(warp::reply::json(&cursor_db))
     };
 }
 
@@ -147,18 +148,29 @@ responses(
 )
 )]
 pub async fn get_signature(
-    trades: Collection<Document>,
+    db_pool: Pool<ConnectionManager<PgConnection>>,
     query: DefaultSignatureParams,
 ) -> Result<impl Reply, Infallible> {
-    return match find_by_signature(trades.clone(), query.signature.clone()).await {
-        Some(data) => {
-            Ok(warp::reply::json(&data))
-        }
-        _ => {
-            /// A placeholder for a future error handling.
-            let error = "Error".to_string();
-            Ok(warp::reply::json(&error))
-        }
+    let mut db = db_pool.get().expect("Unable to get connection from pool!");
+
+    use diesel::prelude::*;
+    use database_psql::model::*;
+    use database_psql::schema::trades::dsl::*;
+
+    let cursor_db: Vec<Trade> = trades
+        .filter(signature.like(query.signature.clone()))
+        .limit(query.limit.unwrap_or(10))
+        .load::<Trade>(&mut db)
+        .expect("Error loading cursors");
+
+    return if cursor_db.is_empty() {
+        warn!("There seems to be no data...");
+        Ok(warp::reply::json(&StatsError {
+            s: 1,
+            errmsg: "No data found".to_string(),
+        }))
+    } else {
+        Ok(warp::reply::json(&cursor_db))
     };
 }
 
@@ -175,18 +187,29 @@ responses(
 )
 )]
 pub async fn get_address(
-    trades: Collection<Document>,
+    db_pool: Pool<ConnectionManager<PgConnection>>,
     query: DefaultAddressParams,
 ) -> Result<impl Reply, Infallible> {
-    return match find_by_address(trades.clone(), query.address.clone(), query.limit.clone()).await {
-        Some(data) => {
-            Ok(warp::reply::json(&data))
-        }
-        _ => {
-            /// A placeholder for a future error handling.
-            let error = "Error".to_string();
-            Ok(warp::reply::json(&error))
-        }
+    let mut db = db_pool.get().expect("Unable to get connection from pool!");
+
+    use diesel::prelude::*;
+    use database_psql::model::*;
+    use database_psql::schema::trades::dsl::*;
+
+    let cursor_db: Vec<Trade> = trades
+        .filter(order_taker.like(query.address.clone()).or(order_initializer.like(query.address)))
+        .limit(query.limit.unwrap_or(100))
+        .load::<Trade>(&mut db)
+        .expect("Error loading cursors");
+
+    return if cursor_db.is_empty() {
+        warn!("There seems to be no data...");
+        Ok(warp::reply::json(&StatsError {
+            s: 1,
+            errmsg: "No data found".to_string(),
+        }))
+    } else {
+        Ok(warp::reply::json(&cursor_db))
     };
 }
 
@@ -203,17 +226,35 @@ responses(
 )
 )]
 pub async fn get_mint(
-    trades: Collection<Document>,
+    db_pool: Pool<ConnectionManager<PgConnection>>,
     query: DefaultMintParams,
 ) -> Result<impl Reply, Infallible> {
-    return match find_by_mint(trades.clone(), query.mint.clone(), query.limit.clone()).await {
-        Some(data) => {
-            Ok(warp::reply::json(&data))
-        }
-        _ => {
-            /// A placeholder for a future error handling.
-            let error = "Error".to_string();
-            Ok(warp::reply::json(&error))
-        }
+    let mut db = db_pool.get().expect("Unable to get connection from pool!");
+
+    use diesel::prelude::*;
+    use database_psql::model::*;
+    use database_psql::schema::trades::dsl::*;
+
+    let cursor_db: Vec<Trade> = trades
+        .filter(
+            asset_mint.like(query.mint.clone())
+                .or(currency_mint.like(query.mint)))
+        .limit(query.limit.unwrap_or(100))
+        .load::<Trade>(&mut db)
+        .expect("Error loading cursors");
+
+    return if cursor_db.is_empty() {
+        warn!("There seems to be no data...");
+        Ok(warp::reply::json(&StatsError {
+            s: 1,
+            errmsg: "No data found".to_string(),
+        }))
+    } else {
+        Ok(warp::reply::json(&cursor_db))
     };
 }
+
+
+
+
+
