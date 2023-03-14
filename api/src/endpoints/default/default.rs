@@ -1,27 +1,27 @@
-use crate::endpoints::udf::udf_error_t::{Status, UdfError};
-use crate::endpoints::udf::{udf_config_t, udf_history_t, udf_symbols_t};
-use crate::endpoints::udf::{udf_search_t, udf_symbol_info_t};
-use crate::udf_config_t::{Exchange, SymbolsType};
-use log::info;
-
-
-use serde::{Deserialize, Serialize};
-use staratlas::symbolstore::{BuilderSymbolStore, SymbolStore};
-use std::future::Future;
-use std::time::{SystemTime, UNIX_EPOCH};
 use std::{
     convert::Infallible,
     env,
     sync::{Arc, Mutex},
 };
+use std::future::Future;
+use std::time::{SystemTime, UNIX_EPOCH};
+
+use log::info;
+use serde::{Deserialize, Serialize};
+use staratlas::symbolstore::{BuilderSymbolStore, SymbolStore};
 use types::databasetrade::DBTrade;
 use types::m_ohclvt::M_OHCLVT;
-use udf::time_convert::convert_udf_time_to_minute;
-use utoipa::openapi::SchemaFormat::DateTime;
 use utoipa::{IntoParams, ToSchema};
+use utoipa::openapi::SchemaFormat::DateTime;
+use warp::{Filter, hyper::StatusCode, Reply};
 use warp::sse::reply;
-use warp::{hyper::StatusCode, Filter, Reply};
+
 use database_psql::connection::create_psql_pool;
+
+use crate::endpoints::udf::{udf_config_t, udf_history_t, udf_symbols_t};
+use crate::endpoints::udf::{udf_search_t, udf_symbol_info_t};
+use crate::endpoints::udf::udf_error_t::{Status, UdfError};
+use crate::udf_config_t::{Exchange, SymbolsType};
 
 //region PARAMS
 

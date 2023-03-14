@@ -1,30 +1,32 @@
-use crate::endpoints::udf::udf_error_t::{Status, UdfError};
-use crate::endpoints::udf::{udf_config_t, udf_history_t, udf_symbols_t};
-use crate::endpoints::udf::{udf_search_t, udf_symbol_info_t};
-use crate::udf_config_t::{Exchange, SymbolsType};
-use log::{info, warn};
-use diesel::r2d2::{Pool, ConnectionManager};
-use diesel::PgConnection;
-use serde::{Deserialize, Serialize};
-use staratlas::symbolstore::{BuilderSymbolStore, SymbolStore};
-use std::time::{SystemTime, UNIX_EPOCH};
 use std::{
     convert::Infallible,
     env,
     sync::{Arc, Mutex},
 };
+use std::time::{SystemTime, UNIX_EPOCH};
+
+use diesel::PgConnection;
+use diesel::r2d2::{ConnectionManager, Pool};
+use log::{info, warn};
+use serde::{Deserialize, Serialize};
+use staratlas::symbolstore::{BuilderSymbolStore, SymbolStore};
 use types::databasetrade::DBTrade;
 use types::m_ohclvt::M_OHCLVT;
-use udf::time_convert::convert_udf_time_to_minute;
-use utoipa::openapi::SchemaFormat::DateTime;
+use udf::time_convert::convert_udf_time_to_seconds;
 use utoipa::{IntoParams, ToSchema};
+use utoipa::openapi::SchemaFormat::DateTime;
+use warp::{Filter, hyper::StatusCode, Reply};
 use warp::sse::reply;
-use warp::{hyper::StatusCode, Filter, Reply};
-use database_psql::connection::create_psql_pool;
-use crate::endpoints::stats::stats_error::StatsError;
-use crate::endpoints::udf::helper::ohlc_converter;
-use crate::helper::with_psql_store;
 
+use database_psql::connection::create_psql_pool;
+
+use crate::endpoints::stats::stats_error::StatsError;
+use crate::endpoints::udf::{udf_config_t, udf_history_t, udf_symbols_t};
+use crate::endpoints::udf::{udf_search_t, udf_symbol_info_t};
+use crate::endpoints::udf::helper::ohlc_converter;
+use crate::endpoints::udf::udf_error_t::{Status, UdfError};
+use crate::helper::with_psql_store;
+use crate::udf_config_t::{Exchange, SymbolsType};
 
 //region PARAMS
 #[derive(Debug, Deserialize, IntoParams)]
@@ -462,8 +464,9 @@ pub async fn get_history(
             nextTime: None,
         }));
     } else {
-        let timeframe_minute = convert_udf_time_to_minute(query.resolution);
-        let ohcl_data = ohlc_converter(&cursor_db, timeframe_minute);
+        let timeframe_seconds = convert_udf_time_to_seconds(query.resolution);
+
+        let ohcl_data = ohlc_converter(&cursor_db, timeframe_seconds);
         Ok(warp::reply::json(&ohcl_data))
     };
 }

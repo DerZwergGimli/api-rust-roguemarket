@@ -1,4 +1,5 @@
 use database_psql::model::Trade;
+
 use crate::endpoints::Data;
 use crate::endpoints::udf::udf_history_t::UdfHistory;
 
@@ -11,7 +12,7 @@ struct OHLC {
     volume: f64,
 }
 
-pub fn ohlc_converter(data: &[Trade], resolution_minute: Option<i64>) -> UdfHistory {
+pub fn ohlc_converter(data: &[Trade], timeframe_seconds: Option<i64>) -> UdfHistory {
     let mut result = UdfHistory {
         s: "ok".to_string(),
         t: vec![],
@@ -26,7 +27,7 @@ pub fn ohlc_converter(data: &[Trade], resolution_minute: Option<i64>) -> UdfHist
 
     for item in data {
         if let Some(ohlc) = &mut current_ohlc {
-            if item.timestamp >= ohlc.timestamp + resolution_minute.unwrap_or(60) {
+            if item.timestamp >= ohlc.timestamp + timeframe_seconds.unwrap_or(60) {
                 result.t.push(ohlc.timestamp);
                 result.c.push(ohlc.close);
                 result.o.push(ohlc.open);
