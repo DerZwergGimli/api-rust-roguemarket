@@ -457,10 +457,10 @@ pub async fn get_history(
             }));
         }
         warn!("There seems to be no data...");
-        Ok(warp::reply::json(&StatsError {
-            s: 1,
-            errmsg: "No data found".to_string(),
-        }))
+        return Ok(warp::reply::json(&UdfError {
+            s: Status::no_data,
+            nextTime: None,
+        }));
     } else {
         let timeframe_minute = convert_udf_time_to_minute(query.resolution);
         let ohcl_data = ohlc_converter(&cursor_db, timeframe_minute);
