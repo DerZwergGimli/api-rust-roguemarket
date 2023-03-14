@@ -18,6 +18,7 @@ pub enum MarketplaceInstruction<'a> {
     InitializeOpenOrdersCounter,
     InitializeMarketplace,
     RegisterCurrency,
+    DeregisterCurrency,
     ProcessCancel,
     ProcessExchange,
     UiAmountToAmount {
@@ -52,13 +53,17 @@ impl<'a> MarketplaceInstruction<'a> {
                 log::info!("[Instruction] ProcessExchange");
                 Self::ProcessExchange {}
             }
+            189 => {
+                log::info!("[Instruction] DeregisterCurrency");
+                Self::DeregisterCurrency {}
+            }
             129 => {
                 log::info!("[Instruction] ProcessInitializeBuy");
-                Self::ProcessInitializeBuy
+                Self::ProcessInitializeBuy {}
             }
             221 => {
                 log::info!("[Instruction] InitializeOpenOrdersCounter");
-                Self::InitializeOpenOrdersCounter
+                Self::InitializeOpenOrdersCounter {}
             }
             233 => {
                 log::info!("[Instruction] UnknownTransaction");
@@ -67,7 +72,7 @@ impl<'a> MarketplaceInstruction<'a> {
 
             247 => {
                 log::info!("[Instruction] RegisterCurrency");
-                Self::RegisterCurrency
+                Self::RegisterCurrency {}
             }
             _ => {
                 log::info!("tag={:?}", tag);
