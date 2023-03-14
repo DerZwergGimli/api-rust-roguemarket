@@ -1,4 +1,5 @@
 use std::sync::Arc;
+
 use anyhow::{Error, format_err};
 use indicatif::ProgressBar;
 use json::object;
@@ -6,7 +7,7 @@ use log::info;
 use prost::Message;
 use reqwest::header;
 use staratlas::symbolstore::SymbolStore;
-use types::trade_t::SATrade;
+
 use database_psql::model::Trade;
 
 use crate::pb::database::{DatabaseChanges, TableChange};

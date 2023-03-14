@@ -1,3 +1,32 @@
+use std::env;
+use std::sync::Arc;
+
+use anyhow::{Context, format_err};
+use diesel::prelude::*;
+use diesel::r2d2::ConnectionManager;
+use diesel::r2d2::Pool;
+use futures::FutureExt;
+use indicatif::{MultiProgress, ProgressBar, ProgressStyle};
+use log::{error, info, warn};
+use staratlas::symbolstore;
+use staratlas::symbolstore::{BuilderSymbolStore, SymbolStore};
+use structopt::StructOpt;
+use tokio::task::JoinSet;
+use tokio::time::{Duration, sleep};
+use tokio_stream::StreamExt;
+
+use database_psql::connection::create_psql_pool;
+use database_psql::db_cursors::{create_cursor, get_cursor, update_cursor};
+use database_psql::db_trades::create_or_update_trade_table;
+use database_psql::model::Cursor;
+
+use crate::helper::{extract_database_changes_from_map, map_trade_to_struct, request_token, TaskStates, update_task_info};
+use crate::pb::database::DatabaseChanges;
+use crate::pb::database::table_change::Operation;
+use crate::pb::substreams::Package;
+use crate::substreams::SubstreamsEndpoint;
+use crate::substreams_stream::{BlockResponse, SubstreamsStream};
+
 mod helper;
 mod pb;
 
@@ -5,35 +34,6 @@ mod pb;
 mod substreams_stream;
 mod substreams;
 
-
-use std::env;
-use std::sync::Arc;
-use anyhow::{Context, Error, format_err};
-use diesel::associations::HasTable;
-use futures::FutureExt;
-use indicatif::{MultiProgress, ProgressBar, ProgressStyle};
-use log::{error, info, warn};
-use staratlas::symbolstore;
-use staratlas::symbolstore::{BuilderSymbolStore, SymbolStore};
-use tokio::task::{JoinHandle, JoinSet};
-use tokio::time::{sleep, Duration};
-use structopt::StructOpt;
-use crate::helper::{extract_database_changes_from_map, map_trade_to_struct, request_token, TaskStates, update_task_info};
-use diesel::r2d2::Pool;
-
-use crate::pb::database::DatabaseChanges;
-use crate::pb::database::table_change::Operation;
-use crate::pb::substreams::Package;
-
-use crate::substreams::SubstreamsEndpoint;
-use crate::substreams_stream::{BlockResponse, SubstreamsStream};
-use diesel::prelude::*;
-use tokio_stream::StreamExt;
-use database_psql::connection::create_psql_pool;
-use database_psql::db_cursors::{create_cursor, get_cursor, update_cursor};
-use database_psql::db_trades::create_or_update_trade_table;
-use database_psql::model::Cursor;
-use diesel::r2d2::ConnectionManager;
 
 #[derive(Debug, StructOpt)]
 struct Config {

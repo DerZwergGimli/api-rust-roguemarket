@@ -1,8 +1,6 @@
 use std::env;
-use diesel::{Connection, PgConnection, RunQueryDsl};
-use crate::model::*;
-use crate::schema::*;
-use diesel::prelude::*;
+
+use diesel::PgConnection;
 use diesel::r2d2::{ConnectionManager, Pool};
 
 pub fn create_psql_pool() -> Pool<ConnectionManager<PgConnection>> {

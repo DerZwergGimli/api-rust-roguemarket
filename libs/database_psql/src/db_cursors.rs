@@ -1,9 +1,9 @@
-use std::env;
-use diesel::{Connection, PgConnection, RunQueryDsl};
+use diesel::{PgConnection, RunQueryDsl};
+use diesel::prelude::*;
+use diesel::r2d2::{ConnectionManager, PooledConnection};
+
 use crate::model::*;
 use crate::schema::*;
-use diesel::prelude::*;
-use diesel::r2d2::{PooledConnection, ConnectionManager};
 
 pub fn get_cursor(connection: &mut PooledConnection<ConnectionManager<diesel::PgConnection>>, name_id: String) -> Vec<Cursor> {
     use crate::schema::cursors::dsl::*;

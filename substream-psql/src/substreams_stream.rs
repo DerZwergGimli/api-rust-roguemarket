@@ -1,22 +1,20 @@
-use anyhow::{anyhow, Error};
-use async_stream::try_stream;
-
 use std::{
     pin::Pin,
     sync::Arc,
     task::{Context, Poll},
     time::Duration,
 };
+
+use anyhow::{anyhow, Error};
+use async_stream::try_stream;
 use futures::Stream;
+use futures::StreamExt;
 use tokio::time::sleep;
 use tokio_retry::strategy::ExponentialBackoff;
-use futures::StreamExt;
-use log::info;
-use crate::{
-    substreams::SubstreamsEndpoint,
-};
-use crate::pb::substreams::ForkStep::{StepNew, StepUndo};
+
+use crate::substreams::SubstreamsEndpoint;
 use crate::pb::substreams::{BlockScopedData, Modules, Request, Response};
+use crate::pb::substreams::ForkStep::{StepNew, StepUndo};
 use crate::pb::substreams::response::Message;
 
 pub struct SubstreamsStream {
