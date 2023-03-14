@@ -10,36 +10,16 @@ use {
 #[repr(C)]
 #[derive(Clone, Debug, PartialEq)]
 pub enum MarketplaceInstruction<'a> {
+    UnknownTransaction,
+    //zsucnLZxPfQz2G9aN9BFu75kaXhfYi55UduB9UWJobd81KwaRxudArYgtFD6Yo6tkjnyibRi1VPL5RkwAukD4FY
+    UpdateCurrencyVault,
     ProcessInitializeBuy,
-    ProcessExchnage_T1 {
-        order_initializer: Vec<u8>,
-        market_vars_account: Vec<u8>,
-        deposit_mint: Vec<u8>,
-        receive_mint: Vec<u8>,
-        order_vault_authority: Vec<u8>,
-        initializer_deposit_token_account: Vec<u8>,
-        initializer_receive_token_account: Vec<u8>,
-        order_account: Vec<u8>,
-        registered_currency: Vec<u8>,
-        open_orders_counter: Vec<u8>,
-        system_program: Vec<u8>,
-        rent_rent: Vec<u8>,
-        token_program_token: Vec<u8>,
-        price: u64,
-        origination_qty: u64,
-
-    },
     ProcessInitializeSell,
-
     InitializeOpenOrdersCounter,
     InitializeMarketplace,
-
     RegisterCurrency,
-
     ProcessCancel,
-
     ProcessExchange,
-
     UiAmountToAmount {
         /// The ui_amount of tokens to reformat.
         ui_amount: &'a str,
@@ -52,6 +32,10 @@ impl<'a> MarketplaceInstruction<'a> {
 
 
         Ok(match tag {
+            18 => {
+                log::info!("[Instruction] UpdateCurrencyVault");
+                Self::UpdateCurrencyVault {}
+            }
             43 => {
                 log::info!("[Instruction] ProcessInitializeSell");
                 Self::ProcessInitializeSell {}
@@ -76,11 +60,15 @@ impl<'a> MarketplaceInstruction<'a> {
                 log::info!("[Instruction] InitializeOpenOrdersCounter");
                 Self::InitializeOpenOrdersCounter
             }
+            233 => {
+                log::info!("[Instruction] UnknownTransaction");
+                Self::UnknownTransaction {}
+            }
+
             247 => {
                 log::info!("[Instruction] RegisterCurrency");
                 Self::RegisterCurrency
             }
-
             _ => {
                 log::info!("tag={:?}", tag);
                 log::info!("invalid marketplace instruction");

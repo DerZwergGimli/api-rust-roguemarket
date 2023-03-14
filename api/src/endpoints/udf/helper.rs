@@ -26,13 +26,13 @@ pub fn ohlc_converter(data: &[Trade], resolution_minute: Option<i64>) -> UdfHist
 
     for item in data {
         if let Some(ohlc) = &mut current_ohlc {
-            if item.timestamp >= ohlc.timestamp + resolution_minute.unwrap_or(60) { // new minute
+            if item.timestamp >= ohlc.timestamp + resolution_minute.unwrap_or(60) {
                 result.t.push(ohlc.timestamp);
                 result.c.push(ohlc.close);
                 result.o.push(ohlc.open);
                 result.h.push(ohlc.high);
                 result.l.push(ohlc.low);
-                result.v.push(ohlc.volume); // volume not supported
+                result.v.push(ohlc.volume);
                 *ohlc = OHLC {
                     timestamp: item.timestamp,
                     open: calc_price(item),
