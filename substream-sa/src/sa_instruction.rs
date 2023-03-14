@@ -1,10 +1,9 @@
-use substreams::log;
 use {
     crate::option::COption,
     std::convert::TryInto,
-    substreams::{errors::Error},
+    substreams::errors::Error,
 };
-
+use substreams::log;
 
 /// Instructions supported by the StarAtlas GalacticMarketplace program.
 #[repr(C)]
@@ -45,6 +44,10 @@ impl<'a> MarketplaceInstruction<'a> {
                 log::info!("[Instruction] InitializeMarketplace");
                 Self::InitializeMarketplace {}
             }
+            74 => {
+                log::info!("[Instruction] UnknownTransaction");
+                Self::UnknownTransaction {}
+            }
             85 => {
                 log::info!("[Instruction] ProcessCancel");
                 Self::ProcessCancel {}
@@ -69,7 +72,6 @@ impl<'a> MarketplaceInstruction<'a> {
                 log::info!("[Instruction] UnknownTransaction");
                 Self::UnknownTransaction {}
             }
-
             247 => {
                 log::info!("[Instruction] RegisterCurrency");
                 Self::RegisterCurrency {}
