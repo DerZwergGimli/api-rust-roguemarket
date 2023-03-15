@@ -55,7 +55,7 @@ struct Config {
 
 
 const ITEMS: u64 = 10;
-const MAX_CONCURRENT: usize = 10;
+const MAX_CONCURRENT: usize = 100;
 const STEPS: u64 = 100;
 
 #[tokio::main]
