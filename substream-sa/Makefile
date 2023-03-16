@@ -13,7 +13,16 @@ build:
 
 .PHONY: map_sa_trades
 map_sa_trades: build
-	substreams run -e mainnet.sol.streamingfast.io:443 substreams.yaml map_sa_trades --start-block 162761056 --stop-block 162761057
+	substreams run -e mainnet.sol.streamingfast.io:443 substreams.yaml map_sa_trades --start-block 151993612 --stop-block 182786969
+
+.PHONY: map_sa_trades_double
+map_sa_trades_double: build
+	substreams run -e mainnet.sol.streamingfast.io:443 substreams.yaml map_sa_trades --start-block 151993612 --stop-block 151993613
+
+
+.PHONY: map_sa_trades_single
+map_sa_trades_single: build
+	substreams run -e mainnet.sol.streamingfast.io:443 substreams.yaml map_sa_trades --start-block 182786968 --stop-block 182786969
 
 
 .PHONY: store_sa_trades

@@ -1,9 +1,20 @@
+use std::borrow::BorrowMut;
+use std::io::BufRead;
+
+use borsh::BorshDeserialize;
+use prost::bytes::Buf;
+use substreams::log;
+use substreams::scalar::BigInt;
+
 use {
     crate::option::COption,
     std::convert::TryInto,
     substreams::errors::Error,
 };
-use substreams::log;
+
+use crate::sa_instruction::MarketplaceInstruction::ProcessExchange;
+
+//use borsh::BorshDeserialize;
 
 /// Instructions supported by the StarAtlas GalacticMarketplace program.
 #[repr(C)]
@@ -20,17 +31,42 @@ pub enum MarketplaceInstruction<'a> {
     DeregisterCurrency,
     UpdateCurrencyRoyalty,
     ProcessCancel,
-    ProcessExchange,
+    ProcessExchange {
+        purchase_quantity: u64,
+        expected_price: u64,
+    },
     UiAmountToAmount {
         /// The ui_amount of tokens to reformat.
         ui_amount: &'a str,
     },
 }
 
+#[derive(BorshDeserialize, Debug)]
+struct Pubkey(pub(crate) [u8; 32]);
+
+#[derive(BorshDeserialize, Debug)]
+struct ProcessExchangeArgNoPubkey {
+    purchase_quantity: u64,
+    expected_price: u64,
+}
+
+#[derive(BorshDeserialize, Debug)]
+struct ProcessExchangeArgsWithPubkey {
+    pub purchase_quantity: u64,
+    pub expected_price: u64,
+    pub seller: Pubkey,
+}
+
+
 impl<'a> MarketplaceInstruction<'a> {
     pub fn unpack(input: &'a [u8]) -> Result<Self, Error> {
-        let (&tag, rest) = input.split_first().ok_or(Error::Unexpected(format!("Invalid Instruction")))?;
+        //Example
+        //[112, 194, 63, 99, 52, 147, 85, 48, 1, 0, 0, 0, 0, 0, 0, 0, 128, 139, 121, 2, 0, 0, 0, 0]
+        //[112, 194, 63, 99, 52, 147, 85, 48] //PROCESS_EXCHANGE_IX_DISCM
+        //                                   [ ARGS                                               ]
 
+        let (&tag, rest) = input.split_first().ok_or(Error::Unexpected(format!("Invalid Instruction")))?;
+        let (dump, exchange_args) = rest.split_at(7);
 
         Ok(match tag {
             18 => {
@@ -54,8 +90,38 @@ impl<'a> MarketplaceInstruction<'a> {
                 Self::ProcessCancel {}
             }
             112 => {
-                log::info!("[Instruction] ProcessExchange");
-                Self::ProcessExchange {}
+                // log::info!("[Instruction] ProcessExchange");
+                // log::info!("{:?}", input);
+                // log::info!("{}", hex::encode(input));
+                // log::info!("{}", base64::encode(input.clone()));
+                // log::info!("--------");
+                //
+                // log::info!("{:?}", exchange_args);
+                // log::info!("{}", hex::encode(exchange_args));
+                // log::info!("{}", base64::encode(exchange_args.clone()));
+                // log::info!("--------");
+
+                match exchange_args.len() {
+                    16 => {
+                        let data = ProcessExchangeArgNoPubkey::try_from_slice(exchange_args).unwrap();
+                        log::info!("ProcessExchangeArgNoPubkey={:?}", data);
+                        ProcessExchange {
+                            purchase_quantity: data.purchase_quantity,
+                            expected_price: data.expected_price,
+                        }
+                    }
+                    48 => {
+                        let data = ProcessExchangeArgsWithPubkey::try_from_slice(exchange_args).unwrap();
+                        log::info!("ProcessExchangeArgsWithPubkey={:?}", data);
+                        ProcessExchange {
+                            purchase_quantity: data.purchase_quantity,
+                            expected_price: data.expected_price,
+                        }
+                    }
+                    _ => {
+                        return Err(Error::Unexpected(format!("Invalid args len={:?}", exchange_args.len())));
+                    }
+                }
             }
             189 => {
                 log::info!("[Instruction] DeregisterCurrency");
@@ -99,11 +165,12 @@ impl<'a> MarketplaceInstruction<'a> {
     }
 }
 
-#[derive(Clone, Debug, PartialEq)]
-pub struct InnerInstruction {
-    authority: String,
-    destination: String,
-    mint: String,
-    source: String,
-    amount: String,
+
+fn hex_string_to_u32_le_unsafe(s: String) -> Vec<u32> {
+    let bytes = hex::decode(s).unwrap();
+    let mut ints: Vec<u32> = Vec::new();
+    for chunk in bytes.chunks(4) {
+        ints.push(u32::from_le_bytes([chunk[0], chunk[1], chunk[2], chunk[3]]));
+    }
+    return ints;
 }

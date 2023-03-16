@@ -18,4 +18,5 @@ message ProcessExchange {
   string asset_change = 9;
   string market_fee = 10;
   string total_cost = 11;
+  string price = 12;
 }
