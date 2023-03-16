@@ -36,24 +36,24 @@ pub fn ohlc_converter(data: &[Trade], timeframe_seconds: Option<i64>) -> UdfHist
                 result.v.push(ohlc.volume);
                 *ohlc = OHLC {
                     timestamp: item.timestamp,
-                    open: calc_price(item),
-                    high: calc_price(item),
-                    low: calc_price(item),
-                    close: calc_price(item),
+                    open: item.price,
+                    high: item.price,
+                    low: item.price,
+                    close: item.price,
                     volume: item.asset_change as f64,
                 };
             } else {
-                ohlc.high = ohlc.high.max(calc_price(item));
-                ohlc.low = ohlc.low.min(calc_price(item));
-                ohlc.close = calc_price(item);
+                ohlc.high = ohlc.high.max(item.price);
+                ohlc.low = ohlc.low.min(item.price);
+                ohlc.close = item.price;
             }
         } else {
             current_ohlc = Some(OHLC {
                 timestamp: item.timestamp,
-                open: calc_price(item),
-                high: calc_price(item),
-                low: calc_price(item),
-                close: calc_price(item),
+                open: item.price,
+                high: item.price,
+                low: item.price,
+                close: item.price,
                 volume: item.asset_change as f64,
             });
         }
