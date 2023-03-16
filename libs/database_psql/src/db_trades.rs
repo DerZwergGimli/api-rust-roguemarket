@@ -1,9 +1,10 @@
 use std::env;
+
 use diesel::{Connection, PgConnection, RunQueryDsl};
-use crate::model::*;
-use crate::schema::*;
 use diesel::prelude::*;
 
+use crate::model::*;
+use crate::schema::*;
 
 pub fn create_or_update_trade_table(connection: &mut PgConnection, data: Trade) {
     use crate::schema::trades::dsl::*;

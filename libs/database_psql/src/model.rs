@@ -1,8 +1,8 @@
 use diesel::prelude::*;
+use serde::{Deserialize, Serialize};
 
 use crate::schema::cursors;
 use crate::schema::trades;
-use serde::{Deserialize, Serialize};
 
 #[derive(Queryable, Insertable, Serialize, Deserialize, Debug)]
 //#[table_name = "cursors"]
@@ -25,5 +25,6 @@ pub struct Trade {
     pub asset_change: f64,
     pub market_fee: f64,
     pub total_cost: f64,
+    pub price: f64,
 }
 

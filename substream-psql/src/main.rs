@@ -29,11 +29,8 @@ use crate::substreams_stream::{BlockResponse, SubstreamsStream};
 
 mod helper;
 mod pb;
-
-
 mod substreams_stream;
 mod substreams;
-
 
 #[derive(Debug, StructOpt)]
 struct Config {

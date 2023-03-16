@@ -86,6 +86,7 @@ pub fn map_trade_to_struct(table_change: TableChange, symbol_store: Arc<SymbolSt
         asset_change: table_change.clone().fields.into_iter().find(|t| { t.name == "asset_change" }).ok_or("asset_change").unwrap().new_value.parse().unwrap_or(0.0),
         market_fee: table_change.clone().fields.into_iter().find(|t| { t.name == "market_fee" }).ok_or("market_fee").unwrap().new_value.parse().unwrap_or(0.0),
         total_cost: table_change.clone().fields.into_iter().find(|t| { t.name == "total_cost" }).ok_or("total_cost").unwrap().new_value.parse().unwrap_or(0.0),
+        price: table_change.clone().fields.into_iter().find(|t| { t.name == "price" }).ok_or("price").unwrap().new_value.parse().unwrap_or(0.0),
     };
 
     trade.symbol = symbol_store

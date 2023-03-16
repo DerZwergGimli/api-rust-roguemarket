@@ -21,6 +21,7 @@ diesel::table! {
         asset_change -> Float8,
         market_fee -> Float8,
         total_cost -> Float8,
+        price -> Float8,
     }
 }
 
