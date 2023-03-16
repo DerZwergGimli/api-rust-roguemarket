@@ -316,7 +316,7 @@ pub async fn get_symbols(
         .filter(|asset| asset.symbol == query.symbol)
         .collect::<Vec<_>>();
 
-    if (filtered.len() == 1) {
+    if filtered.len() == 1 {
         let symbols = udf_symbols_t::UdfSymbols {
             symbol: filtered[0].clone().symbol,
             ticker: filtered[0].clone().symbol,
