@@ -1,33 +1,37 @@
-mod endpoints;
-mod helper;
+use std::{env, net::Ipv4Addr, sync::Arc};
 
-use crate::endpoints::default::default;
-use crate::endpoints::trades::trades;
-use crate::endpoints::udf::udf;
-use crate::endpoints::stats::stats;
-use types::trade_t;
+use log::info;
+use tokio::net::unix::SocketAddr;
+use utoipa::{
+    Modify,
+    OpenApi, openapi::security::{ApiKey, ApiKeyValue, SecurityScheme},
+};
+use utoipa_swagger_ui::Config;
+use warp::{
+    Filter,
+    http::Uri,
+    hyper::{Response, StatusCode},
+    path::{FullPath, Tail}, Rejection, Reply,
+};
+use warp::http::Method;
+use warp::http::uri::Port;
+
+use database_psql::connection::create_psql_pool;
+//use types::trade_t;
+use database_psql::model::Trade;
 use endpoints::udf::udf_config_t;
 use endpoints::udf::udf_history_t;
 use endpoints::udf::udf_search_t;
 use endpoints::udf::udf_symbol_info_t;
 use endpoints::udf::udf_symbols_t;
-use log::info;
-use std::{env, net::Ipv4Addr, sync::Arc};
-use tokio::net::unix::SocketAddr;
-use utoipa::{
-    openapi::security::{ApiKey, ApiKeyValue, SecurityScheme},
-    Modify, OpenApi,
-};
-use utoipa_swagger_ui::Config;
-use warp::http::uri::Port;
-use warp::http::Method;
-use warp::{
-    http::Uri,
-    hyper::{Response, StatusCode},
-    path::{FullPath, Tail},
-    Filter, Rejection, Reply,
-};
-use database_psql::connection::create_psql_pool;
+
+use crate::endpoints::default::default;
+use crate::endpoints::stats::stats;
+use crate::endpoints::trades::trades;
+use crate::endpoints::udf::udf;
+
+mod endpoints;
+mod helper;
 
 #[tokio::main]
 async fn main() {
@@ -55,7 +59,7 @@ async fn main() {
     ),
     components(
     schemas(
-    trade_t::SATrade,
+    database_psql::model::Trade,
     udf_config_t::UdfConfig,
     udf_config_t::SymbolsType,
     udf_symbol_info_t::UdfSymbolInfo,

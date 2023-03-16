@@ -1,6 +1,8 @@
 use diesel::prelude::*;
 use serde::{Deserialize, Serialize};
 
+use utoipa::ToSchema;
+
 use crate::schema::cursors;
 use crate::schema::trades;
 
@@ -12,7 +14,7 @@ pub struct Cursor {
     pub block: Option<i64>,
 }
 
-#[derive(Queryable, Insertable, Serialize, Deserialize, Debug)]
+#[derive(Queryable, Insertable, Serialize, Deserialize, ToSchema, Debug)]
 pub struct Trade {
     pub signature: String,
     pub symbol: String,

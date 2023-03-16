@@ -53,12 +53,6 @@ pub async fn handlers() -> impl Filter<Extract=impl warp::Reply, Error=warp::Rej
 
     last_timestamp.or(first_timestamp)
 }
-
-// fn with_mongo_store_stats(
-//     store: Collection<DBTrade>,
-// ) -> impl Filter<Extract=(Collection<DBTrade>, ), Error=Infallible> + Clone {
-//     warp::any().map(move || store.clone())
-// }
 //endregion
 
 /// Last timestamp
@@ -68,7 +62,7 @@ pub async fn handlers() -> impl Filter<Extract=impl warp::Reply, Error=warp::Rej
 get,
 path = "/stats/last_timestamp",
 responses(
-(status = 200, description = "Get time successfully", body = [SATrade])
+(status = 200, description = "Get time successfully", body = [Trade])
 )
 )]
 pub async fn get_last_timestamp(db_pool: Pool<ConnectionManager<PgConnection>>) -> Result<impl Reply, Infallible> {
@@ -102,7 +96,7 @@ pub async fn get_last_timestamp(db_pool: Pool<ConnectionManager<PgConnection>>) 
 get,
 path = "/stats/first_timestamp",
 responses(
-(status = 200, description = "Get time successfully", body = [SATrade])
+(status = 200, description = "Get time successfully", body = [Trade])
 )
 )]
 pub async fn get_first_timestamp(db_pool: Pool<ConnectionManager<PgConnection>>) -> Result<impl Reply, Infallible> {

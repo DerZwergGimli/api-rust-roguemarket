@@ -236,6 +236,7 @@ dependencies = [
  "diesel",
  "r2d2",
  "serde",
+ "utoipa 2.2.0",
 ]
 
 [[package]]
