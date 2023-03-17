@@ -1,7 +1,7 @@
 [package]
 name = "RogueMarketAPI"
 description = "This API is used by the RogueMarket to display charts and data"
-version = "0.2.2"
+version = "0.3.0"
 edition = "2021"
 license = "MIT"
 
