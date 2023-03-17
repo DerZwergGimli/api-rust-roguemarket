@@ -75,12 +75,14 @@ pub fn extract_database_changes_from_map(data: BlockScopedData, module_name: Str
 }
 
 pub fn map_trade_to_struct(table_change: TableChange, symbol_store: Arc<SymbolStore>) -> Result<Trade, Error> {
+    let block_time = table_change.clone().fields.into_iter().find(|t| { t.name == "timestamp" }).ok_or("timestamp").unwrap().new_value.parse::<i64>().unwrap();
     let mut trade = Trade {
         pk: table_change.clone().pk,
         symbol: "-none-".to_string(),
         signature: table_change.clone().fields.into_iter().find(|t| { t.name.contains("signature") }).unwrap().new_value,
         block: table_change.clone().fields.into_iter().find(|t| { t.name.contains("block") }).unwrap().new_value.parse().unwrap_or(0),
-        timestamp: NaiveDateTime::from_timestamp_millis(table_change.clone().fields.into_iter().find(|t| { t.name == "timestamp" }).ok_or("timestamp").unwrap().new_value.parse::<i64>().unwrap()).unwrap(),
+        timestamp: block_time,
+        timestamp_ts: NaiveDateTime::from_timestamp_millis(block_time * 1000).unwrap(),
         order_taker: table_change.clone().fields.into_iter().find(|t| { t.name == "order_taker" }).ok_or("order_taker").unwrap().new_value,
         currency_mint: table_change.clone().fields.into_iter().find(|t| { t.name == "currency_mint" }).ok_or("currency_mint").unwrap().new_value,
         asset_mint: table_change.clone().fields.into_iter().find(|t| { t.name == "asset_mint" }).ok_or("asset_mint").unwrap().new_value,

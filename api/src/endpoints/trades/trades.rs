@@ -38,7 +38,7 @@ pub struct DefaultLastParams {
     #[param(style = Form, example = "FOODATLAS")]
     symbol: String,
     limit: Option<i64>,
-    to: Option<NaiveDateTime>,
+    to: Option<i64>,
 }
 
 #[derive(Debug, Deserialize, IntoParams)]
@@ -46,7 +46,7 @@ pub struct DefaultLastParams {
 pub struct DefaultSignatureParams {
     signature: String,
     limit: Option<i64>,
-    to: Option<NaiveDateTime>,
+    to: Option<i64>,
 }
 
 #[derive(Debug, Deserialize, IntoParams)]
@@ -54,7 +54,7 @@ pub struct DefaultSignatureParams {
 pub struct DefaultAddressParams {
     address: String,
     limit: Option<i64>,
-    to: Option<NaiveDateTime>,
+    to: Option<i64>,
 }
 
 #[derive(Debug, Deserialize, IntoParams)]
@@ -63,7 +63,7 @@ pub struct DefaultMintParams {
     asset_mint: String,
     currency_mint: Option<String>,
     limit: Option<i64>,
-    to: Option<NaiveDateTime>,
+    to: Option<i64>,
 }
 
 //endregion
@@ -73,7 +73,7 @@ pub async fn handlers() -> impl Filter<Extract=impl warp::Reply, Error=warp::Rej
 {
     let psql_pool = create_psql_pool();
 
-    let info = warp::path!("trades" / "last")
+    let info = warp::path!("trades" / "symbol")
         .and(warp::get())
         .and(warp::path::end())
         .and(with_psql_store(psql_pool.clone()))

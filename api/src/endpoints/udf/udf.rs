@@ -61,9 +61,9 @@ pub struct HistoryParams {
     #[param(style = Form, example = "FOODATLAS")]
     symbol: String,
     #[param(style = Form, example = "1677799981")]
-    from: Option<NaiveDateTime>,
+    from: Option<i64>,
     #[param(style = Form, example = "1678663981")]
-    to: Option<NaiveDateTime>,
+    to: Option<i64>,
     resolution: Option<String>,
     countback: Option<u64>,
     #[serde(rename = "currencyCode")]

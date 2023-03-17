@@ -6,7 +6,7 @@ use utoipa::{IntoParams, ToSchema};
 pub struct UdfError {
     pub(crate) s: Status,
     //pub(crate) errmsg: Option<String>,
-    pub(crate) nextTime: Option<NaiveDateTime>,
+    pub(crate) nextTime: Option<i64>,
 }
 
 #[derive(Debug, Serialize, Deserialize, ToSchema, Clone)]

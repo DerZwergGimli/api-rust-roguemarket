@@ -161,7 +161,7 @@ fn process_blocks(blk: Block, process_exchanges: &mut Vec<ProcessExchange>) -> R
                                     pk: format!("{}_{}_{}", sig.clone(), order_taker.clone(), order_initializer.clone()),
                                     signature: sig,
                                     block: blk.slot,
-                                    timestamp: blk.block_time.clone().unwrap_or_default().timestamp * 1000,
+                                    timestamp: blk.block_time.clone().unwrap_or_default().timestamp,
                                     order_taker,
                                     order_initializer,
                                     currency_mint: currency_mint.clone(),
