@@ -102,10 +102,10 @@ pub async fn handlers() -> impl Filter<Extract=impl warp::Reply, Error=warp::Rej
 
 /// Get last trade from SYMBOL
 ///
-/// Responses with a last trade for a given symbol. [max. 100]
+/// Responses with a last trade for a given symbol. [default 10]
 #[utoipa::path(
 get,
-path = "/trades/last",
+path = "/trades/symbol",
 params(DefaultLastParams),
 responses(
 (status = 200, description = "Response: Time successful", body = [Trade])
