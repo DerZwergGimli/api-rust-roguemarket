@@ -63,6 +63,7 @@ async fn main() {
     trades::VolumeData,
     database_psql::model::Trade,
     udf_config_t::UdfConfig,
+    udf_config_t::Exchange,
     udf_config_t::SymbolsType,
     udf_symbol_info_t::UdfSymbolInfo,
     udf_search_t::UdfSearchSymbol,
