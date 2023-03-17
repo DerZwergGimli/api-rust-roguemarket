@@ -147,10 +147,15 @@ fn process_blocks(blk: Block, process_exchanges: &mut Vec<ProcessExchange>) -> R
                                 let currency_mint = bs58::encode(&msg.account_keys[inst.accounts[3] as usize]).into_string();
                                 let order_initializer = bs58::encode(&msg.account_keys[inst.accounts[5] as usize]).into_string();
                                 let asset_mint = bs58::encode(&msg.account_keys[inst.accounts[4] as usize]).into_string();
-                                let current_change_abs =
+                                let currency_change_abs =
                                     calc_token_balance_change(&meta, currency_mint.clone(), bs58::encode(&msg.account_keys[inst.accounts[0] as usize]).into_string());
-                                let asset_change_abs = purchase_quantity as f64;
+
                                 let fees_change_abs = calc_token_balance_change(&meta, currency_mint.clone(), "feesQYAaH3wjGUUQYD959mmi5pY8HSz3F5C3SVc1fp3".to_string());
+
+                                let price = match expected_price {
+                                    None => { currency_change_abs }
+                                    Some(value) => { calc_token_decimals(value, currency_mint.clone()) }
+                                };
 
                                 process_exchanges.push(pb::trade::ProcessExchange {
                                     pk: format!("{}_{}_{}", sig.clone(), order_taker.clone(), order_initializer.clone()),
@@ -161,10 +166,10 @@ fn process_blocks(blk: Block, process_exchanges: &mut Vec<ProcessExchange>) -> R
                                     order_initializer,
                                     currency_mint: currency_mint.clone(),
                                     asset_mint,
-                                    asset_change: asset_change_abs.to_string(),
+                                    asset_change: purchase_quantity.to_string(),
                                     market_fee: fees_change_abs.to_string(),
-                                    total_cost: current_change_abs.to_string(),
-                                    price: calc_token_decimals(expected_price, currency_mint).to_string(),
+                                    total_cost: currency_change_abs.to_string(),
+                                    price: price.to_string(),
                                 })
                             }
                             _ => {}

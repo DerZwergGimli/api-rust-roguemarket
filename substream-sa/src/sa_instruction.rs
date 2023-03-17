@@ -33,7 +33,7 @@ pub enum MarketplaceInstruction<'a> {
     ProcessCancel,
     ProcessExchange {
         purchase_quantity: u64,
-        expected_price: u64,
+        expected_price: Option<u64>,
     },
     UiAmountToAmount {
         /// The ui_amount of tokens to reformat.
@@ -43,6 +43,11 @@ pub enum MarketplaceInstruction<'a> {
 
 #[derive(BorshDeserialize, Debug)]
 struct Pubkey(pub(crate) [u8; 32]);
+
+#[derive(BorshDeserialize, Debug)]
+struct ProcessExchangeArgNoPubkeyAndPrice {
+    purchase_quantity: u64,
+}
 
 #[derive(BorshDeserialize, Debug)]
 struct ProcessExchangeArgNoPubkey {
@@ -90,24 +95,32 @@ impl<'a> MarketplaceInstruction<'a> {
                 Self::ProcessCancel {}
             }
             112 => {
-                // log::info!("[Instruction] ProcessExchange");
-                // log::info!("{:?}", input);
-                // log::info!("{}", hex::encode(input));
-                // log::info!("{}", base64::encode(input.clone()));
-                // log::info!("--------");
-                //
-                // log::info!("{:?}", exchange_args);
-                // log::info!("{}", hex::encode(exchange_args));
-                // log::info!("{}", base64::encode(exchange_args.clone()));
-                // log::info!("--------");
+                log::info!("[Instruction] ProcessExchange");
+                log::info!("{:?}", input);
+                log::info!("{}", hex::encode(input));
+                log::info!("{}", base64::encode(input.clone()));
+                log::info!("--------");
+
+                log::info!("{:?}", exchange_args);
+                log::info!("{}", hex::encode(exchange_args));
+                log::info!("{}", base64::encode(exchange_args.clone()));
+                log::info!("--------");
 
                 match exchange_args.len() {
+                    8 => {
+                        let data = ProcessExchangeArgNoPubkeyAndPrice::try_from_slice(exchange_args).unwrap();
+                        log::info!("ProcessExchangeArgNoPubkeyAndPrice={:?}", data);
+                        ProcessExchange {
+                            purchase_quantity: data.purchase_quantity,
+                            expected_price: None,
+                        }
+                    }
                     16 => {
                         let data = ProcessExchangeArgNoPubkey::try_from_slice(exchange_args).unwrap();
                         log::info!("ProcessExchangeArgNoPubkey={:?}", data);
                         ProcessExchange {
                             purchase_quantity: data.purchase_quantity,
-                            expected_price: data.expected_price,
+                            expected_price: Some(data.expected_price),
                         }
                     }
                     48 => {
@@ -115,7 +128,7 @@ impl<'a> MarketplaceInstruction<'a> {
                         log::info!("ProcessExchangeArgsWithPubkey={:?}", data);
                         ProcessExchange {
                             purchase_quantity: data.purchase_quantity,
-                            expected_price: data.expected_price,
+                            expected_price: Some(data.expected_price),
                         }
                     }
                     _ => {
