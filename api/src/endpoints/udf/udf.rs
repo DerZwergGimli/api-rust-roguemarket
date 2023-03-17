@@ -20,7 +20,6 @@ use warp::sse::reply;
 
 use database_psql::connection::create_psql_pool;
 
-use crate::endpoints::stats::stats_error::StatsError;
 use crate::endpoints::udf::{udf_config_t, udf_history_t, udf_symbols_t};
 use crate::endpoints::udf::{udf_search_t, udf_symbol_info_t};
 use crate::endpoints::udf::helper::ohlc_converter;

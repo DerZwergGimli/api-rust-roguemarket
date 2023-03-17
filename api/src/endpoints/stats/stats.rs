@@ -21,7 +21,7 @@ use warp::sse::reply;
 use database_psql::connection::create_psql_pool;
 use database_psql::model::Trade;
 
-use crate::endpoints::stats::stats_error::StatsError;
+use crate::endpoints::responses::response_error::ResponseError;
 use crate::endpoints::trades::trades;
 use crate::endpoints::udf::{udf_config_t, udf_history_t, udf_symbols_t};
 use crate::endpoints::udf::{udf_search_t, udf_symbol_info_t};
@@ -80,7 +80,7 @@ pub async fn get_last_timestamp(db_pool: Pool<ConnectionManager<PgConnection>>) 
 
     return if cursor_db.is_empty() {
         warn!("While getting get_first_timestamp");
-        Ok(warp::reply::json(&StatsError {
+        Ok(warp::reply::json(&ResponseError {
             s: 1,
             errmsg: "No data found".to_string(),
         }))
@@ -114,7 +114,7 @@ pub async fn get_first_timestamp(db_pool: Pool<ConnectionManager<PgConnection>>)
 
     return if cursor_db.is_empty() {
         warn!("While getting get_first_timestamp");
-        Ok(warp::reply::json(&StatsError {
+        Ok(warp::reply::json(&ResponseError {
             s: 1,
             errmsg: "No data found".to_string(),
         }))

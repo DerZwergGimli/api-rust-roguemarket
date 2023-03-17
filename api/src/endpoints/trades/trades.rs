@@ -4,6 +4,7 @@ use std::{
     sync::{Arc, Mutex},
 };
 use std::future::Future;
+use std::mem::swap;
 use std::time::{SystemTime, UNIX_EPOCH};
 
 use diesel::PgConnection;
@@ -19,8 +20,10 @@ use warp::{Filter, hyper::StatusCode, Reply};
 use warp::sse::reply;
 
 use database_psql::connection::create_psql_pool;
+use database_psql::model::Trade;
 
-use crate::endpoints::stats::stats_error::StatsError;
+use crate::endpoints::responses::response_error::ResponseError;
+use crate::endpoints::responses::response_trade::create_trade_response;
 use crate::endpoints::udf::{udf_config_t, udf_history_t, udf_symbols_t};
 use crate::endpoints::udf::{udf_search_t, udf_symbol_info_t};
 use crate::endpoints::udf::udf_error_t::{Status, UdfError};
@@ -34,6 +37,7 @@ pub struct DefaultLastParams {
     #[param(style = Form, example = "FOODATLAS")]
     symbol: String,
     limit: Option<i64>,
+    to: Option<i64>,
 }
 
 #[derive(Debug, Deserialize, IntoParams)]
@@ -41,6 +45,7 @@ pub struct DefaultLastParams {
 pub struct DefaultSignatureParams {
     signature: String,
     limit: Option<i64>,
+    to: Option<i64>,
 }
 
 #[derive(Debug, Deserialize, IntoParams)]
@@ -48,6 +53,7 @@ pub struct DefaultSignatureParams {
 pub struct DefaultAddressParams {
     address: String,
     limit: Option<i64>,
+    to: Option<i64>,
 }
 
 #[derive(Debug, Deserialize, IntoParams)]
@@ -56,6 +62,7 @@ pub struct DefaultMintParams {
     asset_mint: String,
     currency_mint: Option<String>,
     limit: Option<i64>,
+    to: Option<i64>,
 }
 
 //endregion
@@ -116,27 +123,30 @@ pub async fn get_last(
     query: DefaultLastParams,
 ) -> Result<impl Reply, Infallible> {
     let mut db = db_pool.get().expect("Unable to get connection from pool!");
-
     use diesel::prelude::*;
     use database_psql::model::*;
     use database_psql::schema::trades::dsl::*;
 
-    let cursor_db: Vec<Trade> = trades
-        .filter(symbol.like(query.symbol.clone()))
-        .limit(query.limit.unwrap_or(10))
-        .load::<Trade>(&mut db)
-        .expect("Error loading cursors");
-
-    return if cursor_db.is_empty() {
-        warn!("There seems to be no data...");
-        Ok(warp::reply::json(&StatsError {
-            s: 1,
-            errmsg: "No data found".to_string(),
-        }))
-    } else {
-        Ok(warp::reply::json(&cursor_db))
+    let cursor_db: Vec<Trade> = match query.to {
+        None => {
+            trades
+                .filter(symbol.like(query.symbol.clone()))
+                .limit(query.limit.unwrap_or(10))
+                .load::<Trade>(&mut db)
+                .expect("Error loading cursors")
+        }
+        Some(to) => {
+            trades
+                .filter(symbol.like(query.symbol.clone())
+                    .and(timestamp.le(to)))
+                .limit(query.limit.unwrap_or(10))
+                .load::<Trade>(&mut db)
+                .expect("Error loading cursors")
+        }
     };
+    create_trade_response(&cursor_db)
 }
+
 
 /// Get trade for signature
 ///
@@ -159,21 +169,25 @@ pub async fn get_signature(
     use database_psql::model::*;
     use database_psql::schema::trades::dsl::*;
 
-    let cursor_db: Vec<Trade> = trades
-        .filter(signature.like(query.signature.clone()))
-        .limit(query.limit.unwrap_or(10))
-        .load::<Trade>(&mut db)
-        .expect("Error loading cursors");
-
-    return if cursor_db.is_empty() {
-        warn!("There seems to be no data...");
-        Ok(warp::reply::json(&StatsError {
-            s: 1,
-            errmsg: "No data found".to_string(),
-        }))
-    } else {
-        Ok(warp::reply::json(&cursor_db))
+    let cursor_db: Vec<Trade> = match query.to {
+        None => {
+            trades
+                .filter(signature.like(query.signature.clone()))
+                .limit(query.limit.unwrap_or(10))
+                .load::<Trade>(&mut db)
+                .expect("Error loading cursors")
+        }
+        Some(to) => {
+            trades
+                .filter(signature.like(query.signature.clone())
+                    .and(timestamp.le(to)))
+                .limit(query.limit.unwrap_or(10))
+                .load::<Trade>(&mut db)
+                .expect("Error loading cursors")
+        }
     };
+
+    create_trade_response(&cursor_db)
 }
 
 
@@ -198,21 +212,26 @@ pub async fn get_address(
     use database_psql::model::*;
     use database_psql::schema::trades::dsl::*;
 
-    let cursor_db: Vec<Trade> = trades
-        .filter(order_taker.like(query.address.clone()).or(order_initializer.like(query.address)))
-        .limit(query.limit.unwrap_or(100))
-        .load::<Trade>(&mut db)
-        .expect("Error loading cursors");
-
-    return if cursor_db.is_empty() {
-        warn!("There seems to be no data...");
-        Ok(warp::reply::json(&StatsError {
-            s: 1,
-            errmsg: "No data found".to_string(),
-        }))
-    } else {
-        Ok(warp::reply::json(&cursor_db))
+    let cursor_db: Vec<Trade> = match query.to {
+        None => {
+            trades
+                .filter(order_taker.like(query.address.clone()).or(order_initializer.like(query.address)))
+                .limit(query.limit.unwrap_or(100))
+                .load::<Trade>(&mut db)
+                .expect("Error loading cursors")
+        }
+        Some(to) => {
+            trades
+                .filter(order_taker.like(query.address.clone())
+                    .or(order_initializer.like(query.address))
+                    .and(timestamp.le(to)))
+                .limit(query.limit.unwrap_or(100))
+                .load::<Trade>(&mut db)
+                .expect("Error loading cursors")
+        }
     };
+
+    create_trade_response(&cursor_db)
 }
 
 
@@ -239,36 +258,57 @@ pub async fn get_mint(
 
     let cursor_db: Vec<Trade> = match query.currency_mint {
         None => {
-            trades
-                .filter(
-                    asset_mint.like(query.asset_mint.clone())
-                )
-                .limit(query.limit.unwrap_or(100))
-                .load::<Trade>(&mut db)
-                .expect("Error loading cursors")
+            match query.to {
+                None => {
+                    trades
+                        .filter(
+                            asset_mint.like(query.asset_mint.clone())
+                        )
+                        .limit(query.limit.unwrap_or(100))
+                        .load::<Trade>(&mut db)
+                        .expect("Error loading cursors")
+                }
+                Some(to) => {
+                    trades
+                        .filter(
+                            asset_mint.like(query.asset_mint.clone())
+                                .and(timestamp.le(to))
+                        )
+                        .limit(query.limit.unwrap_or(100))
+                        .load::<Trade>(&mut db)
+                        .expect("Error loading cursors")
+                }
+            }
         }
         Some(_) => {
-            trades
-                .filter(
-                    asset_mint.like(query.asset_mint.clone())
-                        .and(currency_mint.like(query.currency_mint.clone().unwrap_or_default())))
-                .limit(query.limit.unwrap_or(100))
-                .load::<Trade>(&mut db)
-                .expect("Error loading cursors")
+            match query.to {
+                None => {
+                    trades
+                        .filter(
+                            asset_mint.like(query.asset_mint.clone())
+                                .and(currency_mint.like(query.currency_mint.unwrap())))
+                        .limit(query.limit.unwrap_or(100))
+                        .load::<Trade>(&mut db)
+                        .expect("Error loading cursors")
+                }
+                Some(to) => {
+                    trades
+                        .filter(
+                            asset_mint.like(query.asset_mint.clone())
+                                .and(currency_mint.like(currency_mint))
+                                .and(timestamp.le(to)))
+                        .limit(query.limit.unwrap_or(100))
+                        .load::<Trade>(&mut db)
+                        .expect("Error loading cursors")
+                }
+            }
         }
     };
 
 
-    return if cursor_db.is_empty() {
-        warn!("There seems to be no data...");
-        Ok(warp::reply::json(&StatsError {
-            s: 1,
-            errmsg: "No data found".to_string(),
-        }))
-    } else {
-        Ok(warp::reply::json(&cursor_db))
-    };
+    create_trade_response(&cursor_db)
 }
+
 
 
 
