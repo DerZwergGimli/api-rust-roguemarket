@@ -29,6 +29,7 @@ futures = "0.3.26"
 structopt = "0.3.26"
 diesel = { version = "2.0.3", features = ["postgres"] }
 database_psql = { path = "../libs/database_psql" }
+chrono = "0.4.24"
 
 [profile.dev]
 panic = "abort"

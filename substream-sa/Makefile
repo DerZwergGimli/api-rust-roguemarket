@@ -36,7 +36,7 @@ sa_trades_db_out: build
 
 .PHONY: db_sa_trades
 db_sa_trades: build
-	substreams run -e mainnet.sol.streamingfast.io:443 substreams.yaml db_sa_trades --start-block 142317109 --stop-block 0
+	substreams run -e mainnet.sol.streamingfast.io:443 substreams.yaml db_sa_trades --start-block 151993612 --stop-block 0
 
 .PHONY: db_out
 db_out: build

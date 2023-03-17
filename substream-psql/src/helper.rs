@@ -1,6 +1,7 @@
 use std::sync::Arc;
 
 use anyhow::{Error, format_err};
+use chrono::NaiveDateTime;
 use indicatif::ProgressBar;
 use json::object;
 use log::info;
@@ -79,7 +80,7 @@ pub fn map_trade_to_struct(table_change: TableChange, symbol_store: Arc<SymbolSt
         symbol: "-none-".to_string(),
         signature: table_change.clone().fields.into_iter().find(|t| { t.name.contains("signature") }).unwrap().new_value,
         block: table_change.clone().fields.into_iter().find(|t| { t.name.contains("block") }).unwrap().new_value.parse().unwrap_or(0),
-        timestamp: table_change.clone().fields.into_iter().find(|t| { t.name == "timestamp" }).ok_or("timestamp").unwrap().new_value.parse().unwrap_or_default(),
+        timestamp: NaiveDateTime::parse_from_str(table_change.clone().fields.into_iter().find(|t| { t.name == "timestamp" }).ok_or("timestamp").unwrap().new_value.as_str(), "%Y-%m-%d %H:%M:%S").unwrap(),
         order_taker: table_change.clone().fields.into_iter().find(|t| { t.name == "order_taker" }).ok_or("order_taker").unwrap().new_value,
         currency_mint: table_change.clone().fields.into_iter().find(|t| { t.name == "currency_mint" }).ok_or("currency_mint").unwrap().new_value,
         asset_mint: table_change.clone().fields.into_iter().find(|t| { t.name == "asset_mint" }).ok_or("asset_mint").unwrap().new_value,
