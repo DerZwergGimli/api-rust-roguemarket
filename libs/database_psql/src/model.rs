@@ -18,6 +18,7 @@ pub struct Cursor {
 
 #[derive(Queryable, Insertable, Serialize, Deserialize, ToSchema, Debug)]
 pub struct Trade {
+    pub pk: String,
     pub signature: String,
     pub symbol: String,
     pub block: i64,

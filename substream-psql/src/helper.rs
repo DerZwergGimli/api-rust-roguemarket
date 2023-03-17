@@ -75,8 +75,9 @@ pub fn extract_database_changes_from_map(data: BlockScopedData, module_name: Str
 
 pub fn map_trade_to_struct(table_change: TableChange, symbol_store: Arc<SymbolStore>) -> Result<Trade, Error> {
     let mut trade = Trade {
+        pk: table_change.clone().pk,
         symbol: "-none-".to_string(),
-        signature: table_change.clone().pk,
+        signature: table_change.clone().fields.into_iter().find(|t| { t.name.contains("signature") }).unwrap().new_value,
         block: table_change.clone().fields.into_iter().find(|t| { t.name.contains("block") }).unwrap().new_value.parse().unwrap_or(0),
         timestamp: table_change.clone().fields.into_iter().find(|t| { t.name == "timestamp" }).ok_or("timestamp").unwrap().new_value.parse().unwrap_or_default(),
         order_taker: table_change.clone().fields.into_iter().find(|t| { t.name == "order_taker" }).ok_or("order_taker").unwrap().new_value,

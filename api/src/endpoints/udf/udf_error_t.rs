@@ -1,3 +1,4 @@
+use chrono::NaiveDateTime;
 use serde::{Deserialize, Serialize};
 use utoipa::{IntoParams, ToSchema};
 
@@ -5,7 +6,7 @@ use utoipa::{IntoParams, ToSchema};
 pub struct UdfError {
     pub(crate) s: Status,
     //pub(crate) errmsg: Option<String>,
-    pub(crate) nextTime: Option<i64>,
+    pub(crate) nextTime: Option<NaiveDateTime>,
 }
 
 #[derive(Debug, Serialize, Deserialize, ToSchema, Clone)]

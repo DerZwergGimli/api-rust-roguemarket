@@ -1,9 +1,10 @@
 CREATE TABLE trades
 (
-    signature         TEXT PRIMARY KEY NOT NULL,
+    pk                TEXT PRIMARY KEY NOT NULL,
+    signature         TEXT             NOT NULL,
     symbol            TEXT             NOT NULL,
     block             int8             NOT NULL,
-    timestamp         TIMESTAMPZ       NOT NULL,
+    timestamp         TIMESTAMP        NOT NULL,
     order_taker       TEXT             NOT NULL,
     order_initializer TEXT             NOT NULL,
     currency_mint     TEXT             NOT NULL,

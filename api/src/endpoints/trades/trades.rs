@@ -7,6 +7,7 @@ use std::future::Future;
 use std::mem::swap;
 use std::time::{SystemTime, UNIX_EPOCH};
 
+use chrono::NaiveDateTime;
 use diesel::PgConnection;
 use diesel::r2d2::{ConnectionManager, Pool};
 use log::{info, warn};
@@ -37,7 +38,7 @@ pub struct DefaultLastParams {
     #[param(style = Form, example = "FOODATLAS")]
     symbol: String,
     limit: Option<i64>,
-    to: Option<i64>,
+    to: Option<NaiveDateTime>,
 }
 
 #[derive(Debug, Deserialize, IntoParams)]
@@ -45,7 +46,7 @@ pub struct DefaultLastParams {
 pub struct DefaultSignatureParams {
     signature: String,
     limit: Option<i64>,
-    to: Option<i64>,
+    to: Option<NaiveDateTime>,
 }
 
 #[derive(Debug, Deserialize, IntoParams)]
@@ -53,7 +54,7 @@ pub struct DefaultSignatureParams {
 pub struct DefaultAddressParams {
     address: String,
     limit: Option<i64>,
-    to: Option<i64>,
+    to: Option<NaiveDateTime>,
 }
 
 #[derive(Debug, Deserialize, IntoParams)]
@@ -62,7 +63,7 @@ pub struct DefaultMintParams {
     asset_mint: String,
     currency_mint: Option<String>,
     limit: Option<i64>,
-    to: Option<i64>,
+    to: Option<NaiveDateTime>,
 }
 
 //endregion

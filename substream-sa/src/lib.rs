@@ -152,6 +152,7 @@ fn process_blocks(blk: Block, process_exchanges: &mut Vec<ProcessExchange>) -> R
                                 let fees_change_abs = calc_token_balance_change(&meta, currency_mint.clone(), "feesQYAaH3wjGUUQYD959mmi5pY8HSz3F5C3SVc1fp3".to_string());
 
                                 process_exchanges.push(pb::trade::ProcessExchange {
+                                    pk: format!("{}_{}_{}", sig.clone(), order_taker.clone(), order_initializer.clone()),
                                     signature: sig,
                                     block: blk.slot,
                                     timestamp: blk.block_time.clone().unwrap_or_default().timestamp,

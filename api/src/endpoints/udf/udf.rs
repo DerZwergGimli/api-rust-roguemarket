@@ -5,6 +5,7 @@ use std::{
 };
 use std::time::{SystemTime, UNIX_EPOCH};
 
+use chrono::{DateTime, NaiveDateTime, Utc};
 use diesel::PgConnection;
 use diesel::r2d2::{ConnectionManager, Pool};
 use log::{info, warn};
@@ -14,7 +15,7 @@ use types::databasetrade::DBTrade;
 use types::m_ohclvt::M_OHCLVT;
 use udf::time_convert::convert_udf_time_to_seconds;
 use utoipa::{IntoParams, ToSchema};
-use utoipa::openapi::SchemaFormat::DateTime;
+use utoipa::openapi::SchemaFormat::DateTime as OtherDateTime;
 use warp::{Filter, hyper::StatusCode, Reply};
 use warp::sse::reply;
 
@@ -60,9 +61,9 @@ pub struct HistoryParams {
     #[param(style = Form, example = "FOODATLAS")]
     symbol: String,
     #[param(style = Form, example = "1677799981")]
-    from: Option<u64>,
+    from: Option<NaiveDateTime>,
     #[param(style = Form, example = "1678663981")]
-    to: Option<u64>,
+    to: Option<NaiveDateTime>,
     resolution: Option<String>,
     countback: Option<u64>,
     #[serde(rename = "currencyCode")]
@@ -431,15 +432,15 @@ pub async fn get_history(
     if query.countback.unwrap_or_default() > 0 {
         cursor_db = trades
             .filter(symbol.like(query.symbol.clone())
-                .and(timestamp.lt(query.to.unwrap_or_default() as i64)))
+                .and(timestamp.lt(query.to.unwrap_or_default())))
             .limit(query.countback.unwrap() as i64)
             .load::<Trade>(&mut db)
             .expect("Error loading cursors");
     } else {
         cursor_db = trades
             .filter(symbol.like(query.symbol.clone())
-                .and(timestamp.ge(query.from.unwrap_or_default() as i64))
-                .and(timestamp.lt(query.to.unwrap_or_default() as i64)))
+                .and(timestamp.ge(query.from.unwrap_or_default()))
+                .and(timestamp.lt(query.to.unwrap_or_default())))
             .load::<Trade>(&mut db)
             .expect("Error loading cursors");
     }
@@ -448,7 +449,7 @@ pub async fn get_history(
     return if cursor_db.is_empty() {
         cursor_db = trades
             .filter(symbol.like(query.symbol.clone())
-                .and(timestamp.lt(query.to.unwrap_or_default() as i64)))
+                .and(timestamp.lt(query.to.unwrap_or_default())))
             .limit(1)
             .load::<Trade>(&mut db)
             .expect("Error loading cursors");

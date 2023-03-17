@@ -9,7 +9,8 @@ diesel::table! {
 }
 
 diesel::table! {
-    trades (signature) {
+    trades (pk) {
+        pk -> Text,
         signature -> Text,
         symbol -> Text,
         block -> Int8,

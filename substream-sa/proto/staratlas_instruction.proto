@@ -8,9 +8,10 @@ message ProcessExchanges {
 }
 
 message ProcessExchange {
-  string signature = 1;
-  uint64 block = 2;
-  int64 timestamp = 3;
+  string pk = 1;
+  string signature = 2;
+  uint64 block = 3;
+  int64 timestamp = 4;
   string order_taker = 5;
   string currency_mint = 6;
   string asset_mint = 7;

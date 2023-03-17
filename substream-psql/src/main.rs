@@ -175,7 +175,7 @@ async fn run_substream(
 
     update_task_info(pb_task.clone(), task_index, TaskStates::INITIALIZING);
 
-    let package_store = (read_package(package_name).expect("Error reading package file!"));
+    let package_store = read_package(package_name).expect("Error reading package file!");
     let mut stream = SubstreamsStream::new(
         endpoint.clone(),
         cursor.clone(),
