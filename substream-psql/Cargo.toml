@@ -30,6 +30,13 @@ structopt = "0.3.26"
 diesel = { version = "2.0.3", features = ["postgres"] }
 database_psql = { path = "../libs/database_psql" }
 
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
+
+
 
 [build-dependencies]
 tonic-build = { version = "0.7.2", features = ["prost"] }
