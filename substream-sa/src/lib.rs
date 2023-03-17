@@ -78,6 +78,7 @@ fn db_sa_trades(blk: sol::v1::Block) -> Result<DatabaseChanges, Error> {
 
     for exchange in process_exchanges {
         database_changes.push_change("trade", exchange.signature.as_str(), 0, Operation::Create)
+            .change("signature", db_change_create(format!("{:}", exchange.signature).as_str()))
             .change("block", db_change_create(format!("{:}", exchange.block).as_str()))
             .change("timestamp", db_change_create(format!("{:}", exchange.timestamp).as_str()))
             .change("order_taker", db_change_create(format!("{:}", exchange.order_taker).as_str()))
