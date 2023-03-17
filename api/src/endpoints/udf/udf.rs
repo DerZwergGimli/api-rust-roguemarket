@@ -48,7 +48,7 @@ pub struct SearchParams {
     #[param(style = Form, example = "SymbolsParams")]
     query: String,
     #[serde(rename = "type")]
-    shipType: Option<String>,
+    ship_type: Option<String>,
     exchange: Option<String>,
     #[param(style = Form, example = "2")]
     limit: usize,
@@ -65,7 +65,8 @@ pub struct HistoryParams {
     to: Option<u64>,
     resolution: Option<String>,
     countback: Option<u64>,
-    currencyCode: Option<String>,
+    #[serde(rename = "currencyCode")]
+    currency_code: Option<String>,
 }
 //endregion
 
@@ -363,7 +364,7 @@ pub async fn get_search(store: SymbolStore, query: SearchParams) -> Result<impl 
             asset.symbol.contains(query.query.clone().as_str())
                 && asset
                 .asset_type
-                .contains(query.shipType.clone().unwrap_or("".to_string()).as_str())
+                .contains(query.ship_type.clone().unwrap_or("".to_string()).as_str())
         })
         .collect::<Vec<_>>();
 
