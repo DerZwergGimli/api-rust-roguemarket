@@ -53,7 +53,8 @@ pub struct DefaultAddressParams {
 #[derive(Debug, Deserialize, IntoParams)]
 #[into_params(parameter_in = Query)]
 pub struct DefaultMintParams {
-    mint: String,
+    asset_mint: String,
+    currency_mint: Option<String>,
     limit: Option<i64>,
 }
 
@@ -236,13 +237,27 @@ pub async fn get_mint(
     use database_psql::model::*;
     use database_psql::schema::trades::dsl::*;
 
-    let cursor_db: Vec<Trade> = trades
-        .filter(
-            asset_mint.like(query.mint.clone())
-                .or(currency_mint.like(query.mint)))
-        .limit(query.limit.unwrap_or(100))
-        .load::<Trade>(&mut db)
-        .expect("Error loading cursors");
+    let cursor_db: Vec<Trade> = match query.currency_mint {
+        None => {
+            trades
+                .filter(
+                    asset_mint.like(query.asset_mint.clone())
+                )
+                .limit(query.limit.unwrap_or(100))
+                .load::<Trade>(&mut db)
+                .expect("Error loading cursors")
+        }
+        Some(_) => {
+            trades
+                .filter(
+                    asset_mint.like(query.asset_mint.clone())
+                        .or(currency_mint.like(query.currency_mint.clone().unwrap_or_default())))
+                .limit(query.limit.unwrap_or(100))
+                .load::<Trade>(&mut db)
+                .expect("Error loading cursors")
+        }
+    };
+
 
     return if cursor_db.is_empty() {
         warn!("There seems to be no data...");
