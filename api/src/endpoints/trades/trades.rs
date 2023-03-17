@@ -251,7 +251,7 @@ pub async fn get_mint(
             trades
                 .filter(
                     asset_mint.like(query.asset_mint.clone())
-                        .or(currency_mint.like(query.currency_mint.clone().unwrap_or_default())))
+                        .and(currency_mint.like(query.currency_mint.clone().unwrap_or_default())))
                 .limit(query.limit.unwrap_or(100))
                 .load::<Trade>(&mut db)
                 .expect("Error loading cursors")
