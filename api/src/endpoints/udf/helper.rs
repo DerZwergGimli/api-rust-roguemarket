@@ -1,6 +1,5 @@
 use database_psql::model::Trade;
 
-use crate::endpoints::Data;
 use crate::endpoints::udf::udf_history_t::UdfHistory;
 
 struct OHLC {

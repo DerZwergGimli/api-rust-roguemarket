@@ -8,7 +8,7 @@ use std::future::Future;
 use std::mem::swap;
 use std::time::{SystemTime, UNIX_EPOCH};
 
-use chrono::{DateTime, Utc};
+use chrono::{DateTime, NaiveDate, Utc};
 use diesel::{PgConnection, QueryDsl, RunQueryDsl, sql_query};
 use diesel::dsl::date;
 use diesel::r2d2::{ConnectionManager, Pool};
@@ -28,7 +28,6 @@ use database_psql::model::Trade;
 
 use crate::endpoints::responses::response_error::ResponseError;
 use crate::endpoints::responses::response_trade::create_response;
-use crate::endpoints::trades::helper::{calculate_volume, VolumeData, VolumeInterval};
 use crate::endpoints::udf::{udf_config_t, udf_history_t, udf_symbols_t};
 use crate::endpoints::udf::{udf_search_t, udf_symbol_info_t};
 use crate::endpoints::udf::udf_error_t::{Status, UdfError};
@@ -36,6 +35,13 @@ use crate::helper::{with_psql_store, with_raw_psql_store};
 use crate::udf_config_t::{Exchange, SymbolsType};
 
 //region PARAMS
+#[derive(Debug, Serialize, ToSchema)]
+pub struct VolumeData {
+    #[schema(value_type = String)]
+    time: NaiveDate,
+    volume: f64,
+}
+
 #[derive(Debug, Deserialize, IntoParams)]
 #[into_params(parameter_in = Query)]
 pub struct DefaultLastParams {
@@ -73,6 +79,7 @@ pub struct DefaultMintParams {
 #[derive(Debug, Deserialize, IntoParams)]
 #[into_params(parameter_in = Query)]
 pub struct DefaultVolumeParams {
+    #[param(style = Form, example = "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx")]
     currency_mint: String,
     asset_mint: Option<String>,
 
@@ -352,12 +359,6 @@ pub async fn get_volume(
     use database_psql::model::*;
     use database_psql::schema::trades::dsl::*;
 
-    #[derive(Debug, Serialize)]
-    pub struct VolumeData {
-        time: chrono::NaiveDate,
-        volume: f64,
-
-    }
     let mut volume_data: Vec<VolumeData> = vec![];
 
 

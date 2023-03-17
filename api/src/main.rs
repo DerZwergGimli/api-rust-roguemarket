@@ -60,6 +60,7 @@ async fn main() {
     ),
     components(
     schemas(
+    trades::VolumeData,
     database_psql::model::Trade,
     udf_config_t::UdfConfig,
     udf_config_t::SymbolsType,

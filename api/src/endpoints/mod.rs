@@ -5,8 +5,3 @@ pub mod stats;
 mod responses;
 
 
-struct Data {
-    timestamp: i64,
-    volume: i64,
-    price: f64,
-}
