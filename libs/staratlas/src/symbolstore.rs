@@ -1,6 +1,7 @@
-use crate::staratlasnft::StarAtlasNft;
 use log::info;
 use serde::{Deserialize, Serialize};
+
+use crate::staratlasnft::StarAtlasNft;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct SymbolStore {
@@ -143,7 +144,7 @@ impl BuilderSymbolStore {
                 symbol_store.assets.push(Asset {
                     asset_name: asset.symbol.clone(),
                     pair_name: currency.name.clone(),
-                    description: format!("{} / {}", asset.symbol.clone(), currency.name.clone()),
+                    description: format!("{} [{}]", asset.name.clone(), currency.name.clone()),
                     asset_type: format!("{:?}", asset.attributes.item_type),
                     symbol: format!("{}{}", asset.symbol.clone(), currency.name.clone()),
                     mint: asset.mint.clone(),
