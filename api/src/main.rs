@@ -16,7 +16,7 @@ use warp::{
 use warp::http::Method;
 use warp::http::uri::Port;
 
-use database_psql::connection::create_psql_pool;
+use database_psql::connection::create_psql_pool_diesel;
 //use types::trade_t;
 use database_psql::model::Trade;
 use endpoints::udf::udf_config_t;
@@ -47,6 +47,7 @@ async fn main() {
     trades::get_signature,
     trades::get_address,
     trades::get_mint,
+    trades::get_volume,
     udf::get_home,
     udf::get_time,
     udf::get_config,

@@ -15,7 +15,7 @@ use tokio::task::JoinSet;
 use tokio::time::{Duration, sleep};
 use tokio_stream::StreamExt;
 
-use database_psql::connection::create_psql_pool;
+use database_psql::connection::create_psql_pool_diesel;
 use database_psql::db_cursors::{create_cursor, get_cursor, update_cursor};
 use database_psql::db_trades::create_or_update_trade_table;
 use database_psql::model::Cursor;
@@ -63,7 +63,7 @@ async fn main() {
     info!("Config:\n {:?}", config);
 
 
-    let database_pool = (create_psql_pool());
+    let database_pool = (create_psql_pool_diesel());
     let symbol_store = Arc::new(BuilderSymbolStore::new().init().await);
     let mut token: Option<String> = request_token(env::var("STREAMINGFAST_KEY").expect("please set env with: STREAMINGFAST_KEY")).await;
     let endpoint = Arc::new(SubstreamsEndpoint::new(config.endpoint_url, token).await.unwrap());

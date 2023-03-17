@@ -19,7 +19,7 @@ use utoipa::openapi::SchemaFormat::DateTime as OtherDateTime;
 use warp::{Filter, hyper::StatusCode, Reply};
 use warp::sse::reply;
 
-use database_psql::connection::create_psql_pool;
+use database_psql::connection::create_psql_pool_diesel;
 
 use crate::endpoints::udf::{udf_config_t, udf_history_t, udf_symbols_t};
 use crate::endpoints::udf::{udf_search_t, udf_symbol_info_t};
@@ -75,7 +75,7 @@ pub struct HistoryParams {
 pub async fn handlers() -> impl Filter<Extract=impl warp::Reply, Error=warp::Rejection> + Clone
 {
     let store_sa = BuilderSymbolStore::new().init().await;
-    let psql_pool = create_psql_pool();
+    let psql_pool = create_psql_pool_diesel();
 
     let home = warp::path!("udf")
         .and(warp::get())

@@ -18,7 +18,7 @@ use utoipa::openapi::SchemaFormat::DateTime;
 use warp::{Filter, hyper::StatusCode, Reply};
 use warp::sse::reply;
 
-use database_psql::connection::create_psql_pool;
+use database_psql::connection::create_psql_pool_diesel;
 use database_psql::model::Trade;
 
 use crate::endpoints::responses::response_error::ResponseError;
@@ -37,7 +37,7 @@ use crate::udf_config_t::{Exchange, SymbolsType};
 //region HANDLERS
 pub async fn handlers() -> impl Filter<Extract=impl warp::Reply, Error=warp::Rejection> + Clone
 {
-    let psql_pool = create_psql_pool();
+    let psql_pool = create_psql_pool_diesel();
 
     let last_timestamp = warp::path!("stats"  / "last_timestamp")
         .and(warp::get())

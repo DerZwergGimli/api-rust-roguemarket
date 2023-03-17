@@ -3,32 +3,36 @@ use std::{
     env,
     sync::{Arc, Mutex},
 };
+use std::fmt::format;
 use std::future::Future;
 use std::mem::swap;
 use std::time::{SystemTime, UNIX_EPOCH};
 
-use chrono::NaiveDateTime;
-use diesel::PgConnection;
+use chrono::{DateTime, Utc};
+use diesel::{PgConnection, QueryDsl, RunQueryDsl, sql_query};
+use diesel::dsl::date;
 use diesel::r2d2::{ConnectionManager, Pool};
 use log::{info, warn};
+use postgres::{NoTls, Row};
+use r2d2_postgres::PostgresConnectionManager;
 use serde::{Deserialize, Serialize};
 use staratlas::symbolstore::{BuilderSymbolStore, SymbolStore};
 use types::databasetrade::DBTrade;
 use types::m_ohclvt::M_OHCLVT;
 use utoipa::{IntoParams, ToSchema};
-use utoipa::openapi::SchemaFormat::DateTime;
 use warp::{Filter, hyper::StatusCode, Reply};
 use warp::sse::reply;
 
-use database_psql::connection::create_psql_pool;
+use database_psql::connection::{create_psql_pool_diesel, create_psql_raw_pool};
 use database_psql::model::Trade;
 
 use crate::endpoints::responses::response_error::ResponseError;
-use crate::endpoints::responses::response_trade::create_trade_response;
+use crate::endpoints::responses::response_trade::create_response;
+use crate::endpoints::trades::helper::{calculate_volume, VolumeData, VolumeInterval};
 use crate::endpoints::udf::{udf_config_t, udf_history_t, udf_symbols_t};
 use crate::endpoints::udf::{udf_search_t, udf_symbol_info_t};
 use crate::endpoints::udf::udf_error_t::{Status, UdfError};
-use crate::helper::with_psql_store;
+use crate::helper::{with_psql_store, with_raw_psql_store};
 use crate::udf_config_t::{Exchange, SymbolsType};
 
 //region PARAMS
@@ -66,12 +70,22 @@ pub struct DefaultMintParams {
     to: Option<i64>,
 }
 
+#[derive(Debug, Deserialize, IntoParams)]
+#[into_params(parameter_in = Query)]
+pub struct DefaultVolumeParams {
+    currency_mint: String,
+    asset_mint: Option<String>,
+
+}
+
 //endregion
 
 //region HANDLERS
 pub async fn handlers() -> impl Filter<Extract=impl warp::Reply, Error=warp::Rejection> + Clone
 {
-    let psql_pool = create_psql_pool();
+    let psql_raw_pool = create_psql_raw_pool();
+    let psql_pool = create_psql_pool_diesel();
+
 
     let info = warp::path!("trades" / "symbol")
         .and(warp::get())
@@ -101,7 +115,14 @@ pub async fn handlers() -> impl Filter<Extract=impl warp::Reply, Error=warp::Rej
         .and(warp::query::<DefaultAddressParams>())
         .and_then(get_address);
 
-    info.or(signature).or(mint).or(address)
+    let volume = warp::path!("trades" / "volume")
+        .and(warp::get())
+        .and(warp::path::end())
+        .and(with_raw_psql_store(psql_raw_pool.clone()))
+        .and(warp::query::<DefaultVolumeParams>())
+        .and_then(get_volume);
+
+    info.or(signature).or(mint).or(address).or(volume)
 }
 
 
@@ -145,7 +166,7 @@ pub async fn get_last(
                 .expect("Error loading cursors")
         }
     };
-    create_trade_response(&cursor_db)
+    create_response(&cursor_db)
 }
 
 
@@ -188,7 +209,7 @@ pub async fn get_signature(
         }
     };
 
-    create_trade_response(&cursor_db)
+    create_response(&cursor_db)
 }
 
 
@@ -232,7 +253,7 @@ pub async fn get_address(
         }
     };
 
-    create_trade_response(&cursor_db)
+    create_response(&cursor_db)
 }
 
 
@@ -305,13 +326,68 @@ pub async fn get_mint(
             }
         }
     };
-
-
-    create_trade_response(&cursor_db)
+    create_response(&cursor_db)
 }
 
 
+/// Get trade for mint
+///
+/// Responses with an array of trades for asset/token-mint.
+#[utoipa::path(
+get,
+path = "/trades/volume",
+params(DefaultVolumeParams),
+responses(
+(status = 200, description = "Response: Time successful", body = [VolumeData])
+)
+)]
+pub async fn get_volume(
+    pool: deadpool_postgres::Pool,
+    query: DefaultVolumeParams,
+) -> Result<impl Reply, Infallible> {
+    let mut db = pool.get().await.expect("Unable to get connection from pool!");
 
 
+    use diesel::{prelude::*, sql_types::*};
+    use database_psql::model::*;
+    use database_psql::schema::trades::dsl::*;
+
+    #[derive(Debug, Serialize)]
+    pub struct VolumeData {
+        time: chrono::NaiveDate,
+        volume: f64,
+
+    }
+    let mut volume_data: Vec<VolumeData> = vec![];
 
 
+    let data: Vec<Row> = match query.asset_mint {
+        None => {
+            db.query("SELECT date(timestamp_ts) as timestamp,  sum(price*asset_change) as volume
+                                            from trades
+                                            WHERE (currency_mint LIKE $1)
+                                            GROUP BY date(timestamp_ts)
+                                            ORDER BY timestamp ASC",
+                     &[&query.currency_mint]).await.unwrap_or_default()
+        }
+        Some(value) => {
+            db.query("SELECT date(timestamp_ts) as timestamp,  sum(price*asset_change) as volume
+                                            from trades
+                                            WHERE (currency_mint LIKE $1 AND asset_mint LIKE $2)
+                                            GROUP BY date(timestamp_ts)
+                                            ORDER BY timestamp ASC",
+                     &[&query.currency_mint, &value]).await.unwrap_or_default()
+        }
+    };
+
+
+    data.into_iter().for_each(|d| {
+        volume_data.push(VolumeData {
+            time: d.get(0),
+            volume: d.get(1),
+        })
+    });
+
+
+    create_response(&volume_data)
+}

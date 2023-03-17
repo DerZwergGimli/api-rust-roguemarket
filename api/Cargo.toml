@@ -21,8 +21,9 @@ staratlas = { path = "../libs/staratlas" }
 database_psql = { path = "../libs/database_psql" }
 types = { path = "../libs/types" }
 udf = { path = "../libs/udf" }
-
-
+postgres = { version = "0.19.4", features = ["with-chrono-0_4"] }
+r2d2_postgres = "0.18.1"
 utoipa-swagger-ui = "2.0.1"
 chrono = "0.4.22"
 diesel = { version = "2.0.3", features = ["postgres", "r2d2"] }
+deadpool-postgres = "0.10.5"

@@ -1,6 +1,6 @@
 use chrono::{DateTime, Utc};
 use chrono::NaiveDateTime;
-use diesel::prelude::*;
+use diesel::{prelude::*, sql_query};
 use diesel::sql_types::Timestamp;
 use serde::{Deserialize, Serialize};
 use utoipa::ToSchema;
@@ -8,15 +8,16 @@ use utoipa::ToSchema;
 use crate::schema::cursors;
 use crate::schema::trades;
 
+#[table_name = "cursors"]
 #[derive(Queryable, Insertable, Serialize, Deserialize, Debug)]
-//#[table_name = "cursors"]
 pub struct Cursor {
     pub id: String,
     pub value: Option<String>,
     pub block: Option<i64>,
 }
 
-#[derive(Queryable, Insertable, Serialize, Deserialize, ToSchema, Debug)]
+#[table_name = "trades"]
+#[derive(Queryable, QueryableByName, Insertable, Serialize, Deserialize, ToSchema, Debug)]
 pub struct Trade {
     pub pk: String,
     pub signature: String,
@@ -33,4 +34,13 @@ pub struct Trade {
     pub total_cost: f64,
     pub price: f64,
 }
+
+
+// #[table_name = "trades"]
+// #[derive(Queryable, QueryableByName, Insertable, Serialize, Deserialize, ToSchema, Debug)]
+// struct Volume {
+//     day: String,
+//     volume: f32,
+// }
+
 
