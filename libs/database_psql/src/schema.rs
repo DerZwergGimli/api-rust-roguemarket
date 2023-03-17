@@ -13,7 +13,7 @@ diesel::table! {
         signature -> Text,
         symbol -> Text,
         block -> Int8,
-        timestamp -> Int8,
+        timestamp -> Timestamp,
         order_taker -> Text,
         order_initializer -> Text,
         currency_mint -> Text,

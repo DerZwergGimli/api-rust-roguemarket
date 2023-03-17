@@ -1,6 +1,8 @@
+use chrono::{DateTime, Utc};
+use chrono::NaiveDateTime;
 use diesel::prelude::*;
+use diesel::sql_types::Timestamp;
 use serde::{Deserialize, Serialize};
-
 use utoipa::ToSchema;
 
 use crate::schema::cursors;
@@ -19,7 +21,7 @@ pub struct Trade {
     pub signature: String,
     pub symbol: String,
     pub block: i64,
-    pub timestamp: i64,
+    pub timestamp: NaiveDateTime,
     pub order_taker: String,
     pub order_initializer: String,
     pub currency_mint: String,

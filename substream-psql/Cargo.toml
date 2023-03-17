@@ -16,7 +16,7 @@ tokio = { version = "1.0", features = ["macros", "rt-multi-thread"] }
 tokio-stream = { version = "0.1", features = ["net"] }
 tokio-retry = "0.3.0"
 async-stream = "0.3"
-mongodb = "2.4.0"
+
 serde = "1.0.152"
 progress_bar = "1.0.3"
 staratlas = { path = "../libs/staratlas" }
