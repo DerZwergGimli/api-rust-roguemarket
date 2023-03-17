@@ -10,7 +10,8 @@ diesel = { version = "2.0.3", features = ["postgres", "r2d2", "chrono"] }
 
 serde = { version = "1.0", features = ["derive"] }
 chrono = { version = "0.4.24", features = ["serde"] }
-utoipa = { path = "../utopia_temp/utoipa" }
+utoipa = "3.1.1"
+#utoipa = { path = "../utopia_temp/utoipa" }
 
 r2d2 = "0.8.10"
 deadpool-postgres = "0.10.5"

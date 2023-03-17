@@ -15,7 +15,7 @@ use types::databasetrade::DBTrade;
 use types::m_ohclvt::M_OHCLVT;
 use udf::time_convert::convert_udf_time_to_seconds;
 use utoipa::{IntoParams, ToSchema};
-use utoipa::openapi::SchemaFormat::DateTime as OtherDateTime;
+
 use warp::{Filter, hyper::StatusCode, Reply};
 use warp::sse::reply;
 

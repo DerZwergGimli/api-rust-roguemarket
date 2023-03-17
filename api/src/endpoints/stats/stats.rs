@@ -14,7 +14,7 @@ use staratlas::symbolstore::{BuilderSymbolStore, SymbolStore};
 use types::databasetrade::DBTrade;
 use types::m_ohclvt::M_OHCLVT;
 use utoipa::{IntoParams, ToSchema};
-use utoipa::openapi::SchemaFormat::DateTime;
+
 use warp::{Filter, hyper::StatusCode, Reply};
 use warp::sse::reply;
 
