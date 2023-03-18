@@ -82,7 +82,8 @@ pub struct DefaultVolumeParams {
     #[param(style = Form, example = "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx")]
     currency_mint: String,
     asset_mint: Option<String>,
-
+    #[param(style = Form, example = "1659164001")]
+    from: i64,
 }
 
 //endregion
@@ -366,18 +367,18 @@ pub async fn get_volume(
         None => {
             db.query("SELECT date(timestamp_ts) as timestamp,  sum(price*asset_change) as volume
                                             from trades
-                                            WHERE (currency_mint LIKE $1)
+                                            WHERE (currency_mint LIKE $1) AND timestamp > $2
                                             GROUP BY date(timestamp_ts)
                                             ORDER BY timestamp ASC",
-                     &[&query.currency_mint]).await.unwrap_or_default()
+                     &[&query.currency_mint, &query.from]).await.unwrap_or_default()
         }
         Some(value) => {
             db.query("SELECT date(timestamp_ts) as timestamp,  sum(price*asset_change) as volume
                                             from trades
-                                            WHERE (currency_mint LIKE $1 AND asset_mint LIKE $2)
+                                            WHERE (currency_mint LIKE $1 AND asset_mint LIKE $2) AND timestamp > $2
                                             GROUP BY date(timestamp_ts)
                                             ORDER BY timestamp ASC",
-                     &[&query.currency_mint, &value]).await.unwrap_or_default()
+                     &[&query.currency_mint, &value, &query.from]).await.unwrap_or_default()
         }
     };
 
