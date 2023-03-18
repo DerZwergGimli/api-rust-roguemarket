@@ -99,7 +99,7 @@ pub async fn handlers() -> impl Filter<Extract=impl warp::Reply, Error=warp::Rej
         .and(warp::path::end())
         .and(with_psql_store(psql_pool.clone()))
         .and(warp::query::<DefaultLastParams>())
-        .and_then(get_last);
+        .and_then(get_symbol);
 
     let signature = warp::path!("trades" / "signature")
         .and(warp::get())
@@ -147,7 +147,7 @@ responses(
 (status = 200, description = "Response: Time successful", body = [Trade])
 )
 )]
-pub async fn get_last(
+pub async fn get_symbol(
     db_pool: Pool<ConnectionManager<PgConnection>>,
     query: DefaultLastParams,
 ) -> Result<impl Reply, Infallible> {
