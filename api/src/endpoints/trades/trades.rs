@@ -160,14 +160,14 @@ pub async fn get_symbol(
     let cursor_db: Vec<Trade> = match query.to {
         None => {
             trades
-                .filter(symbol.like(query.symbol.clone()))
+                .filter(symbol.like(format!("%{}%", query.symbol.clone())))
                 .limit(query.limit.unwrap_or(10))
                 .load::<Trade>(&mut db)
                 .expect("Error loading cursors")
         }
         Some(to) => {
             trades
-                .filter(symbol.like(query.symbol.clone())
+                .filter(symbol.like(format!("%{}%", query.symbol.clone()))
                     .and(timestamp.le(to)))
                 .limit(query.limit.unwrap_or(10))
                 .load::<Trade>(&mut db)
@@ -202,14 +202,14 @@ pub async fn get_signature(
     let cursor_db: Vec<Trade> = match query.to {
         None => {
             trades
-                .filter(signature.like(query.signature.clone()))
+                .filter(symbol.like(format!("%{}%", query.signature.clone())))
                 .limit(query.limit.unwrap_or(10))
                 .load::<Trade>(&mut db)
                 .expect("Error loading cursors")
         }
         Some(to) => {
             trades
-                .filter(signature.like(query.signature.clone())
+                .filter(symbol.like(format!("%{}%", query.signature.clone()))
                     .and(timestamp.le(to)))
                 .limit(query.limit.unwrap_or(10))
                 .load::<Trade>(&mut db)
@@ -245,15 +245,15 @@ pub async fn get_address(
     let cursor_db: Vec<Trade> = match query.to {
         None => {
             trades
-                .filter(order_taker.like(query.address.clone()).or(order_initializer.like(query.address)))
+                .filter(order_taker.like(format!("%{}%", query.address.clone())).or(order_initializer.like(format!("%{}%", query.address.clone()))))
                 .limit(query.limit.unwrap_or(100))
                 .load::<Trade>(&mut db)
                 .expect("Error loading cursors")
         }
         Some(to) => {
             trades
-                .filter(order_taker.like(query.address.clone())
-                    .or(order_initializer.like(query.address))
+                .filter(order_taker.like(format!("%{}%", query.address.clone()))
+                    .or(order_initializer.like(format!("%{}%", query.address.clone())))
                     .and(timestamp.le(to)))
                 .limit(query.limit.unwrap_or(100))
                 .load::<Trade>(&mut db)
@@ -292,7 +292,7 @@ pub async fn get_mint(
                 None => {
                     trades
                         .filter(
-                            asset_mint.like(query.asset_mint.clone())
+                            asset_mint.like(format!("%{}%", query.asset_mint.clone()))
                         )
                         .limit(query.limit.unwrap_or(100))
                         .load::<Trade>(&mut db)
@@ -301,7 +301,7 @@ pub async fn get_mint(
                 Some(to) => {
                     trades
                         .filter(
-                            asset_mint.like(query.asset_mint.clone())
+                            asset_mint.like(format!("%{}%", query.asset_mint.clone()))
                                 .and(timestamp.le(to))
                         )
                         .limit(query.limit.unwrap_or(100))
@@ -310,13 +310,13 @@ pub async fn get_mint(
                 }
             }
         }
-        Some(_) => {
+        Some(currency) => {
             match query.to {
                 None => {
                     trades
                         .filter(
-                            asset_mint.like(query.asset_mint.clone())
-                                .and(currency_mint.like(query.currency_mint.unwrap())))
+                            asset_mint.like(format!("%{}%", query.asset_mint.clone()))
+                                .and(currency_mint.like(format!("%{}%", currency))))
                         .limit(query.limit.unwrap_or(100))
                         .load::<Trade>(&mut db)
                         .expect("Error loading cursors")
@@ -324,8 +324,8 @@ pub async fn get_mint(
                 Some(to) => {
                     trades
                         .filter(
-                            asset_mint.like(query.asset_mint.clone())
-                                .and(currency_mint.like(currency_mint))
+                            asset_mint.like(format!("%{}%", query.asset_mint.clone()))
+                                .and(currency_mint.like(format!("%{}%", currency)))
                                 .and(timestamp.le(to)))
                         .limit(query.limit.unwrap_or(100))
                         .load::<Trade>(&mut db)
