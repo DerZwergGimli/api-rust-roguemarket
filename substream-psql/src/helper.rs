@@ -10,6 +10,7 @@ use reqwest::header;
 use staratlas::symbolstore::{Asset, SymbolStore};
 
 use database_psql::model::Trade;
+use metadata_gateway::request_metadata_symbol;
 
 use crate::pb::database::{DatabaseChanges, TableChange};
 use crate::pb::substreams::BlockScopedData;
@@ -100,9 +101,14 @@ pub fn map_trade_to_struct(table_change: TableChange, symbol_store: Arc<SymbolSt
         .find(|asset| { asset.mint == trade.asset_mint && asset.pair_mint == trade.currency_mint })
     {
         None => {
-            log::error!("{:?}", trade);
-            panic!("Error matching symbol from store!");
-            "".to_string()
+            let asset_symbol = request_metadata_symbol(
+                "https://api.mainnet-beta.solana.com".to_string(),
+                trade.asset_mint.clone());
+            let currency_symbol = request_metadata_symbol(
+                "https://api.mainnet-beta.solana.com".to_string(),
+                trade.currency_mint.clone());
+
+            format!("{}/{}", asset_symbol, currency_symbol)
         }
         Some(asset) => { asset.symbol }
     };

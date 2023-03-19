@@ -1,39 +1,43 @@
-use borsh::de::BorshDeserialize;
 use mpl_token_metadata::state::Metadata;
-use solana_client::rpc_client::RpcClient;
-use solana_sdk::pubkey::Pubkey;
-
-#[derive(serde::Deserialize)]
-struct Env {
-    rpc_url: url::Url,
-    mint_account_pubkey: String,
-}
 
 #[cfg(test)]
 mod tests {
+    use std::fs::metadata;
+    use std::str::FromStr;
+
+    use mpl_token_metadata::solana_program::pubkey::Pubkey;
+    use mpl_token_metadata::state::AuthorityType::Metadata;
+    use solana_client::rpc_client::RpcClient;
+
+    use crate::{get_metadata, parse_symbol, request_metadata_symbol};
+
     #[test]
-    fn it_works() {
-        let env = envy::from_env::<Env>()?;
-        let client = RpcClient::new(env.rpc_url.to_string());
-        let mint: Pubkey = env.mint_account_pubkey.parse()?;
+    fn is_AMMO() {
+        let symbol = request_metadata_symbol(
+            "https://api.mainnet-beta.solana.com".to_string(),
+            "ammoK8AkX2wnebQb35cDAZtTkvsXQbi82cGeTnUvvfK".to_string());
 
-        let metadata = get_metadata(&client, &mint)?;
+        assert_eq!(symbol, "AMMO");
+    }
 
-        println!("{} metadata:\n{:#?}", mint.to_string(), metadata);
+    #[test]
+    fn is_LSTAND() {
+        let symbol = request_metadata_symbol(
+            "https://api.mainnet-beta.solana.com".to_string(),
+            "DB8CSxoakPRtXhHcc2cA3iETWfGaYY6zE2T8huJTE2Nw".to_string());
 
-        Ok(());
-        let result = 2 + 2;
-        assert_eq!(result, 4);
+        assert_eq!(symbol, "LSTAND");
+    }
+
+
+    #[test]
+    fn is_USDC() {
+        let symbol = request_metadata_symbol(
+            "https://api.mainnet-beta.solana.com".to_string(),
+            "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v".to_string());
+
+        assert_eq!(symbol, "USDC");
     }
 }
 
 
-fn get_metadata(
-    rpc: &RpcClient,
-    mint_address: &Pubkey,
-) -> Result<Metadata, Box<dyn std::error::Error>> {
-    let (meta_addr, _) = mpl_token_metadata::pda::find_metadata_account(&mint_address);
-    let metadata_account = rpc.get_account(&meta_addr)?;
-    let acct = &mut &metadata_account.data[..];
-    Metadata::deserialize(acct).map_err(|e| e.into())
-}
