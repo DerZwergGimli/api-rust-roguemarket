@@ -7,7 +7,7 @@ use json::object;
 use log::info;
 use prost::Message;
 use reqwest::header;
-use staratlas::symbolstore::SymbolStore;
+use staratlas::symbolstore::{Asset, SymbolStore};
 
 use database_psql::model::Trade;
 
@@ -93,14 +93,19 @@ pub fn map_trade_to_struct(table_change: TableChange, symbol_store: Arc<SymbolSt
         price: table_change.clone().fields.into_iter().find(|t| { t.name == "price" }).ok_or("price").unwrap().new_value.parse().unwrap_or(0.0),
     };
 
-    trade.symbol = symbol_store
+    trade.symbol = match symbol_store
         .assets
         .clone()
         .into_iter()
         .find(|asset| { asset.mint == trade.asset_mint && asset.pair_mint == trade.currency_mint })
-        .unwrap_or_default()
-        .symbol;
-
+    {
+        None => {
+            log::error!("{:?}", trade);
+            panic!("Error matching symbol from store!");
+            "".to_string()
+        }
+        Some(asset) => { asset.symbol }
+    };
 
     return Ok(trade);
 }
