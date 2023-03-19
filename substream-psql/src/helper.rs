@@ -98,7 +98,7 @@ pub fn map_trade_to_struct(table_change: TableChange, symbol_store: Arc<SymbolSt
         .clone()
         .into_iter()
         .find(|asset| { asset.mint == trade.asset_mint && asset.pair_mint == trade.currency_mint })
-        .unwrap()
+        .unwrap_or_default()
         .symbol;
 
 
