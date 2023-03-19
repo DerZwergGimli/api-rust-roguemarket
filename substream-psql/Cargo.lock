@@ -47,6 +47,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "224afbd727c3d6e4b90103ece64b8d1b67fbb1973b1046c2281eed3f3803f800"
 
 [[package]]
+name = "assert-json-diff"
+version = "2.0.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "47e4f2b81832e72834d7518d8487a0396a28cc408186a2e8854c0f98011faf12"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "async-scoped"
 version = "0.7.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -374,11 +384,13 @@ dependencies = [
 name = "database_psql"
 version = "0.1.0"
 dependencies = [
+ "assert-json-diff",
  "chrono",
  "deadpool-postgres",
  "diesel",
  "r2d2",
  "serde",
+ "serde_json",
  "tokio-postgres",
  "utoipa 3.1.1",
 ]
@@ -1711,9 +1723,9 @@ dependencies = [
 
 [[package]]
 name = "serde_json"
-version = "1.0.93"
+version = "1.0.94"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cad406b69c91885b5107daf2c29572f6c8cdb3c66826821e286c533490c0bc76"
+checksum = "1c533a59c9d8a93a09c6ab31f0fd5e5f4dd1b8fc9434804029839884765d04ea"
 dependencies = [
  "indexmap",
  "itoa",
@@ -1868,6 +1880,7 @@ name = "substream-psql"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "assert-json-diff",
  "async-scoped",
  "async-stream",
  "chrono",
@@ -1884,6 +1897,7 @@ dependencies = [
  "prost-types",
  "reqwest",
  "serde",
+ "serde_json",
  "staratlas",
  "structopt",
  "tokio",

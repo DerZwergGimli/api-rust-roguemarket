@@ -31,6 +31,7 @@ mod helper;
 mod pb;
 mod substreams_stream;
 mod substreams;
+mod tests;
 
 #[derive(Debug, StructOpt)]
 struct Config {

@@ -161,6 +161,7 @@ pub async fn get_symbol(
         None => {
             trades
                 .filter(symbol.like(format!("%{}%", query.symbol.clone())))
+                .order(timestamp.desc())
                 .limit(query.limit.unwrap_or(10))
                 .load::<Trade>(&mut db)
                 .expect("Error loading cursors")
@@ -169,6 +170,7 @@ pub async fn get_symbol(
             trades
                 .filter(symbol.like(format!("%{}%", query.symbol.clone()))
                     .and(timestamp.le(to)))
+                .order(timestamp.desc())
                 .limit(query.limit.unwrap_or(10))
                 .load::<Trade>(&mut db)
                 .expect("Error loading cursors")
@@ -203,6 +205,7 @@ pub async fn get_signature(
         None => {
             trades
                 .filter(symbol.like(format!("%{}%", query.signature.clone())))
+                .order(timestamp.desc())
                 .limit(query.limit.unwrap_or(10))
                 .load::<Trade>(&mut db)
                 .expect("Error loading cursors")
@@ -211,6 +214,7 @@ pub async fn get_signature(
             trades
                 .filter(symbol.like(format!("%{}%", query.signature.clone()))
                     .and(timestamp.le(to)))
+                .order(timestamp.desc())
                 .limit(query.limit.unwrap_or(10))
                 .load::<Trade>(&mut db)
                 .expect("Error loading cursors")
@@ -246,6 +250,7 @@ pub async fn get_address(
         None => {
             trades
                 .filter(order_taker.like(format!("%{}%", query.address.clone())).or(order_initializer.like(format!("%{}%", query.address.clone()))))
+                .order(timestamp.desc())
                 .limit(query.limit.unwrap_or(100))
                 .load::<Trade>(&mut db)
                 .expect("Error loading cursors")
@@ -255,6 +260,7 @@ pub async fn get_address(
                 .filter(order_taker.like(format!("%{}%", query.address.clone()))
                     .or(order_initializer.like(format!("%{}%", query.address.clone())))
                     .and(timestamp.le(to)))
+                .order(timestamp.desc())
                 .limit(query.limit.unwrap_or(100))
                 .load::<Trade>(&mut db)
                 .expect("Error loading cursors")
@@ -294,6 +300,7 @@ pub async fn get_mint(
                         .filter(
                             asset_mint.like(format!("%{}%", query.asset_mint.clone()))
                         )
+                        .order(timestamp.desc())
                         .limit(query.limit.unwrap_or(100))
                         .load::<Trade>(&mut db)
                         .expect("Error loading cursors")
@@ -304,6 +311,7 @@ pub async fn get_mint(
                             asset_mint.like(format!("%{}%", query.asset_mint.clone()))
                                 .and(timestamp.le(to))
                         )
+                        .order(timestamp.desc())
                         .limit(query.limit.unwrap_or(100))
                         .load::<Trade>(&mut db)
                         .expect("Error loading cursors")
@@ -317,6 +325,7 @@ pub async fn get_mint(
                         .filter(
                             asset_mint.like(format!("%{}%", query.asset_mint.clone()))
                                 .and(currency_mint.like(format!("%{}%", currency))))
+                        .order(timestamp.desc())
                         .limit(query.limit.unwrap_or(100))
                         .load::<Trade>(&mut db)
                         .expect("Error loading cursors")
@@ -327,6 +336,7 @@ pub async fn get_mint(
                             asset_mint.like(format!("%{}%", query.asset_mint.clone()))
                                 .and(currency_mint.like(format!("%{}%", currency)))
                                 .and(timestamp.le(to)))
+                        .order(timestamp.desc())
                         .limit(query.limit.unwrap_or(100))
                         .load::<Trade>(&mut db)
                         .expect("Error loading cursors")
