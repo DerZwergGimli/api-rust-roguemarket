@@ -1,25 +1,22 @@
+use chrono::{DateTime, NaiveDateTime, Utc};
+use database_psql::connection::create_psql_pool_diesel;
+use diesel::PgConnection;
+use diesel::r2d2::{ConnectionManager, Pool};
+use log::{info, warn};
+use serde::{Deserialize, Serialize};
+use staratlas::symbolstore::{BuilderSymbolStore, SymbolStore};
 use std::{
     convert::Infallible,
     env,
     sync::{Arc, Mutex},
 };
 use std::time::{SystemTime, UNIX_EPOCH};
-
-use chrono::{DateTime, NaiveDateTime, Utc};
-use diesel::PgConnection;
-use diesel::r2d2::{ConnectionManager, Pool};
-use log::{info, warn};
-use serde::{Deserialize, Serialize};
-use staratlas::symbolstore::{BuilderSymbolStore, SymbolStore};
 use types::databasetrade::DBTrade;
 use types::m_ohclvt::M_OHCLVT;
 use udf::time_convert::convert_udf_time_to_seconds;
 use utoipa::{IntoParams, ToSchema};
-
 use warp::{Filter, hyper::StatusCode, Reply};
 use warp::sse::reply;
-
-use database_psql::connection::create_psql_pool_diesel;
 
 use crate::endpoints::udf::{udf_config_t, udf_history_t, udf_symbols_t};
 use crate::endpoints::udf::{udf_search_t, udf_symbol_info_t};
@@ -433,6 +430,7 @@ pub async fn get_history(
         cursor_db = trades
             .filter(symbol.like(query.symbol.clone())
                 .and(timestamp.lt(query.to.unwrap_or_default())))
+            .order(timestamp.desc())
             .limit(query.countback.unwrap() as i64)
             .load::<Trade>(&mut db)
             .expect("Error loading cursors");
@@ -441,6 +439,7 @@ pub async fn get_history(
             .filter(symbol.like(query.symbol.clone())
                 .and(timestamp.ge(query.from.unwrap_or_default()))
                 .and(timestamp.lt(query.to.unwrap_or_default())))
+            .order(timestamp.desc())
             .load::<Trade>(&mut db)
             .expect("Error loading cursors");
     }
@@ -450,6 +449,7 @@ pub async fn get_history(
         cursor_db = trades
             .filter(symbol.like(query.symbol.clone())
                 .and(timestamp.lt(query.to.unwrap_or_default())))
+            .order(timestamp.desc())
             .limit(1)
             .load::<Trade>(&mut db)
             .expect("Error loading cursors");
