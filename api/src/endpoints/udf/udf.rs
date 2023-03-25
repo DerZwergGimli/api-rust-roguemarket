@@ -1,16 +1,18 @@
-use chrono::{DateTime, NaiveDateTime, Utc};
-use database_psql::connection::create_psql_pool_diesel;
-use diesel::PgConnection;
-use diesel::r2d2::{ConnectionManager, Pool};
-use log::{info, warn};
-use serde::{Deserialize, Serialize};
-use staratlas::symbolstore::{BuilderSymbolStore, SymbolStore};
 use std::{
     convert::Infallible,
     env,
     sync::{Arc, Mutex},
 };
 use std::time::{SystemTime, UNIX_EPOCH};
+
+use chrono::{DateTime, NaiveDateTime, Utc};
+use deadpool_postgres::GenericClient;
+use diesel::PgConnection;
+use diesel::r2d2::{ConnectionManager, Pool};
+use log::{info, warn};
+use postgres::{NoTls, Row};
+use serde::{Deserialize, Serialize};
+use staratlas::symbolstore::{BuilderSymbolStore, SymbolStore};
 use types::databasetrade::DBTrade;
 use types::m_ohclvt::M_OHCLVT;
 use udf::time_convert::convert_udf_time_to_seconds;
@@ -18,11 +20,14 @@ use utoipa::{IntoParams, ToSchema};
 use warp::{Filter, hyper::StatusCode, Reply};
 use warp::sse::reply;
 
+use database_psql::connection::create_psql_pool_diesel;
+use database_psql::connection::create_psql_raw_pool;
+
 use crate::endpoints::udf::{udf_config_t, udf_history_t, udf_symbols_t};
 use crate::endpoints::udf::{udf_search_t, udf_symbol_info_t};
 use crate::endpoints::udf::helper::ohlc_converter;
 use crate::endpoints::udf::udf_error_t::{Status, UdfError};
-use crate::helper::with_psql_store;
+use crate::helper::{with_psql_store, with_raw_psql_store};
 use crate::udf_config_t::{Exchange, SymbolsType};
 
 //region PARAMS
@@ -72,6 +77,7 @@ pub struct HistoryParams {
 pub async fn handlers() -> impl Filter<Extract=impl warp::Reply, Error=warp::Rejection> + Clone
 {
     let store_sa = BuilderSymbolStore::new().init().await;
+    let psql_raw_pool = create_psql_raw_pool();
     let psql_pool = create_psql_pool_diesel();
 
     let home = warp::path!("udf")
@@ -113,7 +119,7 @@ pub async fn handlers() -> impl Filter<Extract=impl warp::Reply, Error=warp::Rej
     let history = warp::path!("udf" / "history")
         .and(warp::get())
         .and(warp::path::end())
-        .and(with_psql_store(psql_pool.clone()))
+        .and(with_raw_psql_store(psql_raw_pool.clone()))
         .and(warp::query::<HistoryParams>())
         .and_then(get_history);
 
@@ -406,11 +412,11 @@ responses(
 )
 )]
 pub async fn get_history(
-    db_pool: Pool<ConnectionManager<PgConnection>>,
+    db_pool: deadpool_postgres::Pool,
     query: HistoryParams,
 ) -> Result<impl Reply, Infallible> {
     let mut history = udf_history_t::UdfHistory {
-        s: "".to_string(),
+        s: "ok".to_string(),
         t: vec![],
         c: vec![],
         o: vec![],
@@ -419,55 +425,88 @@ pub async fn get_history(
         v: vec![],
     };
 
-    let mut db = db_pool.get().expect("Unable to get connection from pool!");
+    let mut db = db_pool.get().await.expect("Unable to get connection from pool!");
 
-    use diesel::prelude::*;
-    use database_psql::model::*;
-    use database_psql::schema::trades::dsl::*;
-
-    let mut cursor_db: Vec<Trade>;
-    if query.countback.unwrap_or_default() > 0 {
-        cursor_db = trades
-            .filter(symbol.like(query.symbol.clone())
-                .and(timestamp.lt(query.to.unwrap_or_default())))
-            .order(timestamp.desc())
-            .limit(query.countback.unwrap() as i64)
-            .load::<Trade>(&mut db)
-            .expect("Error loading cursors");
-    } else {
-        cursor_db = trades
-            .filter(symbol.like(query.symbol.clone())
-                .and(timestamp.ge(query.from.unwrap_or_default()))
-                .and(timestamp.lt(query.to.unwrap_or_default())))
-            .order(timestamp.desc())
-            .load::<Trade>(&mut db)
-            .expect("Error loading cursors");
-    }
-
-
-    return if cursor_db.is_empty() {
-        cursor_db = trades
-            .filter(symbol.like(query.symbol.clone())
-                .and(timestamp.lt(query.to.unwrap_or_default())))
-            .order(timestamp.desc())
-            .limit(1)
-            .load::<Trade>(&mut db)
-            .expect("Error loading cursors");
-        if !cursor_db.is_empty() {
-            return Ok(warp::reply::json(&UdfError {
-                s: Status::no_data,
-                nextTime: Some(cursor_db[0].timestamp),
-            }));
-        }
-        warn!("There seems to be no data...");
-        return Ok(warp::reply::json(&UdfError {
-            s: Status::no_data,
-            nextTime: None,
-        }));
-    } else {
-        let timeframe_seconds = convert_udf_time_to_seconds(query.resolution);
-
-        let ohcl_data = ohlc_converter(&cursor_db, timeframe_seconds);
-        Ok(warp::reply::json(&ohcl_data))
+    let candle_timeframe_seconds = convert_udf_time_to_seconds(query.resolution).unwrap_or(86400);
+    let end_time = match query.countback {
+        None => { query.from.unwrap_or_default() }
+        Some(count) => { query.to.clone().unwrap_or_default() - (candle_timeframe_seconds * count as i64) }
     };
+
+
+    println!("{:?}", candle_timeframe_seconds);
+
+
+    let data: Vec<Row> = db.query(
+        "SELECT
+            time_bucket($4, timestamp) AS bucket,
+            first(price, timestamp) AS open,
+            max(price) AS high,
+            min(price) AS low,
+            last(price, timestamp) AS close,
+            sum(asset_change) AS volume
+        FROM trades
+        WHERE symbol like $1
+        AND timestamp >= $3 AND timestamp < $2
+        GROUP BY bucket
+        ORDER BY bucket ASC;",
+        &[&query.symbol, &query.to.unwrap_or_default(), &end_time, &candle_timeframe_seconds],
+    ).await.unwrap_or_default();
+
+    data.into_iter().for_each(|d| {
+        history.t.push(d.get("bucket"));
+        history.o.push(d.get("open"));
+        history.c.push(d.get("close"));
+        history.h.push(d.get("high"));
+        history.l.push(d.get("low"));
+        history.v.push(d.get("volume"))
+    });
+
+
+    // if query.countback.unwrap_or_default() > 0 {
+    //     cursor_db = trades
+    //         .filter(symbol.like(query.symbol.clone())
+    //             .and(timestamp.lt(query.to.unwrap_or_default())))
+    //         .order(timestamp.desc())
+    //         .limit(query.countback.unwrap() as i64)
+    //         .load::<Trade>(&mut db)
+    //         .expect("Error loading cursors");
+    // } else {
+    //     cursor_db = trades
+    //         .filter(symbol.like(query.symbol.clone())
+    //             .and(timestamp.ge(query.from.unwrap_or_default()))
+    //             .and(timestamp.lt(query.to.unwrap_or_default())))
+    //         .order(timestamp.desc())
+    //         .load::<Trade>(&mut db)
+    //         .expect("Error loading cursors");
+    // }
+    //
+    //
+    // return if cursor_db.is_empty() {
+    //     cursor_db = trades
+    //         .filter(symbol.like(query.symbol.clone())
+    //             .and(timestamp.lt(query.to.unwrap_or_default())))
+    //         .order(timestamp.desc())
+    //         .limit(1)
+    //         .load::<Trade>(&mut db)
+    //         .expect("Error loading cursors");
+    //     if !cursor_db.is_empty() {
+    //         return Ok(warp::reply::json(&UdfError {
+    //             s: Status::no_data,
+    //             nextTime: Some(cursor_db[0].timestamp),
+    //         }));
+    //     }
+    //     warn!("There seems to be no data...");
+    //     return Ok(warp::reply::json(&UdfError {
+    //         s: Status::no_data,
+    //         nextTime: None,
+    //     }));
+    // } else {
+    //     let timeframe_seconds = convert_udf_time_to_seconds(query.resolution);
+    //
+    //     let ohcl_data = ohlc_converter(&cursor_db, timeframe_seconds);
+    //     Ok(warp::reply::json(&ohcl_data))
+    // };
+
+    Ok(warp::reply::json(&history))
 }
