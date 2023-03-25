@@ -493,7 +493,7 @@ pub async fn get_history(
         if !last_timestamp.is_empty() {
             return Ok(warp::reply::json(&UdfError {
                 s: Status::no_data,
-                nextTime: last_timestamp[0].get("timestamp"),
+                nextTime: last_timestamp[0].get("timestamp") * 1000,
             }));
         }
         warn!("There seems to be no data...");
