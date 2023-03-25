@@ -449,7 +449,7 @@ pub async fn get_history(
         WHERE symbol like $1
         AND timestamp >= $3 AND timestamp < $2
         GROUP BY bucket
-        ORDER BY bucket ASC;",
+        ORDER BY bucket DESC;",
         &[&query.symbol, &query.to.unwrap_or_default(), &end_time, &candle_timeframe_seconds],
     ).await.unwrap_or_default();
 
@@ -482,31 +482,26 @@ pub async fn get_history(
     // }
     //
     //
-    // return if cursor_db.is_empty() {
-    //     cursor_db = trades
-    //         .filter(symbol.like(query.symbol.clone())
-    //             .and(timestamp.lt(query.to.unwrap_or_default())))
-    //         .order(timestamp.desc())
-    //         .limit(1)
-    //         .load::<Trade>(&mut db)
-    //         .expect("Error loading cursors");
-    //     if !cursor_db.is_empty() {
-    //         return Ok(warp::reply::json(&UdfError {
-    //             s: Status::no_data,
-    //             nextTime: Some(cursor_db[0].timestamp),
-    //         }));
-    //     }
-    //     warn!("There seems to be no data...");
-    //     return Ok(warp::reply::json(&UdfError {
-    //         s: Status::no_data,
-    //         nextTime: None,
-    //     }));
-    // } else {
-    //     let timeframe_seconds = convert_udf_time_to_seconds(query.resolution);
-    //
-    //     let ohcl_data = ohlc_converter(&cursor_db, timeframe_seconds);
-    //     Ok(warp::reply::json(&ohcl_data))
-    // };
+    return if history.t.is_empty() {
+        let last_timestamp: Vec<Row> = db.query("SELECT timestamp
+                    FROM trades
+                    WHERE symbol like $1
+                    AND timestamp < $2
+                    ORDER BY timestamp DESC
+                    LIMIT 1", &[&query.symbol, &query.to.unwrap_or_default()]).await.unwrap_or_default();
 
-    Ok(warp::reply::json(&history))
+        if !last_timestamp.is_empty() {
+            return Ok(warp::reply::json(&UdfError {
+                s: Status::no_data,
+                nextTime: last_timestamp[0].get("timestamp"),
+            }));
+        }
+        warn!("There seems to be no data...");
+        return Ok(warp::reply::json(&UdfError {
+            s: Status::no_data,
+            nextTime: None,
+        }));
+    } else {
+        Ok(warp::reply::json(&history))
+    };
 }
