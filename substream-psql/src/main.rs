@@ -95,11 +95,10 @@ async fn main() {
     pb_main.set_message("total  ");
     pb_main.tick();
 
-    // tokio::task::JoinSet
     // setup the JoinSet to manage the join handles for our futures
     let mut set = JoinSet::new();
-
     let mut last_item = false;
+
 
     for (index, range) in block_ranges.iter().enumerate() {
         if index == block_ranges.len() - 1 {
@@ -154,14 +153,13 @@ async fn run_substream(
     symbol_store: Arc<SymbolStore>,
     endpoint: Arc<SubstreamsEndpoint>,
     pb_task: ProgressBar) -> usize {
-    update_task_info(pb_task.clone(), task_index, TaskStates::CREATING);
-
     let cursor_db = get_cursor(&mut connection_pool.get().expect("Error getting connection"), format!("{}_{}_{}", module_name, range[0], range[1]));
 
 
     let mut cursor: Option<String> = None;
     if cursor_db.len() > 0 {
         cursor = cursor_db[0].value.clone();
+        println!("Cursor (loaded from db) for [{:?}, {:?}]", range[0], range[1]);
     } else {
         let new_cursor = Cursor {
             id: format!("{}_{}_{}", module_name, range[0], range[1]),
@@ -169,6 +167,7 @@ async fn run_substream(
             block: None,
         };
         create_cursor(&mut connection_pool.get().expect("Error getting connection"), new_cursor);
+        println!("Cursor (created) for [{:?}, {:?}]", range[0], range[1]);
     }
 
     sleep(Duration::from_millis(2000)).await;
@@ -189,6 +188,7 @@ async fn run_substream(
 
 
     loop {
+        let mut current_block = 0;
         update_task_info(pb_task.clone(), task_index, TaskStates::RUNNING);
 
         match stream.next().await {
@@ -208,7 +208,7 @@ async fn run_substream(
                     pb_task.inc(1);
 
                     let cursor = Some(data.cursor.clone());
-                    let current_block = 0;
+
                     match extract_database_changes_from_map(data.clone(), module_name.clone()) {
                         Ok(DatabaseChanges { table_changes }) => {
                             for table_changed in table_changes {
@@ -218,8 +218,17 @@ async fn run_substream(
                                     }
                                     Operation::Create => {
                                         let mapped = map_trade_to_struct(table_changed, symbol_store.clone()).expect("Error unwrapping db data");
-                                        let current_block = mapped.block as u64;
+                                        current_block = mapped.block as u64;
                                         create_or_update_trade_table(&mut connection_pool.get().expect("Error getting connection"), mapped);
+
+                                        //Update cursor
+                                        let new_cursor = Cursor {
+                                            id: format!("{}_{}_{}", module_name, range[0], range[1]),
+                                            value: cursor.clone(),
+                                            block: Some(current_block as i64),
+                                        };
+                                        update_cursor(&mut connection_pool.get().expect("Error getting connection"), format!("{}_{}_{}", module_name, range[0], range[1]), new_cursor);
+
 
                                         if range[1] > 0 {
                                             pb_task.set_position(current_block - range[0]);
@@ -235,13 +244,6 @@ async fn run_substream(
                                     }
                                 }
                             }
-                            //Update cursor
-                            let new_cursor = Cursor {
-                                id: format!("{}_{}_{}", module_name, range[0], range[1]),
-                                value: cursor.clone(),
-                                block: Some(current_block as i64),
-                            };
-                            update_cursor(&mut connection_pool.get().expect("Error getting connection"), format!("{}_{}_{}", module_name, range[0], range[1]), new_cursor);
                         }
                         Err(error) => {
                             error!("not correct module");
