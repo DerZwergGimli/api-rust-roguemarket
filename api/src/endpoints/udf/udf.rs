@@ -486,7 +486,7 @@ pub async fn get_history(
         let last_timestamp: Vec<Row> = db.query("SELECT timestamp
                     FROM trades
                     WHERE symbol like $1
-                    AND timestamp < $2
+                    AND timestamp <= $2
                     ORDER BY timestamp DESC
                     LIMIT 1", &[&query.symbol, &query.to.unwrap_or_default()]).await.unwrap_or_default();
 
