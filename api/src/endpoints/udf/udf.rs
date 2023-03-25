@@ -462,26 +462,6 @@ pub async fn get_history(
         history.v.push(d.get("volume"))
     });
 
-
-    // if query.countback.unwrap_or_default() > 0 {
-    //     cursor_db = trades
-    //         .filter(symbol.like(query.symbol.clone())
-    //             .and(timestamp.lt(query.to.unwrap_or_default())))
-    //         .order(timestamp.desc())
-    //         .limit(query.countback.unwrap() as i64)
-    //         .load::<Trade>(&mut db)
-    //         .expect("Error loading cursors");
-    // } else {
-    //     cursor_db = trades
-    //         .filter(symbol.like(query.symbol.clone())
-    //             .and(timestamp.ge(query.from.unwrap_or_default()))
-    //             .and(timestamp.lt(query.to.unwrap_or_default())))
-    //         .order(timestamp.desc())
-    //         .load::<Trade>(&mut db)
-    //         .expect("Error loading cursors");
-    // }
-    //
-    //
     return if history.t.is_empty() {
         let last_timestamp: Vec<Row> = db.query("SELECT timestamp
                     FROM trades
@@ -491,9 +471,11 @@ pub async fn get_history(
                     LIMIT 1", &[&query.symbol, &query.to.unwrap_or_default()]).await.unwrap_or_default();
 
         if !last_timestamp.is_empty() {
+            let timestamp: i64 = last_timestamp[0].get("timestamp");
+
             return Ok(warp::reply::json(&UdfError {
                 s: Status::no_data,
-                nextTime: last_timestamp[0].get("timestamp") * 1000,
+                nextTime: Some(timestamp * 1000),
             }));
         }
         warn!("There seems to be no data...");
