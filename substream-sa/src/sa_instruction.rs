@@ -42,7 +42,7 @@ pub enum MarketplaceInstruction<'a> {
 }
 
 #[derive(BorshDeserialize, Debug)]
-struct Pubkey(pub(crate) [u8; 32]);
+struct Pubkey([u8; 32]);
 
 #[derive(BorshDeserialize, Debug)]
 struct ProcessExchangeArgNoPubkeyAndPrice {
