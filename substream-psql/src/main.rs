@@ -203,9 +203,8 @@ async fn run_substream(
                     panic!("Error while handling stream?");
                 }
                 Ok(BlockResponse::New(data)) => {
-                    update_task_info(pb_task.clone(), task_index, TaskStates::INSERTING_DB);
-
                     pb_task.inc(1);
+
 
                     let cursor = Some(data.cursor.clone());
 
@@ -217,6 +216,8 @@ async fn run_substream(
                                         warn!("operation not supported")
                                     }
                                     Operation::Create => {
+                                        update_task_info(pb_task.clone(), task_index, TaskStates::INSERTING_DB);
+
                                         let mapped = map_trade_to_struct(table_changed, symbol_store.clone()).expect("Error unwrapping db data");
                                         current_block = mapped.block as u64;
                                         create_or_update_trade_table(&mut connection_pool.get().expect("Error getting connection"), mapped);
@@ -228,7 +229,6 @@ async fn run_substream(
                                             block: Some(current_block as i64),
                                         };
                                         update_cursor(&mut connection_pool.get().expect("Error getting connection"), format!("{}_{}_{}", module_name, range[0], range[1]), new_cursor);
-
 
                                         if range[1] > 0 {
                                             pb_task.set_position(current_block - range[0]);

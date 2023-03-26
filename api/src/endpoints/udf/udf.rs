@@ -436,9 +436,10 @@ pub async fn get_history(
 
     println!("{:?}", candle_timeframe_seconds);
 
-
-    let data: Vec<Row> = db.query(
-        "SELECT
+    let data: Vec<Row> = match query.countback {
+        None => {
+            db.query(
+                "SELECT
             time_bucket($4, timestamp) AS bucket,
             first(price, timestamp) AS open,
             max(price) AS high,
@@ -450,8 +451,29 @@ pub async fn get_history(
         AND timestamp >= $3 AND timestamp < $2
         GROUP BY bucket
         ORDER BY bucket DESC;",
-        &[&query.symbol, &query.to.unwrap_or_default(), &end_time, &candle_timeframe_seconds],
-    ).await.unwrap_or_default();
+                &[&query.symbol, &query.to.unwrap_or_default(), &query.from.unwrap_or_default(), &candle_timeframe_seconds],
+            ).await.unwrap_or_default()
+        }
+        Some(countback) => {
+            db.query(
+                "SELECT
+            time_bucket($4, timestamp) AS bucket,
+            first(price, timestamp) AS open,
+            max(price) AS high,
+            min(price) AS low,
+            last(price, timestamp) AS close,
+            sum(asset_change) AS volume
+        FROM trades
+        WHERE symbol like $1
+        AND timestamp < $2
+        GROUP BY bucket
+        ORDER BY bucket DESC
+        LIMIT $3;",
+                &[&query.symbol, &query.to.unwrap_or_default(), &(countback as i32), &candle_timeframe_seconds],
+            ).await.unwrap_or_default()
+        }
+    };
+
 
     data.into_iter().for_each(|d| {
         history.t.push(d.get("bucket"));
