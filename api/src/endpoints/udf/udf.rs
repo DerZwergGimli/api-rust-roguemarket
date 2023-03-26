@@ -447,6 +447,7 @@ pub async fn get_history(
             ).await.unwrap_or_default()
         }
         Some(countback) => {
+            let c = countback as i64;
             db.query(
                 "SELECT
             time_bucket($4, timestamp) AS bucket,
@@ -461,7 +462,7 @@ pub async fn get_history(
         GROUP BY bucket
         ORDER BY bucket ASC
         LIMIT $3;",
-                &[&query.symbol, &query.to.unwrap_or_default(), &(countback as i32), &candle_timeframe_seconds],
+                &[&query.symbol, &query.to.unwrap_or_default(), &c, &candle_timeframe_seconds],
             ).await.unwrap_or_default()
         }
     };
