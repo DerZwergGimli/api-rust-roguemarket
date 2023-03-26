@@ -432,17 +432,17 @@ pub async fn get_history(
         None => {
             db.query(
                 "SELECT
-            time_bucket($4, timestamp) AS bucket,
-            first(price, timestamp) AS open,
-            max(price) AS high,
-            min(price) AS low,
-            last(price, timestamp) AS close,
-            sum(asset_change) AS volume
-        FROM trades
-        WHERE symbol like $1
-        AND timestamp >= $3 AND timestamp < $2
-        GROUP BY bucket
-        ORDER BY bucket ASC;",
+                            time_bucket($4, timestamp) AS bucket,
+                            first(price, timestamp) AS open,
+                            max(price) AS high,
+                            min(price) AS low,
+                            last(price, timestamp) AS close,
+                            sum(asset_change) AS volume
+                        FROM trades
+                        WHERE symbol like $1
+                        AND timestamp >= $3 AND timestamp < $2
+                        GROUP BY bucket
+                        ORDER BY bucket ASC;",
                 &[&query.symbol, &query.to.unwrap_or_default(), &query.from.unwrap_or_default(), &candle_timeframe_seconds],
             ).await.unwrap_or_default()
         }
@@ -450,18 +450,18 @@ pub async fn get_history(
             let c = countback as i64;
             db.query(
                 "SELECT
-            time_bucket($4, timestamp) AS bucket,
-            first(price, timestamp) AS open,
-            max(price) AS high,
-            min(price) AS low,
-            last(price, timestamp) AS close,
-            sum(asset_change) AS volume
-        FROM trades
-        WHERE symbol like $1
-        AND timestamp < $2
-        GROUP BY bucket
-        ORDER BY bucket ASC
-        LIMIT $3;",
+                            time_bucket($4, timestamp) AS bucket,
+                            first(price, timestamp) AS open,
+                            max(price) AS high,
+                            min(price) AS low,
+                            last(price, timestamp) AS close,
+                            sum(asset_change) AS volume
+                        FROM trades
+                        WHERE symbol like $1
+                        AND timestamp < $2
+                        GROUP BY bucket
+                        ORDER BY bucket ASC
+                        LIMIT $3;",
                 &[&query.symbol, &query.to.unwrap_or_default(), &c, &candle_timeframe_seconds],
             ).await.unwrap_or_default()
         }
