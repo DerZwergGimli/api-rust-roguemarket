@@ -428,14 +428,6 @@ pub async fn get_history(
     let mut db = db_pool.get().await.expect("Unable to get connection from pool!");
 
     let candle_timeframe_seconds = convert_udf_time_to_seconds(query.resolution).unwrap_or(86400);
-    let end_time = match query.countback {
-        None => { query.from.unwrap_or_default() }
-        Some(count) => { query.to.clone().unwrap_or_default() - (candle_timeframe_seconds * count as i64) }
-    };
-
-
-    println!("{:?}", candle_timeframe_seconds);
-
     let data: Vec<Row> = match query.countback {
         None => {
             db.query(
@@ -450,7 +442,7 @@ pub async fn get_history(
         WHERE symbol like $1
         AND timestamp >= $3 AND timestamp < $2
         GROUP BY bucket
-        ORDER BY bucket DESC;",
+        ORDER BY bucket ASC;",
                 &[&query.symbol, &query.to.unwrap_or_default(), &query.from.unwrap_or_default(), &candle_timeframe_seconds],
             ).await.unwrap_or_default()
         }
@@ -467,7 +459,7 @@ pub async fn get_history(
         WHERE symbol like $1
         AND timestamp < $2
         GROUP BY bucket
-        ORDER BY bucket DESC
+        ORDER BY bucket ASC
         LIMIT $3;",
                 &[&query.symbol, &query.to.unwrap_or_default(), &(countback as i32), &candle_timeframe_seconds],
             ).await.unwrap_or_default()
