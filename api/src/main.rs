@@ -57,11 +57,13 @@ async fn main() {
     udf::get_history,
     stats::get_last_timestamp,
     stats::get_first_timestamp,
+    stats::get_ranges,
     ),
     components(
     schemas(
     trades::VolumeData,
     database_psql::model::Trade,
+    database_psql::model::Cursor,
     udf_config_t::UdfConfig,
     udf_config_t::Exchange,
     udf_config_t::SymbolsType,

@@ -9,7 +9,7 @@ use crate::schema::cursors;
 use crate::schema::trades;
 
 #[table_name = "cursors"]
-#[derive(Queryable, Insertable, Serialize, Deserialize, Debug)]
+#[derive(Queryable, Insertable, Serialize, Deserialize, ToSchema, Debug)]
 pub struct Cursor {
     pub id: String,
     pub value: Option<String>,
