@@ -31,7 +31,7 @@ pub fn update_cursor(connection: &mut PgConnection, name_id: String, new_cursor:
     use crate::schema::cursors;
     let cursor_db = diesel::update(cursors)
         .filter(id.eq(name_id))
-        .set((value.eq(new_cursor.value), block.eq(new_cursor.block)))
+        .set((value.eq(new_cursor.value), block.eq(new_cursor.block), block.eq(new_cursor.start_block), block.eq(new_cursor.end_block)))
         .get_result::<Cursor>(connection)
         .expect("Error updating Cursor!");
     return cursor_db;

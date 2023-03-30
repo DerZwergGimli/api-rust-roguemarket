@@ -226,11 +226,11 @@ async fn run_substream(
 
                                         //Update cursor
                                         let new_cursor = Cursor {
-                                            id: format!("{}_{}_{}", module_name, range[0], range[1]),
+                                            id: format!("{}_{}_{}", module_name, range[0].clone(), range[1].clone()),
                                             value: cursor.clone(),
                                             block: Some(current_block as i64),
-                                            start_block: Some(range[0] as i64),
-                                            end_block: Some(range[1] as i64),
+                                            start_block: Some(range[0].clone() as i64),
+                                            end_block: Some(range[1].clone() as i64),
                                         };
                                         update_cursor(&mut connection_pool.get().expect("Error getting connection"), format!("{}_{}_{}", module_name, range[0], range[1]), new_cursor);
 
