@@ -9,7 +9,7 @@ use substreams_database_change::pb::database::table_change::Operation;
 use substreams_solana::pb::sol;
 use substreams_solana::pb::sol::v1::Block;
 
-use crate::help::{calc_token_balance_change, calc_token_decimals, db_change_create};
+use crate::help::{calc_token_balance_change, calc_token_decimals, db_change_create, find_asset_mint_in_inner_instruction_get_index};
 use crate::pb::trade::ProcessExchange;
 use crate::sa_instruction::MarketplaceInstruction;
 
@@ -131,7 +131,7 @@ fn process_blocks(blk: Block, process_exchanges: &mut Vec<ProcessExchange>) -> R
             }
             if let Some(transaction) = trx.transaction {
                 if let Some(msg) = transaction.clone().message {
-                    for inst in &msg.instructions {
+                    for (inst_idx, inst) in msg.instructions.clone().into_iter().enumerate() {
                         let program_id = &msg.account_keys[inst.program_id_index as usize];
                         if bs58::encode(program_id).into_string() != "traderDnaR5w6Tcoi3NFm53i48FTDNbGjBSZwWXDRrg" {
                             continue;
@@ -147,9 +147,22 @@ fn process_blocks(blk: Block, process_exchanges: &mut Vec<ProcessExchange>) -> R
                                 let currency_mint = bs58::encode(&msg.account_keys[inst.accounts[3] as usize]).into_string();
                                 let order_initializer = bs58::encode(&msg.account_keys[inst.accounts[5] as usize]).into_string();
                                 let asset_mint = bs58::encode(&msg.account_keys[inst.accounts[4] as usize]).into_string();
+
+                                log::info!("{:?}", inst.accounts);
+
+
+                                let asset_receiving_wallet_index = find_asset_mint_in_inner_instruction_get_index(meta.inner_instructions[inst_idx].clone(), inst.accounts[4]).unwrap();
+
+                                log::info!("{:?}", asset_receiving_wallet_index);
+                                let asset_receiving_wallet = match asset_receiving_wallet_index {
+                                    1 => { bs58::encode(&msg.account_keys[inst.accounts[5] as usize]).into_string() }
+                                    2 => { bs58::encode(&msg.account_keys[inst.accounts[0] as usize]).into_string() }
+                                    _ => { panic!("Error mapping a wallet to the receiving wallet index from inner_instructions!") }
+                                };
+
+
                                 let currency_change_abs =
                                     calc_token_balance_change(&meta, currency_mint.clone(), bs58::encode(&msg.account_keys[inst.accounts[0] as usize]).into_string());
-
                                 let fees_change_abs = calc_token_balance_change(&meta, currency_mint.clone(), "feesQYAaH3wjGUUQYD959mmi5pY8HSz3F5C3SVc1fp3".to_string());
 
                                 let price = match expected_price {
@@ -166,10 +179,12 @@ fn process_blocks(blk: Block, process_exchanges: &mut Vec<ProcessExchange>) -> R
                                     order_initializer,
                                     currency_mint: currency_mint.clone(),
                                     asset_mint,
+                                    asset_receiving_wallet,
                                     asset_change: purchase_quantity.to_string(),
                                     market_fee: fees_change_abs.to_string(),
                                     total_cost: currency_change_abs.to_string(),
                                     price: price.to_string(),
+
                                 })
                             }
                             _ => {}

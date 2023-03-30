@@ -16,8 +16,9 @@ message ProcessExchange {
   string currency_mint = 6;
   string asset_mint = 7;
   string order_initializer = 8;
-  string asset_change = 9;
-  string market_fee = 10;
-  string total_cost = 11;
-  string price = 12;
+  string asset_receiving_wallet = 9;
+  string asset_change = 10;
+  string market_fee = 11;
+  string total_cost = 12;
+  string price = 13;
 }

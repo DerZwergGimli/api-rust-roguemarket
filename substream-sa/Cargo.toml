@@ -27,7 +27,6 @@ marketplace_interface = { path = "../libs/staratlas_gm/marketplace_interface" }
 
 
 
-
 [profile.release]
 lto = true
 opt-level = 's'
