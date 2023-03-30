@@ -86,6 +86,7 @@ fn db_sa_trades(blk: sol::v1::Block) -> Result<DatabaseChanges, Error> {
             .change("asset_mint", db_change_create(format!("{:}", exchange.asset_mint).as_str()))
             .change("order_initializer", db_change_create(format!("{:}", exchange.order_initializer).as_str()))
             .change("asset_change", db_change_create(format!("{:}", exchange.asset_change).as_str()))
+            .change("asset_receiving_wallet", db_change_create(format!("{:}", exchange.asset_receiving_wallet).as_str()))
             .change("market_fee", db_change_create(format!("{:}", exchange.market_fee).as_str()))
             .change("total_cost", db_change_create(format!("{:}", exchange.total_cost).as_str()))
             .change("price", db_change_create(format!("{:}", exchange.price).as_str()));
