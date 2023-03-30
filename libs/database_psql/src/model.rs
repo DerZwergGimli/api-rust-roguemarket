@@ -14,6 +14,8 @@ pub struct Cursor {
     pub id: String,
     pub value: Option<String>,
     pub block: Option<i64>,
+    pub start_block: Option<i64>,
+    pub end_block: Option<i64>,
 }
 
 #[table_name = "trades"]

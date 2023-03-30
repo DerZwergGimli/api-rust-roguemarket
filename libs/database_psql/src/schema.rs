@@ -5,6 +5,8 @@ diesel::table! {
         id -> Text,
         value -> Nullable<Text>,
         block -> Nullable<Int8>,
+        start_block -> Nullable<Int8>,
+        end_block -> Nullable<Int8>,
     }
 }
 

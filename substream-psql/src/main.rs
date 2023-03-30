@@ -165,6 +165,8 @@ async fn run_substream(
             id: format!("{}_{}_{}", module_name, range[0], range[1]),
             value: None,
             block: None,
+            start_block: Some(range[0] as i64),
+            end_block: Some(range[1] as i64),
         };
         create_cursor(&mut connection_pool.get().expect("Error getting connection"), new_cursor);
         println!("Cursor (created) for [{:?}, {:?}]", range[0], range[1]);
@@ -227,6 +229,8 @@ async fn run_substream(
                                             id: format!("{}_{}_{}", module_name, range[0], range[1]),
                                             value: cursor.clone(),
                                             block: Some(current_block as i64),
+                                            start_block: Some(range[0] as i64),
+                                            end_block: Some(range[1] as i64),
                                         };
                                         update_cursor(&mut connection_pool.get().expect("Error getting connection"), format!("{}_{}_{}", module_name, range[0], range[1]), new_cursor);
 
