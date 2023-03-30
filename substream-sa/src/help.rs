@@ -31,7 +31,6 @@ pub fn calc_token_balance_change(meta: &TransactionStatusMeta, currency_mint: St
 }
 
 pub fn find_asset_mint_in_inner_instruction_get_index(inner_instructions: InnerInstructions, asset_mint_account: u8) -> Option<usize> {
-    //Todo: Check if this works
     log::info!("{:?}", inner_instructions);
     for (idx, instruction) in inner_instructions.instructions.clone().into_iter().enumerate() {
         if instruction.accounts.contains(&asset_mint_account) {
