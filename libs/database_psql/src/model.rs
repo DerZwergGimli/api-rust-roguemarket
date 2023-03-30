@@ -28,6 +28,7 @@ pub struct Trade {
     pub order_taker: String,
     pub order_initializer: String,
     pub currency_mint: String,
+    pub asset_receiving_wallet: String,
     pub asset_mint: String,
     pub asset_change: f64,
     pub market_fee: f64,

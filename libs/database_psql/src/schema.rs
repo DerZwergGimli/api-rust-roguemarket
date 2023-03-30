@@ -20,6 +20,7 @@ diesel::table! {
         order_initializer -> Text,
         currency_mint -> Text,
         asset_mint -> Text,
+        asset_receiving_wallet -> Text,
         asset_change -> Float8,
         market_fee -> Float8,
         total_cost -> Float8,
