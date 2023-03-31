@@ -1,5 +1,7 @@
 use std::collections::HashMap;
+use std::str::FromStr;
 
+use bigdecimal::BigDecimal;
 use substreams::log;
 use substreams_solana::pb::sol::v1::{CompiledInstruction, TransactionStatusMeta};
 
@@ -13,21 +15,42 @@ pub fn calc_token_decimals(value: u64, mint: String) -> f64 {
 }
 
 pub fn calc_token_balance_change(meta: &TransactionStatusMeta, currency_mint: String, authority: String) -> f64 {
-    (meta
+    log::info!("{}", meta
         .clone().post_token_balances
         .into_iter()
         .find(|tb| { tb.mint == currency_mint && tb.owner == authority })
         .unwrap_or_default()
         .ui_token_amount
         .unwrap_or_default()
-        .ui_amount -
-        meta.clone().pre_token_balances
+        .ui_amount);
+
+    log::info!("{}", meta
+        .clone().pre_token_balances
+        .into_iter()
+        .find(|tb| { tb.mint == currency_mint && tb.owner == authority })
+        .unwrap_or_default()
+        .ui_token_amount
+        .unwrap_or_default()
+        .ui_amount);
+
+
+    let delta = BigDecimal::from_str(meta
+        .clone().post_token_balances
+        .into_iter()
+        .find(|tb| { tb.mint == currency_mint && tb.owner == authority })
+        .unwrap_or_default()
+        .ui_token_amount
+        .unwrap_or_default()
+        .ui_amount_string.as_str()).unwrap_or_default() -
+        BigDecimal::from_str(meta.clone().pre_token_balances
             .into_iter()
             .find(|tb| { tb.mint == currency_mint && tb.owner == authority })
             .unwrap_or_default()
             .ui_token_amount
             .unwrap_or_default()
-            .ui_amount).abs()
+            .ui_amount_string.as_str()).unwrap_or_default();
+
+    return delta.abs().to_string().parse::<f64>().unwrap_or_default();
 }
 
 pub fn find_asset_mint_in_inner_instruction_get_index(inner_instructions: Vec<CompiledInstruction>, asset_mint_account: u8) -> Option<usize> {
