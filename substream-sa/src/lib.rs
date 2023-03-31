@@ -1,5 +1,7 @@
 use std::ops::Index;
+use std::str::FromStr;
 
+use bigdecimal::BigDecimal;
 use substreams::errors::Error;
 use substreams::log;
 use substreams::store::{StoreGet, StoreGetProto, StoreSet, StoreSetProto};
@@ -167,7 +169,7 @@ fn process_blocks(blk: Block, process_exchanges: &mut Vec<ProcessExchange>) -> R
                                 let fees_change_abs = calc_token_balance_change(&meta, currency_mint.clone(), "feesQYAaH3wjGUUQYD959mmi5pY8HSz3F5C3SVc1fp3".to_string());
 
                                 let price = match expected_price {
-                                    None => { currency_change_abs / purchase_quantity as f64 }
+                                    None => { (BigDecimal::from_str(currency_change_abs.to_string().as_str()).unwrap() / BigDecimal::from_str(purchase_quantity.to_string().as_str()).unwrap()).to_string().parse::<f64>().unwrap() }
                                     Some(value) => { calc_token_decimals(value, currency_mint.clone()) }
                                 };
 
