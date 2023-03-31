@@ -1,3 +1,5 @@
+use std::ops::Index;
+
 use serde_json::json;
 use substreams::{log, proto};
 use substreams::errors::Error;
@@ -126,11 +128,11 @@ fn sa_trades_db_out(store: StoreGetProto<pb::trade::ProcessExchanges>) -> Result
 
 fn process_blocks(blk: Block, process_exchanges: &mut Vec<ProcessExchange>) -> Result<(), Error> {
     for trx in blk.transactions {
-        if let Some(meta) = trx.meta {
+        if let Some(meta) = trx.clone().meta {
             if let Some(_) = meta.err {
                 continue;
             }
-            if let Some(transaction) = trx.transaction {
+            if let Some(transaction) = trx.clone().transaction {
                 if let Some(msg) = transaction.clone().message {
                     for (inst_idx, inst) in msg.instructions.clone().into_iter().enumerate() {
                         let program_id = &msg.account_keys[inst.program_id_index as usize];
@@ -149,12 +151,12 @@ fn process_blocks(blk: Block, process_exchanges: &mut Vec<ProcessExchange>) -> R
                                 let order_initializer = bs58::encode(&msg.account_keys[inst.accounts[5] as usize]).into_string();
                                 let asset_mint = bs58::encode(&msg.account_keys[inst.accounts[4] as usize]).into_string();
 
-                                log::info!("{:?}", inst.accounts);
 
+                                log::info!("instruction index={:?}", inst_idx);
+                                log::info!("instruction inner={:?}", trx.clone().meta.clone().unwrap().inner_instructions);
+                                let asset_receiving_wallet_index = find_asset_mint_in_inner_instruction_get_index(meta.clone().inner_instructions.into_iter().find(|i| i.index == inst_idx as u32).unwrap().clone().instructions, inst.accounts[4]).unwrap();
 
-                                let asset_receiving_wallet_index = find_asset_mint_in_inner_instruction_get_index(meta.inner_instructions[inst_idx].clone(), inst.accounts[4]).unwrap();
-
-                                log::info!("{:?}", asset_receiving_wallet_index);
+                                log::info!("asset_receiving_wallet_index={:?}", asset_receiving_wallet_index);
                                 let asset_receiving_wallet = match asset_receiving_wallet_index {
                                     1 => { bs58::encode(&msg.account_keys[inst.accounts[5] as usize]).into_string() }
                                     2 => { bs58::encode(&msg.account_keys[inst.accounts[0] as usize]).into_string() }
