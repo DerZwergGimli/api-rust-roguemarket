@@ -7,7 +7,7 @@ use json::object;
 use log::info;
 use prost::Message;
 use reqwest::header;
-use staratlas::symbolstore::{Asset, SymbolStore};
+use staratlas::symbolstore::{SymbolStore};
 
 use database_psql::model::Trade;
 use metadata_gateway::request_metadata_symbol;

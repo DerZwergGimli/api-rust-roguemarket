@@ -19,7 +19,7 @@ async fn test_helper_substreams(expected_data: String, start: i64, stop: u64) {
     const PACKAGE_PATH: &str = "substreams.spkg";
     const MODULE_NAME: &str = "db_sa_trades";
 
-    let mut token: Option<String> = request_token(env::var("STREAMINGFAST_KEY").expect("please set env with: STREAMINGFAST_KEY")).await;
+    let token: Option<String> = request_token(env::var("STREAMINGFAST_KEY").expect("please set env with: STREAMINGFAST_KEY")).await;
     let endpoint = Arc::new(SubstreamsEndpoint::new(ENDPOINT_URL, token).await.unwrap());
 
     let package_store = read_package(PACKAGE_PATH.to_string()).expect("Error reading package file!");
@@ -45,8 +45,8 @@ async fn test_helper_substreams(expected_data: String, start: i64, stop: u64) {
                     panic!("Error while handling stream?");
                 }
                 Ok(BlockResponse::New(data)) => {
-                    let cursor = Some(data.cursor.clone());
-                    let current_block = 0;
+                    let _cursor = Some(data.cursor.clone());
+                    let _current_block = 0;
                     match extract_database_changes_from_map(data.clone(), MODULE_NAME.to_string()) {
                         Ok(DatabaseChanges { table_changes }) => {
                             for table_changed in table_changes {
@@ -69,7 +69,7 @@ async fn test_helper_substreams(expected_data: String, start: i64, stop: u64) {
                             }
                             //Update cursor
                         }
-                        Err(error) => {
+                        Err(_error) => {
                             error!("not correct module");
                         }
                     }

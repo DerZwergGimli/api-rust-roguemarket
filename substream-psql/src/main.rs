@@ -8,7 +8,7 @@ use diesel::r2d2::Pool;
 use futures::FutureExt;
 use indicatif::{MultiProgress, ProgressBar, ProgressStyle};
 use log::{error, info, warn};
-use staratlas::symbolstore;
+
 use staratlas::symbolstore::{BuilderSymbolStore, SymbolStore};
 use structopt::StructOpt;
 use tokio::task::JoinSet;
@@ -64,9 +64,9 @@ async fn main() {
     info!("Config:\n {:?}", config);
 
 
-    let database_pool = (create_psql_pool_diesel());
+    let database_pool = create_psql_pool_diesel();
     let symbol_store = Arc::new(BuilderSymbolStore::new().init().await);
-    let mut token: Option<String> = request_token(env::var("STREAMINGFAST_KEY").expect("please set env with: STREAMINGFAST_KEY")).await;
+    let token: Option<String> = request_token(env::var("STREAMINGFAST_KEY").expect("please set env with: STREAMINGFAST_KEY")).await;
     let endpoint = Arc::new(SubstreamsEndpoint::new(config.endpoint_url, token).await.unwrap());
 
     let mut block_ranges = vec![];
@@ -105,7 +105,7 @@ async fn main() {
             last_item = true;
         }
 
-        let mut pb_task;
+        let pb_task;
 
         if range[1] > 0 {
             pb_task = multi_pg.insert_before(&pb_main, ProgressBar::new(range[1] - range[0]));
@@ -249,7 +249,7 @@ async fn run_substream(
                                 }
                             }
                         }
-                        Err(error) => {
+                        Err(_error) => {
                             error!("not correct module");
                         }
                     }
