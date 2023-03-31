@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 use substreams::log;
-use substreams_solana::pb::sol::v1::{CompiledInstruction, InnerInstructions, TransactionStatusMeta};
+use substreams_solana::pb::sol::v1::{CompiledInstruction, TransactionStatusMeta};
 
 pub fn calc_token_decimals(value: u64, mint: String) -> f64 {
     let mut store = HashMap::new();

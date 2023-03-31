@@ -1,14 +1,12 @@
-use std::borrow::BorrowMut;
-use std::io::BufRead;
+
+
 
 use borsh::BorshDeserialize;
-use prost::bytes::Buf;
+
 use substreams::log;
-use substreams::scalar::BigInt;
+
 
 use {
-    crate::option::COption,
-    std::convert::TryInto,
     substreams::errors::Error,
 };
 
@@ -71,7 +69,7 @@ impl<'a> MarketplaceInstruction<'a> {
         //                                   [ ARGS                                               ]
 
         let (&tag, rest) = input.split_first().ok_or(Error::Unexpected(format!("Invalid Instruction")))?;
-        let (dump, exchange_args) = rest.split_at(7);
+        let (_dump, exchange_args) = rest.split_at(7);
 
         Ok(match tag {
             18 => {

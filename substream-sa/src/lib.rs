@@ -1,12 +1,12 @@
 use std::ops::Index;
 
-use serde_json::json;
-use substreams::{log, proto};
+
+use substreams::{log};
 use substreams::errors::Error;
-use substreams::Hex;
-use substreams::store::{DeltaProto, Deltas, StoreGet, StoreGetProto, StoreSet, StoreSetProto};
+
+use substreams::store::{StoreGet, StoreGetProto, StoreSet, StoreSetProto};
 use substreams::store::StoreNew;
-use substreams_database_change::pb::database::{DatabaseChanges, TableChange};
+use substreams_database_change::pb::database::{DatabaseChanges};
 use substreams_database_change::pb::database::table_change::Operation;
 use substreams_solana::pb::sol;
 use substreams_solana::pb::sol::v1::Block;
@@ -97,11 +97,11 @@ fn db_sa_trades(blk: sol::v1::Block) -> Result<DatabaseChanges, Error> {
 }
 
 #[substreams::handlers::map]
-fn sa_trades_db_out(store: StoreGetProto<pb::trade::ProcessExchanges>) -> Result<DatabaseChanges, Error> {
+fn sa_trades_db_out(_store: StoreGetProto<pb::trade::ProcessExchanges>) -> Result<DatabaseChanges, Error> {
     log::info!("sa_trades_db_out");
 
 
-    let mut database_changes: DatabaseChanges = Default::default();
+    let database_changes: DatabaseChanges = Default::default();
 
 
     // for trx in blk.transactions {
