@@ -8,7 +8,6 @@ use diesel::r2d2::Pool;
 use futures::FutureExt;
 use indicatif::{MultiProgress, ProgressBar, ProgressStyle};
 use log::{error, info, warn};
-
 use staratlas::symbolstore::{BuilderSymbolStore, SymbolStore};
 use structopt::StructOpt;
 use tokio::task::JoinSet;
@@ -159,7 +158,7 @@ async fn run_substream(
     let mut cursor: Option<String> = None;
     if cursor_db.len() > 0 {
         cursor = cursor_db[0].value.clone();
-        println!("Cursor (loaded from db) for [{:?}, {:?}]", range[0], range[1]);
+        println!("Cursor (loaded from db) for [{:?}, {:?}]:\n{:?}", range[0], range[1], cursor);
     } else {
         let new_cursor = Cursor {
             id: format!("{}_{}_{}", module_name, range[0], range[1]),
