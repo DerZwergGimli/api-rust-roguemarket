@@ -43,6 +43,7 @@ async fn main() {
     #[openapi(
     paths(
     default::get_info,
+    trades::get_base,
     trades::get_symbol,
     trades::get_signature,
     trades::get_address,

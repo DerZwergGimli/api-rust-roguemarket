@@ -9,6 +9,8 @@ use std::mem::swap;
 use std::time::{SystemTime, UNIX_EPOCH};
 
 use chrono::{DateTime, NaiveDate, Utc};
+use database_psql::connection::{create_psql_pool_diesel, create_psql_raw_pool};
+use database_psql::model::Trade;
 use diesel::{PgConnection, QueryDsl, RunQueryDsl, sql_query};
 use diesel::dsl::date;
 use diesel::r2d2::{ConnectionManager, Pool};
@@ -22,9 +24,6 @@ use types::m_ohclvt::M_OHCLVT;
 use utoipa::{IntoParams, ToSchema};
 use warp::{Filter, hyper::StatusCode, Reply};
 use warp::sse::reply;
-
-use database_psql::connection::{create_psql_pool_diesel, create_psql_raw_pool};
-use database_psql::model::Trade;
 
 use crate::endpoints::responses::response_error::ResponseError;
 use crate::endpoints::responses::response_trade::create_response;
@@ -44,7 +43,15 @@ pub struct VolumeData {
 
 #[derive(Debug, Deserialize, IntoParams)]
 #[into_params(parameter_in = Query)]
-pub struct DefaultLastParams {
+pub struct DefaultBaseParams {
+    limit: Option<i64>,
+    to: Option<i64>,
+    from: Option<i64>,
+}
+
+#[derive(Debug, Deserialize, IntoParams)]
+#[into_params(parameter_in = Query)]
+pub struct DefaultSymbolParams {
     #[param(style = Form, example = "FOODATLAS")]
     symbol: String,
     limit: Option<i64>,
@@ -94,12 +101,19 @@ pub async fn handlers() -> impl Filter<Extract=impl warp::Reply, Error=warp::Rej
     let psql_raw_pool = create_psql_raw_pool();
     let psql_pool = create_psql_pool_diesel();
 
+    let base = warp::path!("trades")
+        .and(warp::get())
+        .and(warp::path::end())
+        .and(with_psql_store(psql_pool.clone()))
+        .and(warp::query::<DefaultBaseParams>())
+        .and_then(get_base);
+
 
     let info = warp::path!("trades" / "symbol")
         .and(warp::get())
         .and(warp::path::end())
         .and(with_psql_store(psql_pool.clone()))
-        .and(warp::query::<DefaultLastParams>())
+        .and(warp::query::<DefaultSymbolParams>())
         .and_then(get_symbol);
 
     let signature = warp::path!("trades" / "signature")
@@ -130,11 +144,76 @@ pub async fn handlers() -> impl Filter<Extract=impl warp::Reply, Error=warp::Rej
         .and(warp::query::<DefaultVolumeParams>())
         .and_then(get_volume);
 
-    info.or(signature).or(mint).or(address).or(volume)
+    base.or(info).or(signature).or(mint).or(address).or(volume)
 }
 
 
 //endregion
+
+/// Get x trade from Database
+///
+/// Responses with a last trade for a given symbol. [default 10]
+#[utoipa::path(
+get,
+path = "/trades",
+params(DefaultBaseParams),
+responses(
+(status = 200, description = "Response: Time successful", body = [Trade])
+)
+)]
+pub async fn get_base(
+    db_pool: Pool<ConnectionManager<PgConnection>>,
+    query: DefaultBaseParams,
+) -> Result<impl Reply, Infallible> {
+    let mut db = db_pool.get().expect("Unable to get connection from pool!");
+    use diesel::prelude::*;
+    use database_psql::model::*;
+    use database_psql::schema::trades::dsl::*;
+
+    let cursor_db: Vec<Trade> = match query.to {
+        None => {
+            match query.from {
+                None => {
+                    trades
+                        .order(timestamp.desc())
+                        .limit(query.limit.unwrap_or(10))
+                        .load::<Trade>(&mut db)
+                        .expect("Error loading trades")
+                }
+                Some(from) => {
+                    trades
+                        .filter(timestamp.ge(from))
+                        .order(timestamp.desc())
+                        .limit(query.limit.unwrap_or(10))
+                        .load::<Trade>(&mut db)
+                        .expect("Error loading trades")
+                }
+            }
+        }
+        Some(to) => {
+            match query.from {
+                None => {
+                    trades
+                        .filter(timestamp.le(to))
+                        .order(timestamp.desc())
+                        .limit(query.limit.unwrap_or(10))
+                        .load::<Trade>(&mut db)
+                        .expect("Error loading trades")
+                }
+                Some(from) => {
+                    trades
+                        .filter(timestamp.le(to)
+                            .and(timestamp.ge(from)))
+                        .order(timestamp.desc())
+                        .limit(query.limit.unwrap_or(10))
+                        .load::<Trade>(&mut db)
+                        .expect("Error loading trades")
+                }
+            }
+        }
+    };
+    create_response(&cursor_db)
+}
 
 
 /// Get last trade from SYMBOL
@@ -143,14 +222,14 @@ pub async fn handlers() -> impl Filter<Extract=impl warp::Reply, Error=warp::Rej
 #[utoipa::path(
 get,
 path = "/trades/symbol",
-params(DefaultLastParams),
+params(DefaultSymbolParams),
 responses(
 (status = 200, description = "Response: Time successful", body = [Trade])
 )
 )]
 pub async fn get_symbol(
     db_pool: Pool<ConnectionManager<PgConnection>>,
-    query: DefaultLastParams,
+    query: DefaultSymbolParams,
 ) -> Result<impl Reply, Infallible> {
     let mut db = db_pool.get().expect("Unable to get connection from pool!");
     use diesel::prelude::*;
