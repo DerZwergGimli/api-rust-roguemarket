@@ -150,7 +150,7 @@ pub async fn handlers() -> impl Filter<Extract=impl warp::Reply, Error=warp::Rej
 
 //endregion
 
-/// Get x trade from Database
+/// Get x-amount of trades from Database
 ///
 /// Responses with a last trade for a given symbol. [default 10]
 #[utoipa::path(
