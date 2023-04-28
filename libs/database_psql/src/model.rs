@@ -33,6 +33,7 @@ pub struct Trade {
     pub asset_mint: String,
     pub asset_receiving_wallet: String,
     pub asset_change: f64,
+    pub currency_change: f64,
     pub market_fee: f64,
     pub total_cost: f64,
     pub price: f64,

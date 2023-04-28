@@ -2,15 +2,14 @@ use std::sync::Arc;
 
 use anyhow::{Error, format_err};
 use chrono::NaiveDateTime;
+use database_psql::model::Trade;
 use indicatif::ProgressBar;
 use json::object;
 use log::info;
+use metadata_gateway::request_metadata_symbol;
 use prost::Message;
 use reqwest::header;
-use staratlas::symbolstore::{SymbolStore};
-
-use database_psql::model::Trade;
-use metadata_gateway::request_metadata_symbol;
+use staratlas::symbolstore::SymbolStore;
 
 use crate::pb::database::{DatabaseChanges, TableChange};
 use crate::pb::substreams::BlockScopedData;
@@ -90,9 +89,10 @@ pub fn map_trade_to_struct(table_change: TableChange, symbol_store: Arc<SymbolSt
         order_initializer: table_change.clone().fields.into_iter().find(|t| { t.name == "order_initializer" }).ok_or("order_initializer").unwrap().new_value,
         asset_receiving_wallet: table_change.clone().fields.into_iter().find(|t| { t.name == "asset_receiving_wallet" }).ok_or("asset_receiving_wallet").unwrap().new_value,
         asset_change: table_change.clone().fields.into_iter().find(|t| { t.name == "asset_change" }).ok_or("asset_change").unwrap().new_value.parse().unwrap_or(0.0),
+        currency_change: table_change.clone().fields.into_iter().find(|t| { t.name == "currency_change" }).ok_or("currency_change").unwrap().new_value.parse().unwrap_or(0.0),
         market_fee: table_change.clone().fields.into_iter().find(|t| { t.name == "market_fee" }).ok_or("market_fee").unwrap().new_value.parse().unwrap_or(0.0),
-        total_cost: table_change.clone().fields.into_iter().find(|t| { t.name == "total_cost" }).ok_or("total_cost").unwrap().new_value.parse().unwrap_or(0.0),
         price: table_change.clone().fields.into_iter().find(|t| { t.name == "price" }).ok_or("price").unwrap().new_value.parse().unwrap_or(0.0),
+        total_cost: table_change.clone().fields.into_iter().find(|t| { t.name == "total_cost" }).ok_or("total_cost").unwrap().new_value.parse().unwrap_or(0.0),
     };
 
     trade.symbol = match symbol_store

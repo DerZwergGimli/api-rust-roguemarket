@@ -21,4 +21,5 @@ message ProcessExchange {
   string market_fee = 11;
   string total_cost = 12;
   string price = 13;
+  string currency_change = 14;
 }

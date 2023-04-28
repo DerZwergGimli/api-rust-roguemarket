@@ -12,6 +12,7 @@ CREATE TABLE trades
     asset_mint             TEXT             NOT NULL,
     asset_receiving_wallet TEXT             NOT NULL,
     asset_change           float8           NOT NULL,
+    currency_change        float8           NOT NULL,
     market_fee             float8           NOT NULL,
     total_cost             float8           NOT NULL,
     price                  float8           NOT NULL

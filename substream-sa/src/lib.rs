@@ -12,7 +12,8 @@ use substreams_solana::pb::sol;
 use substreams_solana::pb::sol::v1::Block;
 
 use crate::help::{calc_token_balance_change, calc_token_decimals, db_change_create, find_asset_mint_in_inner_instruction_get_index};
-use crate::pb::trade::ProcessExchange;
+use crate::pb::sa::trade::v1::ProcessExchange;
+use crate::pb::sa::trade::v1::ProcessExchanges;
 use crate::sa_instruction::MarketplaceInstruction;
 
 mod pb;
@@ -22,17 +23,17 @@ mod option;
 
 
 #[substreams::handlers::map]
-fn map_sa_trades(blk: sol::v1::Block) -> Result<pb::trade::ProcessExchanges, Error> {
+fn map_sa_trades(blk: sol::v1::Block) -> Result<ProcessExchanges, Error> {
     log::info!("map_sa_trades");
     let mut process_exchanges = vec![];
     process_blocks(blk, &mut process_exchanges).unwrap();
 
-    return Ok(pb::trade::ProcessExchanges { process_exchanges });
+    return Ok(ProcessExchanges { process_exchanges });
 }
 
 
 #[substreams::handlers::store]
-fn store_sa_trades(blk: sol::v1::Block, output: StoreSetProto<pb::trade::ProcessExchange>) {
+fn store_sa_trades(blk: sol::v1::Block, output: StoreSetProto<ProcessExchange>) {
     log::info!("store_sa_trades");
 
     let mut process_exchanges = vec![];
@@ -45,7 +46,7 @@ fn store_sa_trades(blk: sol::v1::Block, output: StoreSetProto<pb::trade::Process
 }
 
 #[substreams::handlers::map]
-fn db_out(exchanges: pb::trade::ProcessExchanges) -> Result<DatabaseChanges, Error> {
+fn db_out(exchanges: ProcessExchanges) -> Result<DatabaseChanges, Error> {
     log::info!("db_sa_trades");
 
     substreams::register_panic_hook();
@@ -87,17 +88,19 @@ fn db_sa_trades(blk: sol::v1::Block) -> Result<DatabaseChanges, Error> {
             .change("currency_mint", db_change_create(format!("{:}", exchange.currency_mint).as_str()))
             .change("asset_mint", db_change_create(format!("{:}", exchange.asset_mint).as_str()))
             .change("order_initializer", db_change_create(format!("{:}", exchange.order_initializer).as_str()))
-            .change("asset_change", db_change_create(format!("{:}", exchange.asset_change).as_str()))
             .change("asset_receiving_wallet", db_change_create(format!("{:}", exchange.asset_receiving_wallet).as_str()))
+            .change("asset_change", db_change_create(format!("{:}", exchange.asset_change).as_str()))
+            .change("currency_change", db_change_create(format!("{:}", exchange.currency_change).as_str()))
+
             .change("market_fee", db_change_create(format!("{:}", exchange.market_fee).as_str()))
-            .change("total_cost", db_change_create(format!("{:}", exchange.total_cost).as_str()))
-            .change("price", db_change_create(format!("{:}", exchange.price).as_str()));
+            .change("price", db_change_create(format!("{:}", exchange.price).as_str()))
+            .change("total_cost", db_change_create(format!("{:}", exchange.total_cost).as_str()));
     }
     return Ok(database_changes);
 }
 
 #[substreams::handlers::map]
-fn sa_trades_db_out(_store: StoreGetProto<pb::trade::ProcessExchanges>) -> Result<DatabaseChanges, Error> {
+fn sa_trades_db_out(_store: StoreGetProto<ProcessExchanges>) -> Result<DatabaseChanges, Error> {
     log::info!("sa_trades_db_out");
 
 
@@ -173,7 +176,7 @@ fn process_blocks(blk: Block, process_exchanges: &mut Vec<ProcessExchange>) -> R
                                     Some(value) => { calc_token_decimals(value, currency_mint.clone()) }
                                 };
 
-                                process_exchanges.push(pb::trade::ProcessExchange {
+                                process_exchanges.push(ProcessExchange {
                                     pk: format!("{}_{}_{}", sig.clone(), order_taker.clone(), order_initializer.clone()),
                                     signature: sig,
                                     block: blk.slot,
@@ -183,10 +186,11 @@ fn process_blocks(blk: Block, process_exchanges: &mut Vec<ProcessExchange>) -> R
                                     currency_mint: currency_mint.clone(),
                                     asset_mint,
                                     asset_receiving_wallet,
-                                    asset_change: purchase_quantity.to_string(),
+                                    currency_change: currency_change_abs.to_string(),
                                     market_fee: fees_change_abs.to_string(),
-                                    total_cost: currency_change_abs.to_string(),
+                                    asset_change: purchase_quantity.to_string(),
                                     price: price.to_string(),
+                                    total_cost: (purchase_quantity as f64 * price).to_string(),
 
                                 })
                             }
