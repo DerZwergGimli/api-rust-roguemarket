@@ -10,7 +10,6 @@ codegen:
 build:
 	cargo build --target wasm32-unknown-unknown --release
 
-
 .PHONY: map_sa_trades
 map_sa_trades: build
 	substreams run -e mainnet.sol.streamingfast.io:443 substreams.yaml map_sa_trades --start-block 190653115 --stop-block 190653117
@@ -51,7 +50,7 @@ db_out: build
 
 .PHONY: package
 package: build
-	substreams pack -o substreams.spkg substreams.yaml
+	substreams pack -o substreams.spkg substreams.yaml && cp ./substreams.spkg ../substream-psql/substreams.spkg
 
 .PHONY: db_eth
 db_eth: package
