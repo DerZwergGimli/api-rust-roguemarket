@@ -1,14 +1,6 @@
-
-
-
 use borsh::BorshDeserialize;
-
+use substreams::errors::Error;
 use substreams::log;
-
-
-use {
-    substreams::errors::Error,
-};
 
 use crate::sa_instruction::MarketplaceInstruction::ProcessExchange;
 
@@ -18,6 +10,7 @@ use crate::sa_instruction::MarketplaceInstruction::ProcessExchange;
 #[repr(C)]
 #[derive(Clone, Debug, PartialEq)]
 pub enum MarketplaceInstruction<'a> {
+    CreateAccountWithSeed,
     UnknownTransaction,
     //zsucnLZxPfQz2G9aN9BFu75kaXhfYi55UduB9UWJobd81KwaRxudArYgtFD6Yo6tkjnyibRi1VPL5RkwAukD4FY
     UpdateCurrencyVault,
@@ -91,6 +84,10 @@ impl<'a> MarketplaceInstruction<'a> {
             85 => {
                 log::info!("[Instruction] ProcessCancel");
                 Self::ProcessCancel {}
+            }
+            64 => {
+                log::info!("[Instruction] CreateAccountWithSeed");
+                Self::CreateAccountWithSeed {}
             }
             112 => {
                 log::info!("[Instruction] ProcessExchange");
