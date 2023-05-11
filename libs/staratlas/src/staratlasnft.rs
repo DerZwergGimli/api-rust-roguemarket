@@ -1,10 +1,11 @@
-use serde::{Deserialize, Serialize};
 use std::str::FromStr;
+
+use serde::{Deserialize, Serialize};
 use strum_macros::Display;
 use strum_macros::EnumString;
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct StarAtlasNft{
+pub struct StarAtlasNft {
     #[serde(rename = "_id")]
     pub id: String,
     pub deactivated: bool,
@@ -186,6 +187,8 @@ pub enum ItemType {
     Story,
     #[serde(rename = "structure")]
     Structure,
+    #[serde(rename = "currency")]
+    Currency,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
