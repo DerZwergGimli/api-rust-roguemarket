@@ -479,7 +479,7 @@ pub async fn get_history(
         history.v.push(d.try_get("volume").unwrap_or_default())
     });
 
-    if history.c.clone().into_iter().any( |close| close == 0.0)
+    if history.c.clone().into_iter().all( |close| close == 0.0)
     {
         history.t = vec![]
     }
