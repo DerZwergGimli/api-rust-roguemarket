@@ -3,7 +3,6 @@ use std::{
     env,
     sync::{Arc, Mutex},
 };
-use std::default::default;
 use std::time::{SystemTime, UNIX_EPOCH};
 
 use chrono::{DateTime, NaiveDateTime, Utc};
@@ -480,7 +479,7 @@ pub async fn get_history(
         history.v.push(d.try_get("volume").unwrap_or_default())
     });
 
-    if history.c.into_iter().any( |close| close == 0.0)
+    if history.c.clone().into_iter().any( |close| close == 0.0)
     {
         history.t = vec![]
     }
