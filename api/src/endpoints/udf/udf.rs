@@ -460,12 +460,12 @@ pub async fn get_history(
                             sum(asset_change) AS volume
                         FROM trades
                         WHERE symbol like $1
-                        AND timestamp < $2
+                        AND timestamp >= $2 AND timestamp < $3
                         GROUP BY bucket
                         ORDER BY bucket ASC
-                        LIMIT $3 ;",
-                &[&query.symbol, &query.to.unwrap_or_default(), &c, &candle_timeframe_seconds],
-            ).await.unwrap_or_default()
+                        LIMIT $5 ;",
+                &[&query.symbol, &query.from.unwrap_or_default(), &query.to.unwrap_or_default(), &candle_timeframe_seconds, &c ],
+            ).await.expect("Error querrying using countback")
         }
     };
 
