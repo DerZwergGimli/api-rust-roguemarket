@@ -1,5 +1,6 @@
 use std::num::ParseIntError;
 use std::time::Duration;
+use std::str;
 
 pub fn convert_udf_time_to_seconds(input: Option<String>) -> Option<i64> {
     if let Some(input_str) = input {
@@ -18,6 +19,29 @@ pub fn convert_udf_time_to_seconds(input: Option<String>) -> Option<i64> {
     } else {
         None
     }
+}
+
+
+pub fn convert_udf_time_to_timestamp_minute(input: Option<String>) -> Option<i64> {
+    if let Some(time_str) = input {
+        if let Some(time) = time_str.strip_suffix('s') {
+            if let Ok(num) = time.parse::<i64>() {
+                return Some(num);
+            }
+        } else if let Ok(num) = time_str.parse::<i64>() {
+            return Some(num);
+        } else if let Some(time) = time_str.strip_suffix('D') {
+            if let Ok(num) = time.parse::<i64>() {
+                return Some(num * 24 * 60);
+            }
+        } else if let Some(time) = time_str.strip_suffix('W') {
+            if let Ok(num) = time.parse::<i64>() {
+                return Some(num * 7 * 24 * 60);
+            }
+        }
+    }
+
+    None
 }
 
 

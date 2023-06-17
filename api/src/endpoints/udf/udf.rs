@@ -6,6 +6,8 @@ use std::{
 use std::time::{SystemTime, UNIX_EPOCH};
 
 use chrono::{DateTime, NaiveDateTime, Utc};
+use database_psql::connection::create_psql_pool_diesel;
+use database_psql::connection::create_psql_raw_pool;
 use deadpool_postgres::GenericClient;
 use diesel::PgConnection;
 use diesel::r2d2::{ConnectionManager, Pool};
@@ -15,13 +17,11 @@ use serde::{Deserialize, Serialize};
 use staratlas::symbolstore::{BuilderSymbolStore, SymbolStore};
 use types::databasetrade::DBTrade;
 use types::m_ohclvt::M_OHCLVT;
-use udf::time_convert::convert_udf_time_to_seconds;
 use utoipa::{IntoParams, ToSchema};
 use warp::{Filter, hyper::StatusCode, Reply};
 use warp::sse::reply;
 
-use database_psql::connection::create_psql_pool_diesel;
-use database_psql::connection::create_psql_raw_pool;
+use udf::time_convert::{convert_udf_time_to_seconds, convert_udf_time_to_timestamp_minute};
 
 use crate::endpoints::udf::{udf_config_t, udf_history_t, udf_symbols_t};
 use crate::endpoints::udf::{udf_search_t, udf_symbol_info_t};
@@ -427,7 +427,9 @@ pub async fn get_history(
 
     let mut db = db_pool.get().await.expect("Unable to get connection from pool!");
 
-    let candle_timeframe_seconds = convert_udf_time_to_seconds(query.resolution).unwrap_or(86400);
+    let candle_timeframe_seconds = convert_udf_time_to_timestamp_minute(query.resolution).unwrap_or(60)*60;
+    println!("candle_timeframe_seconds: {}", candle_timeframe_seconds);
+
     let data: Vec<Row> = match query.countback {
         None => {
             db.query(
@@ -440,10 +442,10 @@ pub async fn get_history(
                             sum(asset_change) AS volume
                         FROM trades
                         WHERE symbol like $1
-                        AND timestamp >= $3 AND timestamp < $2
+                        AND timestamp >= $2 AND timestamp < $3
                         GROUP BY bucket
                         ORDER BY bucket ASC ;",
-                &[&query.symbol, &query.to.unwrap_or_default(), &query.from.unwrap_or_default(), &candle_timeframe_seconds],
+                &[&query.symbol, &query.from.unwrap_or_default(), &query.to.unwrap_or_default(), &candle_timeframe_seconds],
             ).await.unwrap_or_default()
         }
         Some(countback) => {
