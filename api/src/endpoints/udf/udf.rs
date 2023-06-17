@@ -427,14 +427,14 @@ pub async fn get_history(
 
     let mut db = db_pool.get().await.expect("Unable to get connection from pool!");
 
-    let candle_timeframe_seconds = convert_udf_time_to_timestamp_minute(query.resolution).unwrap_or(60)*60;
+    let candle_timeframe_seconds = convert_udf_time_to_timestamp_minute(query.resolution).unwrap_or(60) * 60;
     println!("candle_timeframe_seconds: {}", candle_timeframe_seconds);
 
     let data: Vec<Row> = match query.countback {
         None => {
             db.query(
                 "SELECT
-                            time_bucket($4, timestamp) AS bucket,
+                            time_bucket_gapfill($4, timestamp) AS bucket,
                             first(price, timestamp) AS open,
                             max(price) AS high,
                             min(price) AS low,
@@ -452,7 +452,7 @@ pub async fn get_history(
             let c = countback as i64;
             db.query(
                 "SELECT
-                            time_bucket($4, timestamp) AS bucket,
+                            time_bucket_gapfill($4, timestamp) AS bucket,
                             first(price, timestamp) AS open,
                             max(price) AS high,
                             min(price) AS low,
@@ -472,11 +472,11 @@ pub async fn get_history(
 
     data.into_iter().for_each(|d| {
         history.t.push(d.get("bucket"));
-        history.o.push(d.get("open"));
-        history.c.push(d.get("close"));
-        history.h.push(d.get("high"));
-        history.l.push(d.get("low"));
-        history.v.push(d.get("volume"))
+        history.o.push(d.try_get("open").unwrap_or_default());
+        history.c.push(d.try_get("close").unwrap_or_default());
+        history.h.push(d.try_get("high").unwrap_or_default());
+        history.l.push(d.try_get("low").unwrap_or_default());
+        history.v.push(d.try_get("volume").unwrap_or_default())
     });
 
     return if history.t.is_empty() {
