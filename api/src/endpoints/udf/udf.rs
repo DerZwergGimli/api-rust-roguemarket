@@ -25,7 +25,6 @@ use udf::time_convert::{convert_udf_time_to_seconds, convert_udf_time_to_timesta
 
 use crate::endpoints::udf::{udf_config_t, udf_history_t, udf_symbols_t};
 use crate::endpoints::udf::{udf_search_t, udf_symbol_info_t};
-use crate::endpoints::udf::helper::ohlc_converter;
 use crate::endpoints::udf::udf_error_t::{Status, UdfError};
 use crate::helper::{with_psql_store, with_raw_psql_store};
 use crate::udf_config_t::{Exchange, SymbolsType};
@@ -471,18 +470,13 @@ pub async fn get_history(
 
 
     data.into_iter().for_each(|d| {
-        history.t.push(d.get("bucket"));
-        history.c.push(d.try_get("close").unwrap_or(*history.clone().c.last().unwrap_or(&0.0)));
-        history.o.push(d.try_get("open").unwrap_or(*history.clone().c.last().unwrap_or(&0.0)));
-        history.h.push(d.try_get("high").unwrap_or(*history.clone().c.last().unwrap_or(&0.0)));
-        history.l.push(d.try_get("low").unwrap_or(*history.clone().c.last().unwrap_or(&0.0)));
+        history.t.push(d.try_get("bucket").unwrap_or_default());
+        history.o.push(d.try_get("open").unwrap_or_default());
+        history.h.push(d.try_get("high").unwrap_or_default());
+        history.c.push(d.try_get("close").unwrap_or_default());
+        history.l.push(d.try_get("low").unwrap_or_default());
         history.v.push(d.try_get("volume").unwrap_or_default());
     });
-
-    if history.c.clone().into_iter().all(|close| close == 0.0)
-    {
-        history.t = vec![]
-    }
 
 
     return if history.t.is_empty() {

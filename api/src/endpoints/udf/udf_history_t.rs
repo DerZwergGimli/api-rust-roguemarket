@@ -5,11 +5,11 @@ use utoipa::{IntoParams, ToSchema};
 pub struct UdfHistory {
     pub s: String,
     pub t: Vec<i64>,
-    pub c: Vec<f64>,
-    pub o: Vec<f64>,
-    pub h: Vec<f64>,
-    pub l: Vec<f64>,
-    pub v: Vec<f64>,
+    pub c: Vec<Option<f64>>,
+    pub o: Vec<Option<f64>>,
+    pub h: Vec<Option<f64>>,
+    pub l: Vec<Option<f64>>,
+    pub v: Vec<Option<f64>>,
 }
 
 struct Data {
