@@ -464,7 +464,7 @@ pub async fn get_history(
                         GROUP BY bucket
                         ORDER BY bucket ASC
                         LIMIT $5 ;",
-                &[&query.symbol, &query.from.unwrap_or_default(), &query.to.unwrap_or_default(), &candle_timeframe_seconds, &c ],
+                &[&query.symbol, &query.from.unwrap_or_default(), &query.to.unwrap_or_default(), &candle_timeframe_seconds, &c],
             ).await.expect("Error querrying using countback")
         }
     };
@@ -472,14 +472,14 @@ pub async fn get_history(
 
     data.into_iter().for_each(|d| {
         history.t.push(d.get("bucket"));
-        history.o.push(d.try_get("open").unwrap_or(history.clone().o.into_iter().rev().find(|&o| o != 0.0).unwrap_or_default()));
-        history.c.push(d.try_get("close").unwrap_or(history.clone().o.into_iter().rev().find(|&o| o != 0.0).unwrap_or_default()));
-        history.h.push(d.try_get("high").unwrap_or(history.clone().o.into_iter().rev().find(|&o| o != 0.0).unwrap_or_default()));
-        history.l.push(d.try_get("low").unwrap_or(history.clone().o.into_iter().rev().find(|&o| o != 0.0).unwrap_or_default()));
+        history.o.push(d.try_get("open").unwrap_or(history.clone().c.into_iter().rev().find(|&o| o != 0.0).unwrap_or_default()));
+        history.c.push(d.try_get("close").unwrap_or(history.clone().c.into_iter().rev().find(|&o| o != 0.0).unwrap_or_default()));
+        history.h.push(d.try_get("high").unwrap_or(history.clone().c.into_iter().rev().find(|&o| o != 0.0).unwrap_or_default()));
+        history.l.push(d.try_get("low").unwrap_or(history.clone().c.into_iter().rev().find(|&o| o != 0.0).unwrap_or_default()));
         history.v.push(d.try_get("volume").unwrap_or_default());
     });
 
-    if history.c.clone().into_iter().all( |close| close == 0.0)
+    if history.c.clone().into_iter().all(|close| close == 0.0)
     {
         history.t = vec![]
     }
@@ -506,8 +506,7 @@ pub async fn get_history(
             s: Status::no_data,
             nextTime: None,
         }));
-    }
-    else {
+    } else {
         Ok(warp::reply::json(&history))
     };
 }
