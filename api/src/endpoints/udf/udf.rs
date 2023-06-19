@@ -471,9 +471,9 @@ pub async fn get_history(
 
     data.into_iter().for_each(|d| {
         history.t.push(d.try_get("bucket").unwrap_or_default());
-        history.o.push(d.try_get("open").unwrap_or_default());
+        history.o.push(d.try_get("open").unwrap_or(history.c.last().unwrap_or(&None).clone()));
         history.h.push(d.try_get("high").unwrap_or_default());
-        history.c.push(d.try_get("close").unwrap_or_default());
+        history.c.push(d.try_get("close").unwrap_or(history.c.last().unwrap_or(&None).clone()));
         history.l.push(d.try_get("low").unwrap_or_default());
         history.v.push(d.try_get("volume").unwrap_or_default());
     });
