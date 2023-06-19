@@ -503,8 +503,10 @@ pub async fn get_history(
             _ => close
         });
 
-
-        history.v.push(d.try_get("volume").unwrap_or_default());
+        history.v.push(match d.try_get("volume") {
+            Ok(d) => Some(d),
+            _ => Some(0.0)
+        });
     });
 
 
