@@ -9,6 +9,7 @@ use chrono::{DateTime, NaiveDateTime, Utc};
 use database_psql::connection::create_psql_pool_diesel;
 use database_psql::connection::create_psql_raw_pool;
 use deadpool_postgres::GenericClient;
+use deadpool_postgres::tokio_postgres::Error;
 use diesel::PgConnection;
 use diesel::r2d2::{ConnectionManager, Pool};
 use log::{info, warn};
@@ -429,6 +430,14 @@ pub async fn get_history(
     let candle_timeframe_seconds = convert_udf_time_to_timestamp_minute(query.resolution).unwrap_or(60) * 60;
     println!("candle_timeframe_seconds: {}", candle_timeframe_seconds);
 
+    let default_price: Option<f64> = match db.query("SELECT price from trades where symbol like $1 AND timestamp < $2 LIMIT 1", &[&query.symbol, &query.from.unwrap_or_default()]).await {
+        Ok(p) => {
+            Some(p[0].try_get("price").unwrap_or_default())
+        }
+        Err(_) => { None }
+    };
+
+
     let data: Vec<Row> = match query.countback {
         None => {
             db.query(
@@ -470,11 +479,31 @@ pub async fn get_history(
 
 
     data.into_iter().for_each(|d| {
+        let close = match d.try_get("close") {
+            Ok(d) => Some(d),
+            _ => default_price
+        };
+
         history.t.push(d.try_get("bucket").unwrap_or_default());
-        history.o.push(d.try_get("open").unwrap_or(history.c.clone().into_iter().last().unwrap_or(None)));
-        history.h.push(d.try_get("high").unwrap_or(history.c.clone().into_iter().last().unwrap_or(None)));
-        history.c.push(d.try_get("close").unwrap_or(history.c.clone().into_iter().last().unwrap_or(None)));
-        history.l.push(d.try_get("low").unwrap_or(history.c.clone().into_iter().last().unwrap_or(None)));
+
+        history.o.push(match d.try_get("open") {
+            Ok(d) => Some(d),
+            _ => close
+        });
+        history.h.push(match d.try_get("high") {
+            Ok(d) => Some(d),
+            _ => close
+        });
+        history.c.push(match d.try_get("close") {
+            Ok(d) => Some(d),
+            _ => close
+        });
+        history.l.push(match d.try_get("low") {
+            Ok(d) => Some(d),
+            _ => close
+        });
+
+
         history.v.push(d.try_get("volume").unwrap_or_default());
     });
 
