@@ -432,7 +432,11 @@ pub async fn get_history(
 
     let default_price: Option<f64> = match db.query("SELECT price from trades where symbol like $1 AND timestamp < $2 LIMIT 1", &[&query.symbol, &query.from.unwrap_or_default()]).await {
         Ok(p) => {
-            Some(p[0].try_get("price").unwrap_or_default())
+            if !p.is_empty() {
+                Some(p[0].try_get("price").unwrap_or_default())
+            } else {
+                None
+            }
         }
         Err(_) => { None }
     };
@@ -440,38 +444,57 @@ pub async fn get_history(
 
     let data: Vec<Row> = match query.countback {
         None => {
-            db.query(
-                "SELECT
-                            time_bucket_gapfill($4, timestamp) AS bucket,
-                            first(price, timestamp) AS open,
-                            max(price) AS high,
-                            min(price) AS low,
-                            last(price, timestamp) AS close,
-                            sum(asset_change) AS volume
-                        FROM trades
-                        WHERE symbol like $1
-                        AND timestamp >= $2 AND timestamp < $3
-                        GROUP BY bucket
-                        ORDER BY bucket ASC ;",
-                &[&query.symbol, &query.from.unwrap_or_default(), &query.to.unwrap_or_default(), &candle_timeframe_seconds],
+            db.query("
+            SELECT
+                   bucket,
+                   coalesce(open, close)  AS open,
+                   coalesce(high, close)  AS high,
+                   coalesce(low, close)   AS low,
+                   coalesce(close, close) AS close,
+                   coalesce(volume, 0)    AS volume
+
+            FROM (SELECT time_bucket_gapfill($4, timestamp) AS bucket,
+                         first(price, timestamp)                AS open,
+                         MAX(price)                             AS high,
+                         MIN(price)                             AS low,
+                         locf(last(price, timestamp))     AS close,
+                         SUM(asset_change)                      AS volume
+
+                  FROM trades
+                  WHERE symbol like $1
+                    AND timestamp >= $2
+                    AND timestamp < $3
+                  GROUP BY bucket
+                  ORDER BY bucket ASC) AS P",
+                     &[&query.symbol, &query.from.unwrap_or_default(), &query.to.unwrap_or_default(), &candle_timeframe_seconds],
             ).await.unwrap_or_default()
         }
         Some(countback) => {
             let c = countback as i64;
             db.query(
-                "SELECT
-                            time_bucket_gapfill($4, timestamp) AS bucket,
-                            first(price, timestamp) AS open,
-                            max(price) AS high,
-                            min(price) AS low,
-                            last(price, timestamp) AS close,
-                            sum(asset_change) AS volume
-                        FROM trades
-                        WHERE symbol like $1
-                        AND timestamp >= $2 AND timestamp < $3
-                        GROUP BY bucket
-                        ORDER BY bucket ASC
-                        LIMIT $5 ;",
+                "
+                SELECT
+                   bucket,
+                   coalesce(open, close)  AS open,
+                   coalesce(high, close)  AS high,
+                   coalesce(low, close)   AS low,
+                   coalesce(close, close) AS close,
+                   coalesce(volume, 0)    AS volume
+
+                FROM (SELECT time_bucket_gapfill($4, timestamp) AS bucket,
+                             first(price, timestamp)                AS open,
+                             MAX(price)                             AS high,
+                             MIN(price)                             AS low,
+                             locf(last(price, timestamp))     AS close,
+                             SUM(asset_change)                      AS volume
+
+                      FROM trades
+                      WHERE symbol like $1
+                        AND timestamp >= $2
+                        AND timestamp < $3
+                      GROUP BY bucket
+                      ORDER BY bucket ASC
+                      LIMIT $5 ) AS P",
                 &[&query.symbol, &query.from.unwrap_or_default(), &query.to.unwrap_or_default(), &candle_timeframe_seconds, &c],
             ).await.expect("Error querrying using countback")
         }
@@ -479,38 +502,16 @@ pub async fn get_history(
 
 
     data.into_iter().for_each(|d| {
-        let close = match d.try_get("close") {
-            Ok(d) => Some(d),
-            _ => default_price
-        };
-
         history.t.push(d.try_get("bucket").unwrap_or_default());
-
-        history.o.push(match d.try_get("open") {
-            Ok(d) => Some(d),
-            _ => close
-        });
-        history.h.push(match d.try_get("high") {
-            Ok(d) => Some(d),
-            _ => close
-        });
-        history.c.push(match d.try_get("close") {
-            Ok(d) => Some(d),
-            _ => close
-        });
-        history.l.push(match d.try_get("low") {
-            Ok(d) => Some(d),
-            _ => close
-        });
-
-        history.v.push(match d.try_get("volume") {
-            Ok(d) => Some(d),
-            _ => Some(0.0)
-        });
+        history.o.push(d.try_get("open").unwrap_or_default());
+        history.h.push(d.try_get("high").unwrap_or_default());
+        history.c.push(d.try_get("close").unwrap_or_default());
+        history.l.push(d.try_get("low").unwrap_or_default());
+        history.v.push(d.try_get("volume").unwrap_or_default());
     });
 
 
-    return if history.t.is_empty() {
+    return if history.c.is_empty() {
         let last_timestamp: Vec<Row> = db.query("SELECT timestamp
                     FROM trades
                     WHERE symbol like $1
