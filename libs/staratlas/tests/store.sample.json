@@ -1,1204 +1,4024 @@
 {
   "assets": [
     {
+      "asset_name": "MRDR",
+      "pair_name": "USDC",
+      "description": "The Assassination of Paizul [USDC]",
+      "asset_type": "Collectible",
       "symbol": "MRDRUSDC",
       "mint": "7dr7jVyXf1KUnYq5FTpV2vCZjKRR4MV94jzerb8Fi16Q",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "MRDR",
+      "pair_name": "ATLAS",
+      "description": "The Assassination of Paizul [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "MRDRATLAS",
       "mint": "7dr7jVyXf1KUnYq5FTpV2vCZjKRR4MV94jzerb8Fi16Q",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "TCW",
+      "pair_name": "USDC",
+      "description": "The Convergence War [USDC]",
+      "asset_type": "Collectible",
       "symbol": "TCWUSDC",
       "mint": "36s6AFRXzE9KVdUyoJQ5y6mwxXw21LawYqqwNiQUMD8s",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "TCW",
+      "pair_name": "ATLAS",
+      "description": "The Convergence War [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "TCWATLAS",
       "mint": "36s6AFRXzE9KVdUyoJQ5y6mwxXw21LawYqqwNiQUMD8s",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "TLS",
+      "pair_name": "USDC",
+      "description": "The Last Stand [USDC]",
+      "asset_type": "Collectible",
       "symbol": "TLSUSDC",
       "mint": "Hfjgcs9ix17EwgXVVbKjo6NfMm2CXfr34cwty3xWARUm",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "TLS",
+      "pair_name": "ATLAS",
+      "description": "The Last Stand [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "TLSATLAS",
       "mint": "Hfjgcs9ix17EwgXVVbKjo6NfMm2CXfr34cwty3xWARUm",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "OMPH",
+      "pair_name": "USDC",
+      "description": "Om Photoli [USDC]",
+      "asset_type": "Collectible",
       "symbol": "OMPHUSDC",
       "mint": "DB76aiNQeLzHPwvFhzgwfpe6HGHCDTQ6snW6UD7AnHid",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "OMPH",
+      "pair_name": "ATLAS",
+      "description": "Om Photoli [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "OMPHATLAS",
       "mint": "DB76aiNQeLzHPwvFhzgwfpe6HGHCDTQ6snW6UD7AnHid",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "STAR",
+      "pair_name": "USDC",
+      "description": "Star Atlas [USDC]",
+      "asset_type": "Collectible",
       "symbol": "STARUSDC",
       "mint": "BrzwWsG845VttbTsacZMLKhyc2jAZU12MaPkTYrJHoqm",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "STAR",
+      "pair_name": "ATLAS",
+      "description": "Star Atlas [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "STARATLAS",
       "mint": "BrzwWsG845VttbTsacZMLKhyc2jAZU12MaPkTYrJHoqm",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "ASF",
+      "pair_name": "USDC",
+      "description": "Armstrong Forever [USDC]",
+      "asset_type": "Collectible",
       "symbol": "ASFUSDC",
       "mint": "9vi6PTKBFHR2hXgyjoTZx6h7WXNkFAA5dCsZRSi4higK",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "ASF",
+      "pair_name": "ATLAS",
+      "description": "Armstrong Forever [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "ASFATLAS",
       "mint": "9vi6PTKBFHR2hXgyjoTZx6h7WXNkFAA5dCsZRSi4higK",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "BGAT",
+      "pair_name": "USDC",
+      "description": "Atlas Badge [USDC]",
+      "asset_type": "Access",
       "symbol": "BGATUSDC",
       "mint": "7GBfZq24jHXmp6bQ988yhgV2bQiZjZx7Fj1E2xSg8ytU",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "BGAT",
+      "pair_name": "ATLAS",
+      "description": "Atlas Badge [ATLAS]",
+      "asset_type": "Access",
       "symbol": "BGATATLAS",
       "mint": "7GBfZq24jHXmp6bQ988yhgV2bQiZjZx7Fj1E2xSg8ytU",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PX5SSP",
+      "pair_name": "USDC",
+      "description": "Spacer [USDC]",
+      "asset_type": "Collectible",
       "symbol": "PX5SSPUSDC",
       "mint": "FMwvZPFGvmjjTQ9ZhePd4kB9WqK3YkyBGcHkYQp45TW1",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PX5SSP",
+      "pair_name": "ATLAS",
+      "description": "Spacer [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "PX5SSPATLAS",
       "mint": "FMwvZPFGvmjjTQ9ZhePd4kB9WqK3YkyBGcHkYQp45TW1",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
-      "symbol": "STAKE2USDC",
+      "asset_name": "SOLPK2",
+      "pair_name": "USDC",
+      "description": "Automated Plague Control [USDC]",
+      "asset_type": "Collectible",
+      "symbol": "SOLPK2USDC",
       "mint": "7gJenN7qBMP3yZeg7ULq5t7BCk5wYmvEtaqL9t9WkkAF",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
-      "symbol": "STAKE2ATLAS",
+      "asset_name": "SOLPK2",
+      "pair_name": "ATLAS",
+      "description": "Automated Plague Control [ATLAS]",
+      "asset_type": "Collectible",
+      "symbol": "SOLPK2ATLAS",
       "mint": "7gJenN7qBMP3yZeg7ULq5t7BCk5wYmvEtaqL9t9WkkAF",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CEMOP",
+      "pair_name": "USDC",
+      "description": "Peace Sign [USDC]",
+      "asset_type": "Collectible",
       "symbol": "CEMOPUSDC",
       "mint": "M7cvT3qkNRkhG3YmQ3sTe2T46q4JKWH9mWK39UarxYv",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CEMOP",
+      "pair_name": "ATLAS",
+      "description": "Peace Sign [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "CEMOPATLAS",
       "mint": "M7cvT3qkNRkhG3YmQ3sTe2T46q4JKWH9mWK39UarxYv",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "VZUSOP",
+      "pair_name": "USDC",
+      "description": "VZUS opod [USDC]",
+      "asset_type": "Ship",
       "symbol": "VZUSOPUSDC",
       "mint": "9czEqEZ4EkRt7N3HWDcw9qqwys3xRRjGdbn8Jhk8Khwj",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "VZUSOP",
+      "pair_name": "ATLAS",
+      "description": "VZUS opod [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "VZUSOPATLAS",
       "mint": "9czEqEZ4EkRt7N3HWDcw9qqwys3xRRjGdbn8Jhk8Khwj",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "BGCPN",
+      "pair_name": "USDC",
+      "description": "Captain's Badge [USDC]",
+      "asset_type": "Access",
       "symbol": "BGCPNUSDC",
       "mint": "J9ZfRgF8hDbTgCHZ5VFR4V3vCecww4MJ9jmeBPd5gt3D",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "BGCPN",
+      "pair_name": "ATLAS",
+      "description": "Captain's Badge [ATLAS]",
+      "asset_type": "Access",
       "symbol": "BGCPNATLAS",
       "mint": "J9ZfRgF8hDbTgCHZ5VFR4V3vCecww4MJ9jmeBPd5gt3D",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CALG",
+      "pair_name": "USDC",
+      "description": "Calico Guardian [USDC]",
+      "asset_type": "Ship",
       "symbol": "CALGUSDC",
       "mint": "DdpXnnYsyUQgJby8TDHbmPwkKyGF4U6bXwCXTQZsrfKP",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CALG",
+      "pair_name": "ATLAS",
+      "description": "Calico Guardian [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "CALGATLAS",
       "mint": "DdpXnnYsyUQgJby8TDHbmPwkKyGF4U6bXwCXTQZsrfKP",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CCHSB",
+      "pair_name": "USDC",
+      "description": "Black Sun [USDC]",
+      "asset_type": "Collectible",
       "symbol": "CCHSBUSDC",
       "mint": "m3uDZnPeWPQMQHKNmeZqmTxqweRyDbhNFps3HRx6xTo",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CCHSB",
+      "pair_name": "ATLAS",
+      "description": "Black Sun [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "CCHSBATLAS",
       "mint": "m3uDZnPeWPQMQHKNmeZqmTxqweRyDbhNFps3HRx6xTo",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CMPAS",
+      "pair_name": "USDC",
+      "description": "Council Meta-PAS [USDC]",
+      "asset_type": "Access",
       "symbol": "CMPASUSDC",
       "mint": "H1wrPe2TgmCV1yS8NeVq7C4qPLxcioRWFFerQAfzQUfM",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CMPAS",
+      "pair_name": "ATLAS",
+      "description": "Council Meta-PAS [ATLAS]",
+      "asset_type": "Access",
       "symbol": "CMPASATLAS",
       "mint": "H1wrPe2TgmCV1yS8NeVq7C4qPLxcioRWFFerQAfzQUfM",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "BGEXE",
+      "pair_name": "USDC",
+      "description": "Executive Badge [USDC]",
+      "asset_type": "Access",
       "symbol": "BGEXEUSDC",
       "mint": "3QGcfPwr3GhfeyxpprAPvDGRzXmBKwCJBgxM4NfrQDBN",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "BGEXE",
+      "pair_name": "ATLAS",
+      "description": "Executive Badge [ATLAS]",
+      "asset_type": "Access",
       "symbol": "BGEXEATLAS",
       "mint": "3QGcfPwr3GhfeyxpprAPvDGRzXmBKwCJBgxM4NfrQDBN",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "COVAS",
+      "pair_name": "USDC",
+      "description": "Vintage Astronaut Suit [USDC]",
+      "asset_type": "Collectible",
       "symbol": "COVASUSDC",
       "mint": "5utpkwvqG5euWHbvrxo8S66C7T5dfoweCC7y1zCWokts",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "COVAS",
+      "pair_name": "ATLAS",
+      "description": "Vintage Astronaut Suit [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "COVASATLAS",
       "mint": "5utpkwvqG5euWHbvrxo8S66C7T5dfoweCC7y1zCWokts",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "BGUNQ",
+      "pair_name": "USDC",
+      "description": "Unique Badge [USDC]",
+      "asset_type": "Access",
       "symbol": "BGUNQUSDC",
       "mint": "BUtLhi4ohcuYiFooWhZyWxQXKceZLCLNS3BHGXnmnhqM",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "BGUNQ",
+      "pair_name": "ATLAS",
+      "description": "Unique Badge [ATLAS]",
+      "asset_type": "Access",
       "symbol": "BGUNQATLAS",
       "mint": "BUtLhi4ohcuYiFooWhZyWxQXKceZLCLNS3BHGXnmnhqM",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FM-T3FTX",
+      "pair_name": "USDC",
+      "description": "TTT 300K FTX [USDC]",
+      "asset_type": "Collectible",
       "symbol": "FM-T3FTXUSDC",
       "mint": "43shunGxqAydDfcHadZzs9j9JHVCEYixPnSMFHpqwc3k",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FM-T3FTX",
+      "pair_name": "ATLAS",
+      "description": "TTT 300K FTX [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "FM-T3FTXATLAS",
       "mint": "43shunGxqAydDfcHadZzs9j9JHVCEYixPnSMFHpqwc3k",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PF4",
+      "pair_name": "USDC",
+      "description": "Pearce F4 [USDC]",
+      "asset_type": "Ship",
       "symbol": "PF4USDC",
       "mint": "9MvZS3TVfv4DZL9W2pT12po384aBHf7wi89KXQ9Z7uwW",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PF4",
+      "pair_name": "ATLAS",
+      "description": "Pearce F4 [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "PF4ATLAS",
       "mint": "9MvZS3TVfv4DZL9W2pT12po384aBHf7wi89KXQ9Z7uwW",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "OM",
+      "pair_name": "USDC",
+      "description": "Rainbow Om [USDC]",
+      "asset_type": "Ship",
       "symbol": "OMUSDC",
       "mint": "HzBx8PP86pyPrrboTHqPYWhxnEB5vXDHDBP8femWfPTS",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "OM",
+      "pair_name": "ATLAS",
+      "description": "Rainbow Om [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "OMATLAS",
       "mint": "HzBx8PP86pyPrrboTHqPYWhxnEB5vXDHDBP8femWfPTS",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "DOI",
+      "pair_name": "USDC",
+      "description": "Discovery of Iris [USDC]",
+      "asset_type": "Collectible",
       "symbol": "DOIUSDC",
       "mint": "HAWy8kV3bD4gaN6yy6iK2619x2dyzLUBj1PfJiihTisE",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "DOI",
+      "pair_name": "ATLAS",
+      "description": "Discovery of Iris [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "DOIATLAS",
       "mint": "HAWy8kV3bD4gaN6yy6iK2619x2dyzLUBj1PfJiihTisE",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "HOSA",
+      "pair_name": "USDC",
+      "description": "The Heart of Star Atlas [USDC]",
+      "asset_type": "Collectible",
       "symbol": "HOSAUSDC",
       "mint": "ATSPo9f9TJ3Atx8SuoTYdzSMh4ctQBzYzDiNukQDmoF7",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "HOSA",
+      "pair_name": "ATLAS",
+      "description": "The Heart of Star Atlas [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "HOSAATLAS",
       "mint": "ATSPo9f9TJ3Atx8SuoTYdzSMh4ctQBzYzDiNukQDmoF7",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "UWB",
+      "pair_name": "USDC",
+      "description": "Ustur Wod.bod [USDC]",
+      "asset_type": "Collectible",
       "symbol": "UWBUSDC",
       "mint": "FPnwwNiL1tXqd4ZbGjFYsCw5qsQw91VN79SNcU4Bc732",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "UWB",
+      "pair_name": "ATLAS",
+      "description": "Ustur Wod.bod [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "UWBATLAS",
       "mint": "FPnwwNiL1tXqd4ZbGjFYsCw5qsQw91VN79SNcU4Bc732",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
-      "symbol": "STAKE1USDC",
+      "asset_name": "SOLPK1",
+      "pair_name": "USDC",
+      "description": "The First Coded Seeds Crop [USDC]",
+      "asset_type": "Collectible",
+      "symbol": "SOLPK1USDC",
       "mint": "GEBRghyfoFfFdvb4q2kb6DCczKtPvDBSjdMPFtweVxLj",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
-      "symbol": "STAKE1ATLAS",
+      "asset_name": "SOLPK1",
+      "pair_name": "ATLAS",
+      "description": "The First Coded Seeds Crop [ATLAS]",
+      "asset_type": "Collectible",
+      "symbol": "SOLPK1ATLAS",
       "mint": "GEBRghyfoFfFdvb4q2kb6DCczKtPvDBSjdMPFtweVxLj",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "MSPP1",
+      "pair_name": "USDC",
+      "description": "Power Plant [USDC]",
+      "asset_type": "Structure",
       "symbol": "MSPP1USDC",
       "mint": "9d6JQSWrXVEjxBNrej7efCUdc7ZCRpaHsdN2CH6sEawn",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "MSPP1",
+      "pair_name": "ATLAS",
+      "description": "Power Plant [ATLAS]",
+      "asset_type": "Structure",
       "symbol": "MSPP1ATLAS",
       "mint": "9d6JQSWrXVEjxBNrej7efCUdc7ZCRpaHsdN2CH6sEawn",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "OSTD1",
+      "pair_name": "USDC",
+      "description": "Space Station [USDC]",
+      "asset_type": "Structure",
       "symbol": "OSTD1USDC",
       "mint": "5LiAUHfvRpkvrNTZe5CNgoQpdn4VFM5KfX5jDJKAjTSS",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "OSTD1",
+      "pair_name": "ATLAS",
+      "description": "Space Station [ATLAS]",
+      "asset_type": "Structure",
       "symbol": "OSTD1ATLAS",
       "mint": "5LiAUHfvRpkvrNTZe5CNgoQpdn4VFM5KfX5jDJKAjTSS",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PX5",
+      "pair_name": "USDC",
+      "description": "Pearce X5 [USDC]",
+      "asset_type": "Ship",
       "symbol": "PX5USDC",
       "mint": "267DbhCypYzvTqv72ZG5UKHeFu56qXFsuoz3rw832eC5",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PX5",
+      "pair_name": "ATLAS",
+      "description": "Pearce X5 [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "PX5ATLAS",
       "mint": "267DbhCypYzvTqv72ZG5UKHeFu56qXFsuoz3rw832eC5",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "TIGU",
+      "pair_name": "USDC",
+      "description": "Tigu [USDC]",
+      "asset_type": "Collectible",
       "symbol": "TIGUUSDC",
       "mint": "2eibTj6LtqF6DyabpmUZH8EhzZJFvoxcApyzArHt24G6",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "TIGU",
+      "pair_name": "ATLAS",
+      "description": "Tigu [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "TIGUATLAS",
       "mint": "2eibTj6LtqF6DyabpmUZH8EhzZJFvoxcApyzArHt24G6",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "TIGUEA",
+      "pair_name": "USDC",
+      "description": "Ancient Dance [USDC]",
+      "asset_type": "Collectible",
       "symbol": "TIGUEAUSDC",
       "mint": "BhsbcuW7iDEthrh6noja7ZFJ9yMqtu9QnuzpK38wv3r9",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "TIGUEA",
+      "pair_name": "ATLAS",
+      "description": "Ancient Dance [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "TIGUEAATLAS",
       "mint": "BhsbcuW7iDEthrh6noja7ZFJ9yMqtu9QnuzpK38wv3r9",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "BGPR",
+      "pair_name": "USDC",
+      "description": "Principal's Badge [USDC]",
+      "asset_type": "Access",
       "symbol": "BGPRUSDC",
       "mint": "B9xkxYMfv1TuPu2BFRuGNcd9XqX8YTCvdrG9ozAE3a9d",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "BGPR",
+      "pair_name": "ATLAS",
+      "description": "Principal's Badge [ATLAS]",
+      "asset_type": "Access",
       "symbol": "BGPRATLAS",
       "mint": "B9xkxYMfv1TuPu2BFRuGNcd9XqX8YTCvdrG9ozAE3a9d",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CONCC",
+      "pair_name": "USDC",
+      "description": "Noble Cloak [USDC]",
+      "asset_type": "Collectible",
       "symbol": "CONCCUSDC",
       "mint": "9Qpe56yDLcUddhU6mJowdhcDkqPXXYZNn7VEjz8yUxNv",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CONCC",
+      "pair_name": "ATLAS",
+      "description": "Noble Cloak [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "CONCCATLAS",
       "mint": "9Qpe56yDLcUddhU6mJowdhcDkqPXXYZNn7VEjz8yUxNv",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "VOPSUS",
+      "pair_name": "USDC",
+      "description": "Usturn [USDC]",
+      "asset_type": "Collectible",
       "symbol": "VOPSUSUSDC",
       "mint": "Ebke6Z3VsZ5of9yAxrnjB51YsxvxXo1b43u7qzRMQmwg",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "VOPSUS",
+      "pair_name": "ATLAS",
+      "description": "Usturn [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "VOPSUSATLAS",
       "mint": "Ebke6Z3VsZ5of9yAxrnjB51YsxvxXo1b43u7qzRMQmwg",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "VOPESQ",
+      "pair_name": "USDC",
+      "description": "Squiddish [USDC]",
+      "asset_type": "Collectible",
       "symbol": "VOPESQUSDC",
       "mint": "GyHxNG3fotjU2hPiyGb6v3ZJX2LhPuxCuLcrzBRAbGYh",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "VOPESQ",
+      "pair_name": "ATLAS",
+      "description": "Squiddish [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "VOPESQATLAS",
       "mint": "GyHxNG3fotjU2hPiyGb6v3ZJX2LhPuxCuLcrzBRAbGYh",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FBLBPL",
+      "pair_name": "USDC",
+      "description": "Fimbul BYOS Packlite [USDC]",
+      "asset_type": "Ship",
       "symbol": "FBLBPLUSDC",
       "mint": "7V9C2XUQgCb31n7hGKqKGu4ENcvqXhJLJzU77CAQtXhw",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FBLBPL",
+      "pair_name": "ATLAS",
+      "description": "Fimbul BYOS Packlite [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "FBLBPLATLAS",
       "mint": "7V9C2XUQgCb31n7hGKqKGu4ENcvqXhJLJzU77CAQtXhw",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FBPLER",
+      "pair_name": "USDC",
+      "description": "Rolling Coal [USDC]",
+      "asset_type": "Collectible",
       "symbol": "FBPLERUSDC",
       "mint": "DvTdgwdU5wvTw2PLPbyPJdrg16SmULye1F3hccAcpCJi",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FBPLER",
+      "pair_name": "ATLAS",
+      "description": "Rolling Coal [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "FBPLERATLAS",
       "mint": "DvTdgwdU5wvTw2PLPbyPJdrg16SmULye1F3hccAcpCJi",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "OGKATP",
+      "pair_name": "USDC",
+      "description": "Ogrika Thripid [USDC]",
+      "asset_type": "Ship",
       "symbol": "OGKATPUSDC",
       "mint": "CWxNX9sTexuqvQefqskhP9f6AP5C8hq2VNkicRseqAT5",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "OGKATP",
+      "pair_name": "ATLAS",
+      "description": "Ogrika Thripid [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "OGKATPATLAS",
       "mint": "CWxNX9sTexuqvQefqskhP9f6AP5C8hq2VNkicRseqAT5",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "MPAS",
+      "pair_name": "USDC",
+      "description": "Faction Meta-PAS [USDC]",
+      "asset_type": "Access",
       "symbol": "MPASUSDC",
       "mint": "6hSPiSuZiD9k6wzdJWMxZcj9bQUPDBu7pQ6Zwb4imXYs",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "MPAS",
+      "pair_name": "ATLAS",
+      "description": "Faction Meta-PAS [ATLAS]",
+      "asset_type": "Access",
       "symbol": "MPASATLAS",
       "mint": "6hSPiSuZiD9k6wzdJWMxZcj9bQUPDBu7pQ6Zwb4imXYs",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CALGEI",
+      "pair_name": "USDC",
+      "description": "To Infinity [USDC]",
+      "asset_type": "Collectible",
       "symbol": "CALGEIUSDC",
       "mint": "6kQzEJdVdsVAYHZjnmCoxNqFfPXvxTTPPb4x3nZFDyAh",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CALGEI",
+      "pair_name": "ATLAS",
+      "description": "To Infinity [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "CALGEIATLAS",
       "mint": "6kQzEJdVdsVAYHZjnmCoxNqFfPXvxTTPPb4x3nZFDyAh",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CALCH",
+      "pair_name": "USDC",
+      "description": "Calico Compakt Hero [USDC]",
+      "asset_type": "Ship",
       "symbol": "CALCHUSDC",
       "mint": "AkNbg12E9PatjkiAWJ3tAbM479gtcoA1gi6Joa925WKi",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CALCH",
+      "pair_name": "ATLAS",
+      "description": "Calico Compakt Hero [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "CALCHATLAS",
       "mint": "AkNbg12E9PatjkiAWJ3tAbM479gtcoA1gi6Joa925WKi",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "OJSW",
+      "pair_name": "USDC",
+      "description": "White Hot [USDC]",
+      "asset_type": "Collectible",
       "symbol": "OJSWUSDC",
       "mint": "6z8sqTatfnXfV8DYJzEFeqrXnFz9AKRtRXVoL37DtCLp",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "OJSW",
+      "pair_name": "ATLAS",
+      "description": "White Hot [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "OJSWATLAS",
       "mint": "6z8sqTatfnXfV8DYJzEFeqrXnFz9AKRtRXVoL37DtCLp",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PCHAUP",
+      "pair_name": "USDC",
+      "description": "Armstrong Patch [USDC]",
+      "asset_type": "Collectible",
       "symbol": "PCHAUPUSDC",
       "mint": "DkCdWb73xNPVbFDE9LXAiqnJRioQyGJYNjsiYiVdFTdj",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PCHAUP",
+      "pair_name": "ATLAS",
+      "description": "Armstrong Patch [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "PCHAUPATLAS",
       "mint": "DkCdWb73xNPVbFDE9LXAiqnJRioQyGJYNjsiYiVdFTdj",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PX5SR",
+      "pair_name": "USDC",
+      "description": "Raydium Defy [USDC]",
+      "asset_type": "Collectible",
       "symbol": "PX5SRUSDC",
       "mint": "H9gji7B9ePpyjFtfn9T1NN1MkAXVpGWFiExmeBPgN5Sy",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PX5SR",
+      "pair_name": "ATLAS",
+      "description": "Raydium Defy [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "PX5SRATLAS",
       "mint": "H9gji7B9ePpyjFtfn9T1NN1MkAXVpGWFiExmeBPgN5Sy",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FM-PP",
+      "pair_name": "USDC",
+      "description": "PhotoniX Provenance [USDC]",
+      "asset_type": "Collectible",
       "symbol": "FM-PPUSDC",
       "mint": "77GQVKfHFRJJuMXsWSHsM8acMZvouZ352EEMfRdoKRZP",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FM-PP",
+      "pair_name": "ATLAS",
+      "description": "PhotoniX Provenance [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "FM-PPATLAS",
       "mint": "77GQVKfHFRJJuMXsWSHsM8acMZvouZ352EEMfRdoKRZP",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FM-T3SR",
+      "pair_name": "USDC",
+      "description": "TTT 300K SERUM [USDC]",
+      "asset_type": "Collectible",
       "symbol": "FM-T3SRUSDC",
       "mint": "2F62gz2zmNaRM1eQToQfJfhHCKG1t6c18fC1pZ9iB52J",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FM-T3SR",
+      "pair_name": "ATLAS",
+      "description": "TTT 300K SERUM [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "FM-T3SRATLAS",
       "mint": "2F62gz2zmNaRM1eQToQfJfhHCKG1t6c18fC1pZ9iB52J",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FM-T3RAY",
+      "pair_name": "USDC",
+      "description": "TTT 300K Raydium [USDC]",
+      "asset_type": "Collectible",
       "symbol": "FM-T3RAYUSDC",
       "mint": "3Sg2QjXxJMpgiaf2VWU5dDWfWt1NVETtxVrZ26NuFpx9",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FM-T3RAY",
+      "pair_name": "ATLAS",
+      "description": "TTT 300K Raydium [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "FM-T3RAYATLAS",
       "mint": "3Sg2QjXxJMpgiaf2VWU5dDWfWt1NVETtxVrZ26NuFpx9",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FM-T3ATL",
+      "pair_name": "USDC",
+      "description": "TTT 300K ATLAS [USDC]",
+      "asset_type": "Collectible",
       "symbol": "FM-T3ATLUSDC",
       "mint": "56M4yyHAwz3Ro8SezkrQ3ph2ayR8sScSy7mqjHQwMS87",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FM-T3ATL",
+      "pair_name": "ATLAS",
+      "description": "TTT 300K ATLAS [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "FM-T3ATLATLAS",
       "mint": "56M4yyHAwz3Ro8SezkrQ3ph2ayR8sScSy7mqjHQwMS87",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FM-T3PH",
+      "pair_name": "USDC",
+      "description": "TTT 300K Phantom [USDC]",
+      "asset_type": "Collectible",
       "symbol": "FM-T3PHUSDC",
       "mint": "53ToK5o8cSZCNTjydjxDZYF3P2KbTzzUmmWPSD52PpY5",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FM-T3PH",
+      "pair_name": "ATLAS",
+      "description": "TTT 300K Phantom [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "FM-T3PHATLAS",
       "mint": "53ToK5o8cSZCNTjydjxDZYF3P2KbTzzUmmWPSD52PpY5",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FM-T3FAB",
+      "pair_name": "USDC",
+      "description": "TTT 300K THE_FAB_RIC_ANT [USDC]",
+      "asset_type": "Collectible",
       "symbol": "FM-T3FABUSDC",
       "mint": "6pUxjPghGz5Gn9XnJuPaJCSpk9mhvzecvHb6G4rrSCJq",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FM-T3FAB",
+      "pair_name": "ATLAS",
+      "description": "TTT 300K THE_FAB_RIC_ANT [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "FM-T3FABATLAS",
       "mint": "6pUxjPghGz5Gn9XnJuPaJCSpk9mhvzecvHb6G4rrSCJq",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CMHFAT",
+      "pair_name": "USDC",
+      "description": "Anna Tolle [USDC]",
+      "asset_type": "Collectible",
       "symbol": "CMHFATUSDC",
       "mint": "HzeBiGCyGESHS3d5ndQmvz7q7Nz8Py6PV5xFjRL4cQGk",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CMHFAT",
+      "pair_name": "ATLAS",
+      "description": "Anna Tolle [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "CMHFATATLAS",
       "mint": "HzeBiGCyGESHS3d5ndQmvz7q7Nz8Py6PV5xFjRL4cQGk",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "VZUSAM",
+      "pair_name": "USDC",
+      "description": "VZUS ambwe [USDC]",
+      "asset_type": "Ship",
       "symbol": "VZUSAMUSDC",
       "mint": "H2jHqvXA2oxSpEp6dKkpK7WeszQEdFW5n25mNfrJFAc1",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "VZUSAM",
+      "pair_name": "ATLAS",
+      "description": "VZUS ambwe [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "VZUSAMATLAS",
       "mint": "H2jHqvXA2oxSpEp6dKkpK7WeszQEdFW5n25mNfrJFAc1",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "LOST",
+      "pair_name": "USDC",
+      "description": "Short Story of a Lost Astronaut [USDC]",
+      "asset_type": "Collectible",
       "symbol": "LOSTUSDC",
       "mint": "BgiTVxW9uLuHHoafTd2qjYB5xjCc5Y1EnUuYNfmTwhvp",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "LOST",
+      "pair_name": "ATLAS",
+      "description": "Short Story of a Lost Astronaut [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "LOSTATLAS",
       "mint": "BgiTVxW9uLuHHoafTd2qjYB5xjCc5Y1EnUuYNfmTwhvp",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "AVE",
+      "pair_name": "USDC",
+      "description": "Ahr Visits Earth [USDC]",
+      "asset_type": "Collectible",
       "symbol": "AVEUSDC",
       "mint": "6bD8mr8DyuVqN5dXd1jnqmCL66b5KUV14jYY1HSmnxTE",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "AVE",
+      "pair_name": "ATLAS",
+      "description": "Ahr Visits Earth [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "AVEATLAS",
       "mint": "6bD8mr8DyuVqN5dXd1jnqmCL66b5KUV14jYY1HSmnxTE",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PX4",
+      "pair_name": "USDC",
+      "description": "Pearce X4 [USDC]",
+      "asset_type": "Ship",
       "symbol": "PX4USDC",
       "mint": "2iMhgB4pbdKvwJHVyitpvX5z1NBNypFonUgaSAt9dtDt",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PX4",
+      "pair_name": "ATLAS",
+      "description": "Pearce X4 [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "PX4ATLAS",
       "mint": "2iMhgB4pbdKvwJHVyitpvX5z1NBNypFonUgaSAt9dtDt",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "OPALJJ",
+      "pair_name": "USDC",
+      "description": "Opal Jetjet [USDC]",
+      "asset_type": "Ship",
       "symbol": "OPALJJUSDC",
       "mint": "9ABNesWj7NVdkDgko7UjVaDp5pTh8a6wfXHLWz3bZM6W",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "OPALJJ",
+      "pair_name": "ATLAS",
+      "description": "Opal Jetjet [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "OPALJJATLAS",
       "mint": "9ABNesWj7NVdkDgko7UjVaDp5pTh8a6wfXHLWz3bZM6W",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CONSO",
+      "pair_name": "USDC",
+      "description": "Noble Signer [USDC]",
+      "asset_type": "Collectible",
       "symbol": "CONSOUSDC",
       "mint": "BX9FrvAXfDdFKDcgkRPhq38wCn9SDggg9pN2V9qAup5C",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CONSO",
+      "pair_name": "ATLAS",
+      "description": "Noble Signer [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "CONSOATLAS",
       "mint": "BX9FrvAXfDdFKDcgkRPhq38wCn9SDggg9pN2V9qAup5C",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "BGOF",
+      "pair_name": "USDC",
+      "description": "Officer's Badge [USDC]",
+      "asset_type": "Access",
       "symbol": "BGOFUSDC",
       "mint": "5LkYStW5K4dPkYDzMFw5smUZ3qNJ8v1fG4gwbHbDfNV2",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "BGOF",
+      "pair_name": "ATLAS",
+      "description": "Officer's Badge [ATLAS]",
+      "asset_type": "Access",
       "symbol": "BGOFATLAS",
       "mint": "5LkYStW5K4dPkYDzMFw5smUZ3qNJ8v1fG4gwbHbDfNV2",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CORUS",
+      "pair_name": "USDC",
+      "description": "Replicatur Shawl [USDC]",
+      "asset_type": "Collectible",
       "symbol": "CORUSUSDC",
       "mint": "7AUcvn5k8MFSYdhiZRDzKyvxRFrauzMgcWMYRngrTZsB",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CORUS",
+      "pair_name": "ATLAS",
+      "description": "Replicatur Shawl [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "CORUSATLAS",
       "mint": "7AUcvn5k8MFSYdhiZRDzKyvxRFrauzMgcWMYRngrTZsB",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
-      "symbol": "STAKE4USDC",
+      "asset_name": "SOLPK4",
+      "pair_name": "USDC",
+      "description": "The Atmo-Harvester [USDC]",
+      "asset_type": "Collectible",
+      "symbol": "SOLPK4USDC",
       "mint": "AT5jKk5oUeToyDMneVbu5J92DoM4Ab18zJciUfku2MrD",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
-      "symbol": "STAKE4ATLAS",
+      "asset_name": "SOLPK4",
+      "pair_name": "ATLAS",
+      "description": "The Atmo-Harvester [ATLAS]",
+      "asset_type": "Collectible",
+      "symbol": "SOLPK4ATLAS",
       "mint": "AT5jKk5oUeToyDMneVbu5J92DoM4Ab18zJciUfku2MrD",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "BGSUP",
+      "pair_name": "USDC",
+      "description": "Superior's Badge [USDC]",
+      "asset_type": "Access",
       "symbol": "BGSUPUSDC",
       "mint": "FmWTV4W1KfM5gix2oADmzRJu4T1wCUoCnLqRMRwP7NrF",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "BGSUP",
+      "pair_name": "ATLAS",
+      "description": "Superior's Badge [ATLAS]",
+      "asset_type": "Access",
       "symbol": "BGSUPATLAS",
       "mint": "FmWTV4W1KfM5gix2oADmzRJu4T1wCUoCnLqRMRwP7NrF",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CALGBS",
+      "pair_name": "USDC",
+      "description": "Black Sun [USDC]",
+      "asset_type": "Collectible",
       "symbol": "CALGBSUSDC",
       "mint": "7n79Huf9wmaMaLQxm7beYRw9tggoYcXZzHZxN9L3z1fS",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CALGBS",
+      "pair_name": "ATLAS",
+      "description": "Black Sun [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "CALGBSATLAS",
       "mint": "7n79Huf9wmaMaLQxm7beYRw9tggoYcXZzHZxN9L3z1fS",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CHMVOS",
+      "pair_name": "USDC",
+      "description": "Vintage Orbiting Satellite [USDC]",
+      "asset_type": "Collectible",
       "symbol": "CHMVOSUSDC",
       "mint": "DBFM7MFBWHvsi1CBU5x7av77dDoCTGiBcTx54VR8wp1k",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CHMVOS",
+      "pair_name": "ATLAS",
+      "description": "Vintage Orbiting Satellite [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "CHMVOSATLAS",
       "mint": "DBFM7MFBWHvsi1CBU5x7av77dDoCTGiBcTx54VR8wp1k",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FM-T3ANI",
+      "pair_name": "USDC",
+      "description": "TTT 300K Animoca [USDC]",
+      "asset_type": "Collectible",
       "symbol": "FM-T3ANIUSDC",
       "mint": "2YFmgNYGKLGTofn24mG2gPbGoKAfcH5SsfvNwXo1Hcsq",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FM-T3ANI",
+      "pair_name": "ATLAS",
+      "description": "TTT 300K Animoca [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "FM-T3ANIATLAS",
       "mint": "2YFmgNYGKLGTofn24mG2gPbGoKAfcH5SsfvNwXo1Hcsq",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FM-CO92",
+      "pair_name": "USDC",
+      "description": "COSMIC ORIGIN 92 [USDC]",
+      "asset_type": "Collectible",
       "symbol": "FM-CO92USDC",
       "mint": "DTtuny8L9q4DaDbLrCcE3Na68y1Y5oqrQCF8DX1RB8fr",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FM-CO92",
+      "pair_name": "ATLAS",
+      "description": "COSMIC ORIGIN 92 [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "FM-CO92ATLAS",
       "mint": "DTtuny8L9q4DaDbLrCcE3Na68y1Y5oqrQCF8DX1RB8fr",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FM-T3CK",
+      "pair_name": "USDC",
+      "description": "TTT 300K CryptoKickers [USDC]",
+      "asset_type": "Collectible",
       "symbol": "FM-T3CKUSDC",
       "mint": "2Rw4Eqri7N4n3ZDsUVGfr8nhdxf4Uqjbim9tyJZb7Axd",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FM-T3CK",
+      "pair_name": "ATLAS",
+      "description": "TTT 300K CryptoKickers [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "FM-T3CKATLAS",
       "mint": "2Rw4Eqri7N4n3ZDsUVGfr8nhdxf4Uqjbim9tyJZb7Axd",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FM-PLG",
+      "pair_name": "USDC",
+      "description": "PRIMORDIAL GLO [USDC]",
+      "asset_type": "Collectible",
       "symbol": "FM-PLGUSDC",
       "mint": "7YNMhgmG7ZEQDvKVwsvN2GyUPaDpKYQ3VtzdkEskcAAe",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FM-PLG",
+      "pair_name": "ATLAS",
+      "description": "PRIMORDIAL GLO [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "FM-PLGATLAS",
       "mint": "7YNMhgmG7ZEQDvKVwsvN2GyUPaDpKYQ3VtzdkEskcAAe",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FBLEGR",
+      "pair_name": "USDC",
+      "description": "Fimbul ECOS Greenader [USDC]",
+      "asset_type": "Ship",
       "symbol": "FBLEGRUSDC",
       "mint": "FpwV1Da6BZJnYPr1JSLUm14UwBmZHA7J5WLY4TXgbde8",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FBLEGR",
+      "pair_name": "ATLAS",
+      "description": "Fimbul ECOS Greenader [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "FBLEGRATLAS",
       "mint": "FpwV1Da6BZJnYPr1JSLUm14UwBmZHA7J5WLY4TXgbde8",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "LOVE",
+      "pair_name": "USDC",
+      "description": "B ❤ P [USDC]",
+      "asset_type": "Collectible",
       "symbol": "LOVEUSDC",
       "mint": "4G85c5aUsRTrRPqE5VjY7ebD9b2ktTF6NEVGiCddRBDX",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "LOVE",
+      "pair_name": "ATLAS",
+      "description": "B ❤ P [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "LOVEATLAS",
       "mint": "4G85c5aUsRTrRPqE5VjY7ebD9b2ktTF6NEVGiCddRBDX",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PFP",
+      "pair_name": "USDC",
+      "description": "Paizul Funeral Procession [USDC]",
+      "asset_type": "Collectible",
       "symbol": "PFPUSDC",
       "mint": "G1bE9ge8Yoq43hv7QLcumxTFhHqFMdcL4y2d6ZdzMG4b",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PFP",
+      "pair_name": "ATLAS",
+      "description": "Paizul Funeral Procession [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "PFPATLAS",
       "mint": "G1bE9ge8Yoq43hv7QLcumxTFhHqFMdcL4y2d6ZdzMG4b",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "SPT",
+      "pair_name": "USDC",
+      "description": "The Signing of the Peace Treaty [USDC]",
+      "asset_type": "Collectible",
       "symbol": "SPTUSDC",
       "mint": "8EXX5kG7qWTjgpNSGX7PnB6hJZ8xhXUcCafVJaBEJo32",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "SPT",
+      "pair_name": "ATLAS",
+      "description": "The Signing of the Peace Treaty [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "SPTATLAS",
       "mint": "8EXX5kG7qWTjgpNSGX7PnB6hJZ8xhXUcCafVJaBEJo32",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PBA",
+      "pair_name": "USDC",
+      "description": "The Peacebringers Archive [USDC]",
+      "asset_type": "Collectible",
       "symbol": "PBAUSDC",
       "mint": "CAjoJeGCCRae9oDwHYXzkeUDonp3dZLWV5GKHysLwjnx",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PBA",
+      "pair_name": "ATLAS",
+      "description": "The Peacebringers Archive [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "PBAATLAS",
       "mint": "CAjoJeGCCRae9oDwHYXzkeUDonp3dZLWV5GKHysLwjnx",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PX4SNB",
+      "pair_name": "USDC",
+      "description": "Nanobyte [USDC]",
+      "asset_type": "Collectible",
       "symbol": "PX4SNBUSDC",
       "mint": "eUkSbazTfDir4jjYth6fwayGh2gSQ2zNaHLfoKud97L",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PX4SNB",
+      "pair_name": "ATLAS",
+      "description": "Nanobyte [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "PX4SNBATLAS",
       "mint": "eUkSbazTfDir4jjYth6fwayGh2gSQ2zNaHLfoKud97L",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "MSD1",
+      "pair_name": "USDC",
+      "description": "Mining Drill [USDC]",
+      "asset_type": "Structure",
       "symbol": "MSD1USDC",
       "mint": "AuxCj2T4Mdb6h5i1pZd2yDJy5pdiEpZCPtTHAR1DqKdT",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "MSD1",
+      "pair_name": "ATLAS",
+      "description": "Mining Drill [ATLAS]",
+      "asset_type": "Structure",
       "symbol": "MSD1ATLAS",
       "mint": "AuxCj2T4Mdb6h5i1pZd2yDJy5pdiEpZCPtTHAR1DqKdT",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "TIGUSS",
+      "pair_name": "USDC",
+      "description": "Sphinx [USDC]",
+      "asset_type": "Collectible",
       "symbol": "TIGUSSUSDC",
       "mint": "9bccaxs8YihGCRkPqcFMPkPbVBwNNjzHc4iHvsfQNs6x",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "TIGUSS",
+      "pair_name": "ATLAS",
+      "description": "Sphinx [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "TIGUSSATLAS",
       "mint": "9bccaxs8YihGCRkPqcFMPkPbVBwNNjzHc4iHvsfQNs6x",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "OJJSBB",
+      "pair_name": "USDC",
+      "description": "B.O.B. [USDC]",
+      "asset_type": "Collectible",
       "symbol": "OJJSBBUSDC",
       "mint": "7Yeihi147ynkw58UP6W5AetBgotn6gFxV8UWsNPhfrkZ",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "OJJSBB",
+      "pair_name": "ATLAS",
+      "description": "B.O.B. [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "OJJSBBATLAS",
       "mint": "7Yeihi147ynkw58UP6W5AetBgotn6gFxV8UWsNPhfrkZ",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
-      "symbol": "STAKE3USDC",
+      "asset_name": "SOLPK3",
+      "pair_name": "USDC",
+      "description": "Perpetual Farming Lands [USDC]",
+      "asset_type": "Collectible",
+      "symbol": "SOLPK3USDC",
       "mint": "FJEEHRAKPcVUBfitPZDsmR8PtYfeg1Cy8RusVb7PuPgw",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
-      "symbol": "STAKE3ATLAS",
+      "asset_name": "SOLPK3",
+      "pair_name": "ATLAS",
+      "description": "Perpetual Farming Lands [ATLAS]",
+      "asset_type": "Collectible",
+      "symbol": "SOLPK3ATLAS",
       "mint": "FJEEHRAKPcVUBfitPZDsmR8PtYfeg1Cy8RusVb7PuPgw",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "VIP",
+      "pair_name": "USDC",
+      "description": "VIP [USDC]",
+      "asset_type": "Access",
       "symbol": "VIPUSDC",
       "mint": "CVy9zWnF7y15FeqEvV3ZsMdnMDG25na3NWHzx8xQvcG2",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "VIP",
+      "pair_name": "ATLAS",
+      "description": "VIP [ATLAS]",
+      "asset_type": "Access",
       "symbol": "VIPATLAS",
       "mint": "CVy9zWnF7y15FeqEvV3ZsMdnMDG25na3NWHzx8xQvcG2",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FBPLSL",
+      "pair_name": "USDC",
+      "description": "Lone Star [USDC]",
+      "asset_type": "Collectible",
       "symbol": "FBPLSLUSDC",
       "mint": "BrwKZC3BUNFLKWoyEZC7sNDs4bzwgAXJYK4zGntc5SeN",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FBPLSL",
+      "pair_name": "ATLAS",
+      "description": "Lone Star [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "FBPLSLATLAS",
       "mint": "BrwKZC3BUNFLKWoyEZC7sNDs4bzwgAXJYK4zGntc5SeN",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "OTSS",
+      "pair_name": "USDC",
+      "description": "Streamcatcher [USDC]",
+      "asset_type": "Collectible",
       "symbol": "OTSSUSDC",
       "mint": "Efh5nnkDX3cKU2gYsFTdBbkLo3JpQJ7ZhKsKdCE6rQRS",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "OTSS",
+      "pair_name": "ATLAS",
+      "description": "Streamcatcher [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "OTSSATLAS",
       "mint": "Efh5nnkDX3cKU2gYsFTdBbkLo3JpQJ7ZhKsKdCE6rQRS",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
-      "symbol": "STAKE5USDC",
+      "asset_name": "SOLPK5",
+      "pair_name": "USDC",
+      "description": "The New Paradigm of Sustainability [USDC]",
+      "asset_type": "Collectible",
+      "symbol": "SOLPK5USDC",
       "mint": "AyWsJCrhRbgZETS7s1dkWxxPZHsGxyLXNi5JK8L3xHe5",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
-      "symbol": "STAKE5ATLAS",
+      "asset_name": "SOLPK5",
+      "pair_name": "ATLAS",
+      "description": "The New Paradigm of Sustainability [ATLAS]",
+      "asset_type": "Collectible",
+      "symbol": "SOLPK5ATLAS",
       "mint": "AyWsJCrhRbgZETS7s1dkWxxPZHsGxyLXNi5JK8L3xHe5",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "OPALJ",
+      "pair_name": "USDC",
+      "description": "Opal Jet [USDC]",
+      "asset_type": "Ship",
       "symbol": "OPALJUSDC",
       "mint": "Ev3xUhc1Leqi4qR2E5VoG9pcxCvHHmnAaSRVPg485xAT",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "OPALJ",
+      "pair_name": "ATLAS",
+      "description": "Opal Jet [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "OPALJATLAS",
       "mint": "Ev3xUhc1Leqi4qR2E5VoG9pcxCvHHmnAaSRVPg485xAT",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FM-NLDB",
+      "pair_name": "USDC",
+      "description": "NXT le]V[el DS Bodysuit [USDC]",
+      "asset_type": "Collectible",
       "symbol": "FM-NLDBUSDC",
       "mint": "DyNBYAyH6YPEKMCeh6GSNZR9KowmQEcXjvnv1ktfLRKX",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FM-NLDB",
+      "pair_name": "ATLAS",
+      "description": "NXT le]V[el DS Bodysuit [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "FM-NLDBATLAS",
       "mint": "DyNBYAyH6YPEKMCeh6GSNZR9KowmQEcXjvnv1ktfLRKX",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FM-T3SOL",
+      "pair_name": "USDC",
+      "description": "TTT 300K SOLANA [USDC]",
+      "asset_type": "Collectible",
       "symbol": "FM-T3SOLUSDC",
       "mint": "2Pm57eFBfKbMCKCDVuEscNsJM9x5r9X7Q8t1q9NiUgMV",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FM-T3SOL",
+      "pair_name": "ATLAS",
+      "description": "TTT 300K SOLANA [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "FM-T3SOLATLAS",
       "mint": "2Pm57eFBfKbMCKCDVuEscNsJM9x5r9X7Q8t1q9NiUgMV",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FM-T3STEP",
+      "pair_name": "USDC",
+      "description": "TTT 300K STEP.finance [USDC]",
+      "asset_type": "Collectible",
       "symbol": "FM-T3STEPUSDC",
       "mint": "Cmvj2iW9WQZUaNJiruhjgnCRATRi2AwTK9KaVxMZtdDs",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FM-T3STEP",
+      "pair_name": "ATLAS",
+      "description": "TTT 300K STEP.finance [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "FM-T3STEPATLAS",
       "mint": "Cmvj2iW9WQZUaNJiruhjgnCRATRi2AwTK9KaVxMZtdDs",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CMHMSB",
+      "pair_name": "USDC",
+      "description": "Sammy Banx [USDC]",
+      "asset_type": "Collectible",
       "symbol": "CMHMSBUSDC",
       "mint": "BswdGxfurGpSKPPhHUP6d9uzdY3bAG8o3CJnFUQLanzw",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CMHMSB",
+      "pair_name": "ATLAS",
+      "description": "Sammy Banx [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "CMHMSBATLAS",
       "mint": "BswdGxfurGpSKPPhHUP6d9uzdY3bAG8o3CJnFUQLanzw",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PR8",
+      "pair_name": "USDC",
+      "description": "Pearce R8 [USDC]",
+      "asset_type": "Ship",
       "symbol": "PR8USDC",
       "mint": "2bCgKTo11QayWBy6QryHZMqZL2ZgWd5LEAZKiTGQi4g7",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PR8",
+      "pair_name": "ATLAS",
+      "description": "Pearce R8 [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "PR8ATLAS",
       "mint": "2bCgKTo11QayWBy6QryHZMqZL2ZgWd5LEAZKiTGQi4g7",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PC9",
+      "pair_name": "USDC",
+      "description": "Pearce C9 [USDC]",
+      "asset_type": "Ship",
       "symbol": "PC9USDC",
       "mint": "5f1jUARhtSypVA4uTpgpLp76WYGdB2dGr8zMbh4WjYRf",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PC9",
+      "pair_name": "ATLAS",
+      "description": "Pearce C9 [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "PC9ATLAS",
       "mint": "5f1jUARhtSypVA4uTpgpLp76WYGdB2dGr8zMbh4WjYRf",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PC11",
+      "pair_name": "USDC",
+      "description": "Pearce C11 [USDC]",
+      "asset_type": "Ship",
       "symbol": "PC11USDC",
       "mint": "9ifQ16N5DdUFoejCwsgR73ihUwadAe3srCo9HhQe2zL2",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PC11",
+      "pair_name": "ATLAS",
+      "description": "Pearce C11 [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "PC11ATLAS",
       "mint": "9ifQ16N5DdUFoejCwsgR73ihUwadAe3srCo9HhQe2zL2",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "OGKAJA",
+      "pair_name": "USDC",
+      "description": "Ogrika Jod Asteris [USDC]",
+      "asset_type": "Ship",
       "symbol": "OGKAJAUSDC",
       "mint": "HJBmBYyGR8z1oajAM4jiK46uobuxeJoKDYpFwzWHBvhb",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "OGKAJA",
+      "pair_name": "ATLAS",
+      "description": "Ogrika Jod Asteris [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "OGKAJAATLAS",
       "mint": "HJBmBYyGR8z1oajAM4jiK46uobuxeJoKDYpFwzWHBvhb",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CHI",
+      "pair_name": "USDC",
+      "description": "Rainbow Chi [USDC]",
+      "asset_type": "Ship",
       "symbol": "CHIUSDC",
       "mint": "DsJHgpnNovjJ981QJJnqMggexAekNawbSavfV1QuTpis",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CHI",
+      "pair_name": "ATLAS",
+      "description": "Rainbow Chi [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "CHIATLAS",
       "mint": "DsJHgpnNovjJ981QJJnqMggexAekNawbSavfV1QuTpis",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PX6",
+      "pair_name": "USDC",
+      "description": "Pearce X6 [USDC]",
+      "asset_type": "Ship",
       "symbol": "PX6USDC",
       "mint": "8RveLFEyteyL1vbCKPQJxjf3JT1ACyrzs46TXbJStrHG",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PX6",
+      "pair_name": "ATLAS",
+      "description": "Pearce X6 [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "PX6ATLAS",
       "mint": "8RveLFEyteyL1vbCKPQJxjf3JT1ACyrzs46TXbJStrHG",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FBLBEA",
+      "pair_name": "USDC",
+      "description": "Fimbul BYOS Earp [USDC]",
+      "asset_type": "Ship",
       "symbol": "FBLBEAUSDC",
       "mint": "6SqLuwHNRC1qjo9KATLKJLszFHMWyYaNxDXraCEUtfdR",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FBLBEA",
+      "pair_name": "ATLAS",
+      "description": "Fimbul BYOS Earp [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "FBLBEAATLAS",
       "mint": "6SqLuwHNRC1qjo9KATLKJLszFHMWyYaNxDXraCEUtfdR",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "TUFAFE",
+      "pair_name": "USDC",
+      "description": "Tufa Feist [USDC]",
+      "asset_type": "Ship",
       "symbol": "TUFAFEUSDC",
       "mint": "HsdbLvZrEgN2ZhsrZs5ag4F2FNFCHjjuXPfbVAhkeJBZ",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "TUFAFE",
+      "pair_name": "ATLAS",
+      "description": "Tufa Feist [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "TUFAFEATLAS",
       "mint": "HsdbLvZrEgN2ZhsrZs5ag4F2FNFCHjjuXPfbVAhkeJBZ",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CALEV",
+      "pair_name": "USDC",
+      "description": "Calico Evac [USDC]",
+      "asset_type": "Ship",
       "symbol": "CALEVUSDC",
       "mint": "4txpjHspP4usEsQTr3AcrpyHVjN4fi3d4taM6cmKJnd1",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CALEV",
+      "pair_name": "ATLAS",
+      "description": "Calico Evac [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "CALEVATLAS",
       "mint": "4txpjHspP4usEsQTr3AcrpyHVjN4fi3d4taM6cmKJnd1",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FBLEBO",
+      "pair_name": "USDC",
+      "description": "Fimbul ECOS Bombarella [USDC]",
+      "asset_type": "Ship",
       "symbol": "FBLEBOUSDC",
       "mint": "7M6RHgPiHXiZAin5ManH63cLYGt3miQ54KaGynUQoERS",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FBLEBO",
+      "pair_name": "ATLAS",
+      "description": "Fimbul ECOS Bombarella [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "FBLEBOATLAS",
       "mint": "7M6RHgPiHXiZAin5ManH63cLYGt3miQ54KaGynUQoERS",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FBLETR",
+      "pair_name": "USDC",
+      "description": "Fimbul ECOS Treearrow [USDC]",
+      "asset_type": "Ship",
       "symbol": "FBLETRUSDC",
       "mint": "HqPN13pLUVJRiuGSsKjfWZvGKAagK98PshuKu51bnG4E",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FBLETR",
+      "pair_name": "ATLAS",
+      "description": "Fimbul ECOS Treearrow [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "FBLETRATLAS",
       "mint": "HqPN13pLUVJRiuGSsKjfWZvGKAagK98PshuKu51bnG4E",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "AMMO",
+      "pair_name": "USDC",
+      "description": "Ammunition [USDC]",
+      "asset_type": "Resource",
       "symbol": "AMMOUSDC",
       "mint": "ammoK8AkX2wnebQb35cDAZtTkvsXQbi82cGeTnUvvfK",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "AMMO",
+      "pair_name": "ATLAS",
+      "description": "Ammunition [ATLAS]",
+      "asset_type": "Resource",
       "symbol": "AMMOATLAS",
       "mint": "ammoK8AkX2wnebQb35cDAZtTkvsXQbi82cGeTnUvvfK",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "TOOL",
+      "pair_name": "USDC",
+      "description": "Toolkit [USDC]",
+      "asset_type": "Resource",
       "symbol": "TOOLUSDC",
       "mint": "tooLsNYLiVqzg8o4m3L2Uetbn62mvMWRqkog6PQeYKL",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "TOOL",
+      "pair_name": "ATLAS",
+      "description": "Toolkit [ATLAS]",
+      "asset_type": "Resource",
       "symbol": "TOOLATLAS",
       "mint": "tooLsNYLiVqzg8o4m3L2Uetbn62mvMWRqkog6PQeYKL",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FOOD",
+      "pair_name": "USDC",
+      "description": "Food [USDC]",
+      "asset_type": "Resource",
       "symbol": "FOODUSDC",
       "mint": "foodQJAztMzX1DKpLaiounNe2BDMds5RNuPC6jsNrDG",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FOOD",
+      "pair_name": "ATLAS",
+      "description": "Food [ATLAS]",
+      "asset_type": "Resource",
       "symbol": "FOODATLAS",
       "mint": "foodQJAztMzX1DKpLaiounNe2BDMds5RNuPC6jsNrDG",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FUEL",
+      "pair_name": "USDC",
+      "description": "Fuel [USDC]",
+      "asset_type": "Resource",
       "symbol": "FUELUSDC",
       "mint": "fueL3hBZjLLLJHiFH9cqZoozTG3XQZ53diwFPwbzNim",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FUEL",
+      "pair_name": "ATLAS",
+      "description": "Fuel [ATLAS]",
+      "asset_type": "Resource",
       "symbol": "FUELATLAS",
       "mint": "fueL3hBZjLLLJHiFH9cqZoozTG3XQZ53diwFPwbzNim",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "COSSOU",
+      "pair_name": "USDC",
+      "description": "Cosmic Sounds [USDC]",
+      "asset_type": "Collectible",
       "symbol": "COSSOUUSDC",
       "mint": "D5qtZURrR8hs1V1oTuSFu7tMe5pt1XKWWqqK34CHF5ZA",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "COSSOU",
+      "pair_name": "ATLAS",
+      "description": "Cosmic Sounds [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "COSSOUATLAS",
       "mint": "D5qtZURrR8hs1V1oTuSFu7tMe5pt1XKWWqqK34CHF5ZA",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FBLAIR",
+      "pair_name": "USDC",
+      "description": "Fimbul Airbike [USDC]",
+      "asset_type": "Ship",
       "symbol": "FBLAIRUSDC",
       "mint": "Fw8PqtznYtg4swMk7Yjj89Tsj23u5CJLfW5Bk8ro4G1s",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FBLAIR",
+      "pair_name": "ATLAS",
+      "description": "Fimbul Airbike [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "FBLAIRATLAS",
       "mint": "Fw8PqtznYtg4swMk7Yjj89Tsj23u5CJLfW5Bk8ro4G1s",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "OGKAMK",
+      "pair_name": "USDC",
+      "description": "Ogrika Mik [USDC]",
+      "asset_type": "Ship",
       "symbol": "OGKAMKUSDC",
       "mint": "FMHHwUB6amLWYhWxtiZHC2g5azy9usPTLMq46N3HEgFU",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "OGKAMK",
+      "pair_name": "ATLAS",
+      "description": "Ogrika Mik [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "OGKAMKATLAS",
       "mint": "FMHHwUB6amLWYhWxtiZHC2g5azy9usPTLMq46N3HEgFU",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FBLEUN",
+      "pair_name": "USDC",
+      "description": "Fimbul ECOS Unibomba [USDC]",
+      "asset_type": "Ship",
       "symbol": "FBLEUNUSDC",
       "mint": "9zrgra3XQkZPt8XNs4fowbqmj7B8bBx76aEmsKSnm9BW",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FBLEUN",
+      "pair_name": "ATLAS",
+      "description": "Fimbul ECOS Unibomba [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "FBLEUNATLAS",
       "mint": "9zrgra3XQkZPt8XNs4fowbqmj7B8bBx76aEmsKSnm9BW",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FBLLOW",
+      "pair_name": "USDC",
+      "description": "Fimbul Lowbie [USDC]",
+      "asset_type": "Ship",
       "symbol": "FBLLOWUSDC",
       "mint": "7Xs3yt9eJPuEexZrKSGVbQMXHwWUKHGeDZnM4ZksZmyS",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FBLLOW",
+      "pair_name": "ATLAS",
+      "description": "Fimbul Lowbie [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "FBLLOWATLAS",
       "mint": "7Xs3yt9eJPuEexZrKSGVbQMXHwWUKHGeDZnM4ZksZmyS",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "ARC",
+      "pair_name": "USDC",
+      "description": "Rainbow Arc [USDC]",
+      "asset_type": "Ship",
       "symbol": "ARCUSDC",
       "mint": "EbLBLN44BVLjifLNBbchXFr8QjEkAGYENKuNEaDuyVPL",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "ARC",
+      "pair_name": "ATLAS",
+      "description": "Rainbow Arc [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "ARCATLAS",
       "mint": "EbLBLN44BVLjifLNBbchXFr8QjEkAGYENKuNEaDuyVPL",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "THRILL",
+      "pair_name": "USDC",
+      "description": "Busan Thrill of Life [USDC]",
+      "asset_type": "Ship",
       "symbol": "THRILLUSDC",
       "mint": "FTk1E5UoWkiZEUttCWSYYaVokxWNNp3yJ42HbNDCAkdt",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "THRILL",
+      "pair_name": "ATLAS",
+      "description": "Busan Thrill of Life [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "THRILLATLAS",
       "mint": "FTk1E5UoWkiZEUttCWSYYaVokxWNNp3yJ42HbNDCAkdt",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "VZUSBA",
+      "pair_name": "USDC",
+      "description": "VZUS ballad [USDC]",
+      "asset_type": "Ship",
       "symbol": "VZUSBAUSDC",
       "mint": "FFkPvwLDYuKDW9eAAr5UNfuX3U9PcTGeSk7gqNX7EpNc",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "VZUSBA",
+      "pair_name": "ATLAS",
+      "description": "VZUS ballad [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "VZUSBAATLAS",
       "mint": "FFkPvwLDYuKDW9eAAr5UNfuX3U9PcTGeSk7gqNX7EpNc",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "OPALBB",
+      "pair_name": "USDC",
+      "description": "Opal Bitboat [USDC]",
+      "asset_type": "Ship",
       "symbol": "OPALBBUSDC",
       "mint": "8pPDsMNcz4m8jaajFMFXHGcvaeVeiQhcenvSD6a4XNyq",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "OPALBB",
+      "pair_name": "ATLAS",
+      "description": "Opal Bitboat [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "OPALBBATLAS",
       "mint": "8pPDsMNcz4m8jaajFMFXHGcvaeVeiQhcenvSD6a4XNyq",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CALMED",
+      "pair_name": "USDC",
+      "description": "Calico Medtech [USDC]",
+      "asset_type": "Ship",
       "symbol": "CALMEDUSDC",
       "mint": "4gR3ChfdQxR4BTbgeWSdf6b8kD8Ysu6WBAQqtJ9oLgbF",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CALMED",
+      "pair_name": "ATLAS",
+      "description": "Calico Medtech [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "CALMEDATLAS",
       "mint": "4gR3ChfdQxR4BTbgeWSdf6b8kD8Ysu6WBAQqtJ9oLgbF",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CALATS",
+      "pair_name": "USDC",
+      "description": "Calico ATS Enforcer [USDC]",
+      "asset_type": "Ship",
       "symbol": "CALATSUSDC",
       "mint": "2XYd22LSFGxN7kWgoEeaXVZqgrsPeQLHLEgNhnS12Mny",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "CALATS",
+      "pair_name": "ATLAS",
+      "description": "Calico ATS Enforcer [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "CALATSATLAS",
       "mint": "2XYd22LSFGxN7kWgoEeaXVZqgrsPeQLHLEgNhnS12Mny",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PR6",
+      "pair_name": "USDC",
+      "description": "Pearce R6 [USDC]",
+      "asset_type": "Ship",
       "symbol": "PR6USDC",
       "mint": "Fys8J53cquYsg5zYfeZStVGNwM9FopFw8QFkiE9CCR1J",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PR6",
+      "pair_name": "ATLAS",
+      "description": "Pearce R6 [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "PR6ATLAS",
       "mint": "Fys8J53cquYsg5zYfeZStVGNwM9FopFw8QFkiE9CCR1J",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "HEART",
+      "pair_name": "USDC",
+      "description": "Busan Maiden Heart [USDC]",
+      "asset_type": "Ship",
       "symbol": "HEARTUSDC",
       "mint": "6HzZJwrcuBBmrE7SLDfxheZGAD3NYJ531C9JsNesL9BP",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "HEART",
+      "pair_name": "ATLAS",
+      "description": "Busan Maiden Heart [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "HEARTATLAS",
       "mint": "6HzZJwrcuBBmrE7SLDfxheZGAD3NYJ531C9JsNesL9BP",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "OGKATU",
+      "pair_name": "USDC",
+      "description": "Ogrika Tursic [USDC]",
+      "asset_type": "Ship",
       "symbol": "OGKATUUSDC",
       "mint": "J8Q6jYsrhhaeczyPBo9xzVyy4GpfCnJwj14LJn2HnuKp",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "OGKATU",
+      "pair_name": "ATLAS",
+      "description": "Ogrika Tursic [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "OGKATUATLAS",
       "mint": "J8Q6jYsrhhaeczyPBo9xzVyy4GpfCnJwj14LJn2HnuKp",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "F1CT",
+      "pair_name": "USDC",
+      "description": "Cosmic Thunder [USDC]",
+      "asset_type": "Collectible",
       "symbol": "F1CTUSDC",
       "mint": "AXEyoHAhMM9kRZuEgMpLjuteRSnfiPH8UrFxdUgb5hdo",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "F1CT",
+      "pair_name": "ATLAS",
+      "description": "Cosmic Thunder [ATLAS]",
+      "asset_type": "Collectible",
       "symbol": "F1CTATLAS",
       "mint": "AXEyoHAhMM9kRZuEgMpLjuteRSnfiPH8UrFxdUgb5hdo",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FBLMAM",
+      "pair_name": "USDC",
+      "description": "Fimbul Mamba [USDC]",
+      "asset_type": "Ship",
       "symbol": "FBLMAMUSDC",
       "mint": "6Zj61HuX1E7SCUCf9WsKXw1jdJCobAwK4RSjZvbv35tM",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FBLMAM",
+      "pair_name": "ATLAS",
+      "description": "Fimbul Mamba [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "FBLMAMATLAS",
       "mint": "6Zj61HuX1E7SCUCf9WsKXw1jdJCobAwK4RSjZvbv35tM",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "VZUSSO",
+      "pair_name": "USDC",
+      "description": "VZUS solos [USDC]",
+      "asset_type": "Ship",
       "symbol": "VZUSSOUSDC",
       "mint": "HjFijcGWKgfDwGpFX2rqFwEU9jtEgFuRQAJe1ERXFsA3",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "VZUSSO",
+      "pair_name": "ATLAS",
+      "description": "VZUS solos [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "VZUSSOATLAS",
       "mint": "HjFijcGWKgfDwGpFX2rqFwEU9jtEgFuRQAJe1ERXFsA3",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FBLBTA",
+      "pair_name": "USDC",
+      "description": "Fimbul BYOS Tankship [USDC]",
+      "asset_type": "Ship",
       "symbol": "FBLBTAUSDC",
       "mint": "4ns3shP4WunCtJbr2HFu31RjjxSJxDymEFcBZxiHr11s",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "FBLBTA",
+      "pair_name": "ATLAS",
+      "description": "Fimbul BYOS Tankship [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "FBLBTAATLAS",
       "mint": "4ns3shP4WunCtJbr2HFu31RjjxSJxDymEFcBZxiHr11s",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "OGKASP",
+      "pair_name": "USDC",
+      "description": "Ogrika Sunpaa [USDC]",
+      "asset_type": "Ship",
       "symbol": "OGKASPUSDC",
       "mint": "4b4mhSySBcryzBPamw8v4xeneFRA6xTUA4JA99w6vqey",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "OGKASP",
+      "pair_name": "ATLAS",
+      "description": "Ogrika Sunpaa [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "OGKASPATLAS",
       "mint": "4b4mhSySBcryzBPamw8v4xeneFRA6xTUA4JA99w6vqey",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PD9",
+      "pair_name": "USDC",
+      "description": "Pearce D9 [USDC]",
+      "asset_type": "Ship",
       "symbol": "PD9USDC",
       "mint": "H3cgBXWpUiNsYjUWS7cNR5Bmehh7k5CgpJccc5wSfRbJ",
-      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
     },
     {
+      "asset_name": "PD9",
+      "pair_name": "ATLAS",
+      "description": "Pearce D9 [ATLAS]",
+      "asset_type": "Ship",
       "symbol": "PD9ATLAS",
       "mint": "H3cgBXWpUiNsYjUWS7cNR5Bmehh7k5CgpJccc5wSfRbJ",
-      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE1SA",
+      "pair_name": "USDC",
+      "description": "Core - Episode 1 (Star Atlas) [USDC]",
+      "asset_type": "Story",
+      "symbol": "CORE1SAUSDC",
+      "mint": "4Rrcj4MArUcMtHPp6amTy3SUXbCGYG3n8sf8KgMKjRnr",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE1SA",
+      "pair_name": "ATLAS",
+      "description": "Core - Episode 1 (Star Atlas) [ATLAS]",
+      "asset_type": "Story",
+      "symbol": "CORE1SAATLAS",
+      "mint": "4Rrcj4MArUcMtHPp6amTy3SUXbCGYG3n8sf8KgMKjRnr",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE1ME",
+      "pair_name": "USDC",
+      "description": "Core - Episode 1 (Magic Eden) [USDC]",
+      "asset_type": "Story",
+      "symbol": "CORE1MEUSDC",
+      "mint": "3VGriNDXEhLPMQ1ixBmKm2Sn54RjQuXE7YvUC9DJqd4Y",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE1ME",
+      "pair_name": "ATLAS",
+      "description": "Core - Episode 1 (Magic Eden) [ATLAS]",
+      "asset_type": "Story",
+      "symbol": "CORE1MEATLAS",
+      "mint": "3VGriNDXEhLPMQ1ixBmKm2Sn54RjQuXE7YvUC9DJqd4Y",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "T1TAN",
+      "pair_name": "USDC",
+      "description": "Pearce T1 [USDC]",
+      "asset_type": "Ship",
+      "symbol": "T1TANUSDC",
+      "mint": "56nh4FvMJnSpkWJcmXc1nJtYhSQXuqb7nVMGALr31RVc",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "T1TAN",
+      "pair_name": "ATLAS",
+      "description": "Pearce T1 [ATLAS]",
+      "asset_type": "Ship",
+      "symbol": "T1TANATLAS",
+      "mint": "56nh4FvMJnSpkWJcmXc1nJtYhSQXuqb7nVMGALr31RVc",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "STAND",
+      "pair_name": "USDC",
+      "description": "Busan The Last Stand mk. VIII [USDC]",
+      "asset_type": "Ship",
+      "symbol": "STANDUSDC",
+      "mint": "Cvy691GFw2j3H8e6yf7hZtaQi5P3skQR4gzM6UWvcL7L",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "STAND",
+      "pair_name": "ATLAS",
+      "description": "Busan The Last Stand mk. VIII [ATLAS]",
+      "asset_type": "Ship",
+      "symbol": "STANDATLAS",
+      "mint": "Cvy691GFw2j3H8e6yf7hZtaQi5P3skQR4gzM6UWvcL7L",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "SUPER",
+      "pair_name": "USDC",
+      "description": "Fimbul ECOS Superphoenix [USDC]",
+      "asset_type": "Ship",
+      "symbol": "SUPERUSDC",
+      "mint": "2BMTgfgapuqYBwSRGu6HCafwDGRVTxMkQVhYrNWQGTWH",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "SUPER",
+      "pair_name": "ATLAS",
+      "description": "Fimbul ECOS Superphoenix [ATLAS]",
+      "asset_type": "Ship",
+      "symbol": "SUPERATLAS",
+      "mint": "2BMTgfgapuqYBwSRGu6HCafwDGRVTxMkQVhYrNWQGTWH",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE2ME",
+      "pair_name": "USDC",
+      "description": "Core - Episode 2 (Magic Eden) [USDC]",
+      "asset_type": "Story",
+      "symbol": "CORE2MEUSDC",
+      "mint": "9SLtHqCGpuZCrpaJhcYYUUxU4dNUBwqnbJLrJ2UZx1YD",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE2ME",
+      "pair_name": "ATLAS",
+      "description": "Core - Episode 2 (Magic Eden) [ATLAS]",
+      "asset_type": "Story",
+      "symbol": "CORE2MEATLAS",
+      "mint": "9SLtHqCGpuZCrpaJhcYYUUxU4dNUBwqnbJLrJ2UZx1YD",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE2SA",
+      "pair_name": "USDC",
+      "description": "Core - Episode 2 (Star Atlas) [USDC]",
+      "asset_type": "Story",
+      "symbol": "CORE2SAUSDC",
+      "mint": "GxoC3qAy3j1gjYZuGhVh8ufdJKGn2HJeiRjJ9XpikR8v",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE2SA",
+      "pair_name": "ATLAS",
+      "description": "Core - Episode 2 (Star Atlas) [ATLAS]",
+      "asset_type": "Story",
+      "symbol": "CORE2SAATLAS",
+      "mint": "GxoC3qAy3j1gjYZuGhVh8ufdJKGn2HJeiRjJ9XpikR8v",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "X4YT0",
+      "pair_name": "USDC",
+      "description": "Suntiger [USDC]",
+      "asset_type": "Collectible",
+      "symbol": "X4YT0USDC",
+      "mint": "RDGgGBxJ8mWKrMrsiS1VkPjXTNianRdikYJhGYqyZfF",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "X4YT0",
+      "pair_name": "ATLAS",
+      "description": "Suntiger [ATLAS]",
+      "asset_type": "Collectible",
+      "symbol": "X4YT0ATLAS",
+      "mint": "RDGgGBxJ8mWKrMrsiS1VkPjXTNianRdikYJhGYqyZfF",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "X4YT1",
+      "pair_name": "USDC",
+      "description": "RedX-IV [USDC]",
+      "asset_type": "Collectible",
+      "symbol": "X4YT1USDC",
+      "mint": "6JnRMJGUvnZwR1FSEYazKnMbEGTvrpufuKZ3HW86DXVc",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "X4YT1",
+      "pair_name": "ATLAS",
+      "description": "RedX-IV [ATLAS]",
+      "asset_type": "Collectible",
+      "symbol": "X4YT1ATLAS",
+      "mint": "6JnRMJGUvnZwR1FSEYazKnMbEGTvrpufuKZ3HW86DXVc",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "X4YT2",
+      "pair_name": "USDC",
+      "description": "Blue Tigu [USDC]",
+      "asset_type": "Collectible",
+      "symbol": "X4YT2USDC",
+      "mint": "AxiSgYMhYjSwLhyLMvxixWNEbD2iVXHWr5LRmp9UEXcM",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "X4YT2",
+      "pair_name": "ATLAS",
+      "description": "Blue Tigu [ATLAS]",
+      "asset_type": "Collectible",
+      "symbol": "X4YT2ATLAS",
+      "mint": "AxiSgYMhYjSwLhyLMvxixWNEbD2iVXHWr5LRmp9UEXcM",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "STAKE1",
+      "pair_name": "USDC",
+      "description": "Claim Stake Tier 1 [USDC]",
+      "asset_type": "Structure",
+      "symbol": "STAKE1USDC",
+      "mint": "HzUBawF9xxTy4mTuvSkk1a4voJcm65tSHZz6voCDUB33",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "STAKE1",
+      "pair_name": "ATLAS",
+      "description": "Claim Stake Tier 1 [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "STAKE1ATLAS",
+      "mint": "HzUBawF9xxTy4mTuvSkk1a4voJcm65tSHZz6voCDUB33",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "STAKE2",
+      "pair_name": "USDC",
+      "description": "Claim Stake Tier 2 [USDC]",
+      "asset_type": "Structure",
+      "symbol": "STAKE2USDC",
+      "mint": "2piSPCxbuibsraBnnK4M5rGeHSraNe2oiD8hDw42bPKq",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "STAKE2",
+      "pair_name": "ATLAS",
+      "description": "Claim Stake Tier 2 [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "STAKE2ATLAS",
+      "mint": "2piSPCxbuibsraBnnK4M5rGeHSraNe2oiD8hDw42bPKq",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "STAKE3",
+      "pair_name": "USDC",
+      "description": "Claim Stake Tier 3 [USDC]",
+      "asset_type": "Structure",
+      "symbol": "STAKE3USDC",
+      "mint": "C2uF4fECabWryVCV1bDuxP7jMspbf2gei3YAP2UBn292",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "STAKE3",
+      "pair_name": "ATLAS",
+      "description": "Claim Stake Tier 3 [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "STAKE3ATLAS",
+      "mint": "C2uF4fECabWryVCV1bDuxP7jMspbf2gei3YAP2UBn292",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "STAKE4",
+      "pair_name": "USDC",
+      "description": "Claim Stake Tier 4 [USDC]",
+      "asset_type": "Structure",
+      "symbol": "STAKE4USDC",
+      "mint": "EBEJj1LKuo1k1J2ZvNJxsXATdGYnfaLWzqxck5p4PXSz",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "STAKE4",
+      "pair_name": "ATLAS",
+      "description": "Claim Stake Tier 4 [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "STAKE4ATLAS",
+      "mint": "EBEJj1LKuo1k1J2ZvNJxsXATdGYnfaLWzqxck5p4PXSz",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "STAKE5",
+      "pair_name": "USDC",
+      "description": "Claim Stake Tier 5 [USDC]",
+      "asset_type": "Structure",
+      "symbol": "STAKE5USDC",
+      "mint": "3aTW9zvPz5f7vt2Mfnr5zWA2RcgNTtDSSrBwaxyZ6t7d",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "STAKE5",
+      "pair_name": "ATLAS",
+      "description": "Claim Stake Tier 5 [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "STAKE5ATLAS",
+      "mint": "3aTW9zvPz5f7vt2Mfnr5zWA2RcgNTtDSSrBwaxyZ6t7d",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLM1",
+      "pair_name": "USDC",
+      "description": "MUD CSS Tier 1 [USDC]",
+      "asset_type": "Structure",
+      "symbol": "CSSLM1USDC",
+      "mint": "G92TTgTMc2aV8ApBfnvByM7ov7J3cGbNBziNPdunxPHG",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLM1",
+      "pair_name": "ATLAS",
+      "description": "MUD CSS Tier 1 [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "CSSLM1ATLAS",
+      "mint": "G92TTgTMc2aV8ApBfnvByM7ov7J3cGbNBziNPdunxPHG",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLM3",
+      "pair_name": "USDC",
+      "description": "MUD CSS Tier 3 [USDC]",
+      "asset_type": "Structure",
+      "symbol": "CSSLM3USDC",
+      "mint": "3QQy45dYZjkc15Po2zZPzaEXkg8FRGJtqt194ADUurbC",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLM3",
+      "pair_name": "ATLAS",
+      "description": "MUD CSS Tier 3 [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "CSSLM3ATLAS",
+      "mint": "3QQy45dYZjkc15Po2zZPzaEXkg8FRGJtqt194ADUurbC",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLM5",
+      "pair_name": "USDC",
+      "description": "MUD CSS Tier 5 [USDC]",
+      "asset_type": "Structure",
+      "symbol": "CSSLM5USDC",
+      "mint": "GpmqxwTEdUnqH5bGPYbwHfKa9FSvKfyTuRaPNzkp941W",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLM5",
+      "pair_name": "ATLAS",
+      "description": "MUD CSS Tier 5 [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "CSSLM5ATLAS",
+      "mint": "GpmqxwTEdUnqH5bGPYbwHfKa9FSvKfyTuRaPNzkp941W",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLO1",
+      "pair_name": "USDC",
+      "description": "ONI CSS Tier 1 [USDC]",
+      "asset_type": "Structure",
+      "symbol": "CSSLO1USDC",
+      "mint": "BzbLMbd7ruoUN9gS9sBADfpo6NxAd3QoN9peeSw1S5RE",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLO1",
+      "pair_name": "ATLAS",
+      "description": "ONI CSS Tier 1 [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "CSSLO1ATLAS",
+      "mint": "BzbLMbd7ruoUN9gS9sBADfpo6NxAd3QoN9peeSw1S5RE",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLO4",
+      "pair_name": "USDC",
+      "description": "ONI CSS Tier 4 [USDC]",
+      "asset_type": "Structure",
+      "symbol": "CSSLO4USDC",
+      "mint": "Fa6dpoarSvrKguxXfQ9nPbpF8q1HuVzuWjtarCedKEF8",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLO4",
+      "pair_name": "ATLAS",
+      "description": "ONI CSS Tier 4 [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "CSSLO4ATLAS",
+      "mint": "Fa6dpoarSvrKguxXfQ9nPbpF8q1HuVzuWjtarCedKEF8",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLU3",
+      "pair_name": "USDC",
+      "description": "Ustur CSS Tier 3 [USDC]",
+      "asset_type": "Structure",
+      "symbol": "CSSLU3USDC",
+      "mint": "FZrrzg1PLBycs8DThiRXihr8mNmMwykn8Uxcnp6r8QT1",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLU3",
+      "pair_name": "ATLAS",
+      "description": "Ustur CSS Tier 3 [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "CSSLU3ATLAS",
+      "mint": "FZrrzg1PLBycs8DThiRXihr8mNmMwykn8Uxcnp6r8QT1",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLU4",
+      "pair_name": "USDC",
+      "description": "Ustur CSS Tier 4 [USDC]",
+      "asset_type": "Structure",
+      "symbol": "CSSLU4USDC",
+      "mint": "2qvH481jMjyWW78jR2hn6cUhBzQUYgFGKUmVCoevT8XY",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLU4",
+      "pair_name": "ATLAS",
+      "description": "Ustur CSS Tier 4 [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "CSSLU4ATLAS",
+      "mint": "2qvH481jMjyWW78jR2hn6cUhBzQUYgFGKUmVCoevT8XY",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLM2",
+      "pair_name": "USDC",
+      "description": "MUD CSS Tier 2 [USDC]",
+      "asset_type": "Structure",
+      "symbol": "CSSLM2USDC",
+      "mint": "HbZFd8KQ8HrCERD4boPUGvSqo24ELmRaBnCMyy2H1dm7",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLM2",
+      "pair_name": "ATLAS",
+      "description": "MUD CSS Tier 2 [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "CSSLM2ATLAS",
+      "mint": "HbZFd8KQ8HrCERD4boPUGvSqo24ELmRaBnCMyy2H1dm7",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLM4",
+      "pair_name": "USDC",
+      "description": "MUD CSS Tier 4 [USDC]",
+      "asset_type": "Structure",
+      "symbol": "CSSLM4USDC",
+      "mint": "7FuCkwhNwhZZ6pDcuZWwp1zSzUyiWgrzJmYiVEquxg9P",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLM4",
+      "pair_name": "ATLAS",
+      "description": "MUD CSS Tier 4 [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "CSSLM4ATLAS",
+      "mint": "7FuCkwhNwhZZ6pDcuZWwp1zSzUyiWgrzJmYiVEquxg9P",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLO0",
+      "pair_name": "USDC",
+      "description": "ONI CSS Base Tier [USDC]",
+      "asset_type": "Structure",
+      "symbol": "CSSLO0USDC",
+      "mint": "3o9DFxdaHBAz3YSoRtTvACyCUiRo1CbDD33ajmGecgmi",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLO0",
+      "pair_name": "ATLAS",
+      "description": "ONI CSS Base Tier [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "CSSLO0ATLAS",
+      "mint": "3o9DFxdaHBAz3YSoRtTvACyCUiRo1CbDD33ajmGecgmi",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLO2",
+      "pair_name": "USDC",
+      "description": "ONI CSS Tier 2 [USDC]",
+      "asset_type": "Structure",
+      "symbol": "CSSLO2USDC",
+      "mint": "AefmRKkHp35ydMfQADVVKNL8hRjmgYTGAgDfJxB89ygb",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLO2",
+      "pair_name": "ATLAS",
+      "description": "ONI CSS Tier 2 [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "CSSLO2ATLAS",
+      "mint": "AefmRKkHp35ydMfQADVVKNL8hRjmgYTGAgDfJxB89ygb",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLO3",
+      "pair_name": "USDC",
+      "description": "ONI CSS Tier 3 [USDC]",
+      "asset_type": "Structure",
+      "symbol": "CSSLO3USDC",
+      "mint": "3GbWjXUQYWJDuap1cvVX26YLrMcQNu8S4HX4HCSPDvHq",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLO3",
+      "pair_name": "ATLAS",
+      "description": "ONI CSS Tier 3 [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "CSSLO3ATLAS",
+      "mint": "3GbWjXUQYWJDuap1cvVX26YLrMcQNu8S4HX4HCSPDvHq",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLO5",
+      "pair_name": "USDC",
+      "description": "ONI CSS Tier 5 [USDC]",
+      "asset_type": "Structure",
+      "symbol": "CSSLO5USDC",
+      "mint": "E5k4YTobbsr3hwbSJF1j4VUoaSY4XvKkRqP1dQmr4wjy",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLO5",
+      "pair_name": "ATLAS",
+      "description": "ONI CSS Tier 5 [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "CSSLO5ATLAS",
+      "mint": "E5k4YTobbsr3hwbSJF1j4VUoaSY4XvKkRqP1dQmr4wjy",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLU0",
+      "pair_name": "USDC",
+      "description": "Ustur CSS Base Tier [USDC]",
+      "asset_type": "Structure",
+      "symbol": "CSSLU0USDC",
+      "mint": "ECRmDrmjcGJZfuibjyYanCK3Fwmi3uSy9Vd1iKLeG2Wx",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLU0",
+      "pair_name": "ATLAS",
+      "description": "Ustur CSS Base Tier [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "CSSLU0ATLAS",
+      "mint": "ECRmDrmjcGJZfuibjyYanCK3Fwmi3uSy9Vd1iKLeG2Wx",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLU2",
+      "pair_name": "USDC",
+      "description": "Ustur CSS Tier 2 [USDC]",
+      "asset_type": "Structure",
+      "symbol": "CSSLU2USDC",
+      "mint": "FSxgohUdATtaZhmsChMFPvJ8CPfMC6kUf1sqBJiEg7zt",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLU2",
+      "pair_name": "ATLAS",
+      "description": "Ustur CSS Tier 2 [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "CSSLU2ATLAS",
+      "mint": "FSxgohUdATtaZhmsChMFPvJ8CPfMC6kUf1sqBJiEg7zt",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLM0",
+      "pair_name": "USDC",
+      "description": "MUD CSS Base Tier [USDC]",
+      "asset_type": "Structure",
+      "symbol": "CSSLM0USDC",
+      "mint": "GzhGEoio3w5hwxF61e5XtrzjTAm4AzVPRAgMKSfrAWZq",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLM0",
+      "pair_name": "ATLAS",
+      "description": "MUD CSS Base Tier [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "CSSLM0ATLAS",
+      "mint": "GzhGEoio3w5hwxF61e5XtrzjTAm4AzVPRAgMKSfrAWZq",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLU1",
+      "pair_name": "USDC",
+      "description": "Ustur CSS Tier 1 [USDC]",
+      "asset_type": "Structure",
+      "symbol": "CSSLU1USDC",
+      "mint": "J7A3piAwSrhLAocV2FSzxrzR2aA6x1ExQNmUsrvsBrfy",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLU1",
+      "pair_name": "ATLAS",
+      "description": "Ustur CSS Tier 1 [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "CSSLU1ATLAS",
+      "mint": "J7A3piAwSrhLAocV2FSzxrzR2aA6x1ExQNmUsrvsBrfy",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLU5",
+      "pair_name": "USDC",
+      "description": "Ustur CSS Tier 5 [USDC]",
+      "asset_type": "Structure",
+      "symbol": "CSSLU5USDC",
+      "mint": "BcmqHr9sfwVA5Aa9Dd9CUi8pHcAmTHitysk74c8Lf6CN",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CSSLU5",
+      "pair_name": "ATLAS",
+      "description": "Ustur CSS Tier 5 [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "CSSLU5ATLAS",
+      "mint": "BcmqHr9sfwVA5Aa9Dd9CUi8pHcAmTHitysk74c8Lf6CN",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE3ME",
+      "pair_name": "USDC",
+      "description": "Core - Episode 3 (Magic Eden) [USDC]",
+      "asset_type": "Story",
+      "symbol": "CORE3MEUSDC",
+      "mint": "8mm9Ws3adSABe7mzpgX56X1P5VYu6b6JaDnyZV5TZhCE",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE3ME",
+      "pair_name": "ATLAS",
+      "description": "Core - Episode 3 (Magic Eden) [ATLAS]",
+      "asset_type": "Story",
+      "symbol": "CORE3MEATLAS",
+      "mint": "8mm9Ws3adSABe7mzpgX56X1P5VYu6b6JaDnyZV5TZhCE",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE3SA",
+      "pair_name": "USDC",
+      "description": "Core - Episode 3 (Star Atlas) [USDC]",
+      "asset_type": "Story",
+      "symbol": "CORE3SAUSDC",
+      "mint": "GAz4AGpGCd3djN887oRX4LR8riw1EUQFZgAPprLMv8Qt",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE3SA",
+      "pair_name": "ATLAS",
+      "description": "Core - Episode 3 (Star Atlas) [ATLAS]",
+      "asset_type": "Story",
+      "symbol": "CORE3SAATLAS",
+      "mint": "GAz4AGpGCd3djN887oRX4LR8riw1EUQFZgAPprLMv8Qt",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE4SA",
+      "pair_name": "USDC",
+      "description": "Core - Episode 4 (Star Atlas) [USDC]",
+      "asset_type": "Story",
+      "symbol": "CORE4SAUSDC",
+      "mint": "E19H2D3q93q8Wp1MQ22LdYB4jD5DJMRdF6dKRVUg4Z1y",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE4SA",
+      "pair_name": "ATLAS",
+      "description": "Core - Episode 4 (Star Atlas) [ATLAS]",
+      "asset_type": "Story",
+      "symbol": "CORE4SAATLAS",
+      "mint": "E19H2D3q93q8Wp1MQ22LdYB4jD5DJMRdF6dKRVUg4Z1y",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE4ME",
+      "pair_name": "USDC",
+      "description": "Core - Episode 4 (Magic Eden) [USDC]",
+      "asset_type": "Story",
+      "symbol": "CORE4MEUSDC",
+      "mint": "EbaUoZNNSWgAm5JJ3DUGVUvrotzUA6AS4Yd2BWs12kry",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE4ME",
+      "pair_name": "ATLAS",
+      "description": "Core - Episode 4 (Magic Eden) [ATLAS]",
+      "asset_type": "Story",
+      "symbol": "CORE4MEATLAS",
+      "mint": "EbaUoZNNSWgAm5JJ3DUGVUvrotzUA6AS4Yd2BWs12kry",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "YIPET",
+      "pair_name": "USDC",
+      "description": "Pet House (GAO Land Phase 1) [USDC]",
+      "asset_type": "Structure",
+      "symbol": "YIPETUSDC",
+      "mint": "x7pYPzCg3cpykQJZCZfw88QNHT4VAkTrho9FHkR8MfM",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "YIPET",
+      "pair_name": "ATLAS",
+      "description": "Pet House (GAO Land Phase 1) [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "YIPETATLAS",
+      "mint": "x7pYPzCg3cpykQJZCZfw88QNHT4VAkTrho9FHkR8MfM",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "OGKANR",
+      "pair_name": "USDC",
+      "description": "Ogrika Niruch [USDC]",
+      "asset_type": "Ship",
+      "symbol": "OGKANRUSDC",
+      "mint": "7SUoWHWWJCxCe5g9XqZkCRufGHXRV8nauuz69HPjuewr",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "OGKANR",
+      "pair_name": "ATLAS",
+      "description": "Ogrika Niruch [ATLAS]",
+      "asset_type": "Ship",
+      "symbol": "OGKANRATLAS",
+      "mint": "7SUoWHWWJCxCe5g9XqZkCRufGHXRV8nauuz69HPjuewr",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CRFTS2",
+      "pair_name": "USDC",
+      "description": "Crafting Station - XS [USDC]",
+      "asset_type": "Structure",
+      "symbol": "CRFTS2USDC",
+      "mint": "9gABbLVat8Mb7SCULPURjzKEFvC27yUKTttY5GXsRyWW",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CRFTS2",
+      "pair_name": "ATLAS",
+      "description": "Crafting Station - XS [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "CRFTS2ATLAS",
+      "mint": "9gABbLVat8Mb7SCULPURjzKEFvC27yUKTttY5GXsRyWW",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CRFTS3",
+      "pair_name": "USDC",
+      "description": "Crafting Station - Small [USDC]",
+      "asset_type": "Structure",
+      "symbol": "CRFTS3USDC",
+      "mint": "8FtzpzXPmZPkDUStVGUgns3dUKQSSR9mE6oyZsLEcEHo",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CRFTS3",
+      "pair_name": "ATLAS",
+      "description": "Crafting Station - Small [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "CRFTS3ATLAS",
+      "mint": "8FtzpzXPmZPkDUStVGUgns3dUKQSSR9mE6oyZsLEcEHo",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CRGOS0",
+      "pair_name": "USDC",
+      "description": "Cargo Storage - Tier 0 [USDC]",
+      "asset_type": "Structure",
+      "symbol": "CRGOS0USDC",
+      "mint": "BwPviMqD4kt1T3QejpGjZcko4qdxyojChztuma1dnmze",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CRGOS0",
+      "pair_name": "ATLAS",
+      "description": "Cargo Storage - Tier 0 [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "CRGOS0ATLAS",
+      "mint": "BwPviMqD4kt1T3QejpGjZcko4qdxyojChztuma1dnmze",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "HABEP1",
+      "pair_name": "USDC",
+      "description": "Exterior Paint (GAO Land Phase 1) [USDC]",
+      "asset_type": "Structure",
+      "symbol": "HABEP1USDC",
+      "mint": "544Lg3y7XWxxAUyg8CT2fWrGknUtz155UTvSVTUoMS1L",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "HABEP1",
+      "pair_name": "ATLAS",
+      "description": "Exterior Paint (GAO Land Phase 1) [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "HABEP1ATLAS",
+      "mint": "544Lg3y7XWxxAUyg8CT2fWrGknUtz155UTvSVTUoMS1L",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CRFTS4",
+      "pair_name": "USDC",
+      "description": "Crafting Station - Medium [USDC]",
+      "asset_type": "Structure",
+      "symbol": "CRFTS4USDC",
+      "mint": "5uZ7ocqvT17Tscjk3RahMSrBdBKKGfNHctWVtcrXKFiP",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CRFTS4",
+      "pair_name": "ATLAS",
+      "description": "Crafting Station - Medium [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "CRFTS4ATLAS",
+      "mint": "5uZ7ocqvT17Tscjk3RahMSrBdBKKGfNHctWVtcrXKFiP",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CRGOS1",
+      "pair_name": "USDC",
+      "description": "Cargo Storage - Tier 1 [USDC]",
+      "asset_type": "Structure",
+      "symbol": "CRGOS1USDC",
+      "mint": "5JpZEaou4j9AzG7ysmpMdr3DaAew5oYnyy3EPhKpuEb7",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CRGOS1",
+      "pair_name": "ATLAS",
+      "description": "Cargo Storage - Tier 1 [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "CRGOS1ATLAS",
+      "mint": "5JpZEaou4j9AzG7ysmpMdr3DaAew5oYnyy3EPhKpuEb7",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CRGOS4",
+      "pair_name": "USDC",
+      "description": "Cargo Storage - Tier 4 [USDC]",
+      "asset_type": "Structure",
+      "symbol": "CRGOS4USDC",
+      "mint": "4bVf18wH81AB7MSZjejP2yUWRGsUhLq7auCZ4TacKqdr",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CRGOS4",
+      "pair_name": "ATLAS",
+      "description": "Cargo Storage - Tier 4 [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "CRGOS4ATLAS",
+      "mint": "4bVf18wH81AB7MSZjejP2yUWRGsUhLq7auCZ4TacKqdr",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CALSCD",
+      "pair_name": "USDC",
+      "description": "Calico Scud [USDC]",
+      "asset_type": "Ship",
+      "symbol": "CALSCDUSDC",
+      "mint": "F3HitKsp52UPqBMEWSeTFqrGgnfYbS9DMrJCz9dM3w6D",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CALSCD",
+      "pair_name": "ATLAS",
+      "description": "Calico Scud [ATLAS]",
+      "asset_type": "Ship",
+      "symbol": "CALSCDATLAS",
+      "mint": "F3HitKsp52UPqBMEWSeTFqrGgnfYbS9DMrJCz9dM3w6D",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CALMAX",
+      "pair_name": "USDC",
+      "description": "Calico Maxhog [USDC]",
+      "asset_type": "Ship",
+      "symbol": "CALMAXUSDC",
+      "mint": "GxpbUDxYYvxiUejHcAMzeV2rzdHf6KZZvT86ACrpFgXa",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CALMAX",
+      "pair_name": "ATLAS",
+      "description": "Calico Maxhog [ATLAS]",
+      "asset_type": "Ship",
+      "symbol": "CALMAXATLAS",
+      "mint": "GxpbUDxYYvxiUejHcAMzeV2rzdHf6KZZvT86ACrpFgXa",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "HABIP1",
+      "pair_name": "USDC",
+      "description": "Interior Paint (GAO Land Phase 1) [USDC]",
+      "asset_type": "Structure",
+      "symbol": "HABIP1USDC",
+      "mint": "5gA8DzpsZyKXKeBeLP95pM1nhRyQ5UJ8oS56sjBqMX9C",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "HABIP1",
+      "pair_name": "ATLAS",
+      "description": "Interior Paint (GAO Land Phase 1) [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "HABIP1ATLAS",
+      "mint": "5gA8DzpsZyKXKeBeLP95pM1nhRyQ5UJ8oS56sjBqMX9C",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "HABLP1",
+      "pair_name": "USDC",
+      "description": "Landing Pad - XXS [USDC]",
+      "asset_type": "Structure",
+      "symbol": "HABLP1USDC",
+      "mint": "6EqU4NfBZQHzt9GdyrkdKXqVUeGce3WHCCtQF1ZsgWxZ",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "HABLP1",
+      "pair_name": "ATLAS",
+      "description": "Landing Pad - XXS [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "HABLP1ATLAS",
+      "mint": "6EqU4NfBZQHzt9GdyrkdKXqVUeGce3WHCCtQF1ZsgWxZ",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "HABLP2",
+      "pair_name": "USDC",
+      "description": "Landing Pad - XS [USDC]",
+      "asset_type": "Structure",
+      "symbol": "HABLP2USDC",
+      "mint": "DgGjoBST6m6mJx3w2Tq3sFa11aJYM5smuzsxJcg1VPD5",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "HABLP2",
+      "pair_name": "ATLAS",
+      "description": "Landing Pad - XS [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "HABLP2ATLAS",
+      "mint": "DgGjoBST6m6mJx3w2Tq3sFa11aJYM5smuzsxJcg1VPD5",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "HABLP4",
+      "pair_name": "USDC",
+      "description": "Landing Pad - Medium [USDC]",
+      "asset_type": "Structure",
+      "symbol": "HABLP4USDC",
+      "mint": "3KCNsmz7MBa2LTML6exEpvSoBoaUfRaydmJuBg2iwhXJ",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "HABLP4",
+      "pair_name": "ATLAS",
+      "description": "Landing Pad - Medium [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "HABLP4ATLAS",
+      "mint": "3KCNsmz7MBa2LTML6exEpvSoBoaUfRaydmJuBg2iwhXJ",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CRGOS2",
+      "pair_name": "USDC",
+      "description": "Cargo Storage - Tier 2 [USDC]",
+      "asset_type": "Structure",
+      "symbol": "CRGOS2USDC",
+      "mint": "Fg4fPw5czHhiZuuuBCj72Jko3uQYzyikXbwjnxCvjwTX",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CRGOS2",
+      "pair_name": "ATLAS",
+      "description": "Cargo Storage - Tier 2 [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "CRGOS2ATLAS",
+      "mint": "Fg4fPw5czHhiZuuuBCj72Jko3uQYzyikXbwjnxCvjwTX",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "SSP1",
+      "pair_name": "USDC",
+      "description": "Opportunity [USDC]",
+      "asset_type": "Collectible",
+      "symbol": "SSP1USDC",
+      "mint": "CbcsDuGEqbwsKL68TpwXWX3sxpxuS4C3zbwurxh1RDR8",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "SSP1",
+      "pair_name": "ATLAS",
+      "description": "Opportunity [ATLAS]",
+      "asset_type": "Collectible",
+      "symbol": "SSP1ATLAS",
+      "mint": "CbcsDuGEqbwsKL68TpwXWX3sxpxuS4C3zbwurxh1RDR8",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "SSP2",
+      "pair_name": "USDC",
+      "description": "Dream [USDC]",
+      "asset_type": "Collectible",
+      "symbol": "SSP2USDC",
+      "mint": "7YSFuJjpaNmcp9n9gdGB6TnQ6UsPWcH4KD4ng6WWc1wY",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "SSP2",
+      "pair_name": "ATLAS",
+      "description": "Dream [ATLAS]",
+      "asset_type": "Collectible",
+      "symbol": "SSP2ATLAS",
+      "mint": "7YSFuJjpaNmcp9n9gdGB6TnQ6UsPWcH4KD4ng6WWc1wY",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "HABLP3",
+      "pair_name": "USDC",
+      "description": "Landing Pad - Small [USDC]",
+      "asset_type": "Structure",
+      "symbol": "HABLP3USDC",
+      "mint": "DCD39GG1t6da1sSnDMNLkbayHun62ZpyiNaQBybhP4Zg",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "HABLP3",
+      "pair_name": "ATLAS",
+      "description": "Landing Pad - Small [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "HABLP3ATLAS",
+      "mint": "DCD39GG1t6da1sSnDMNLkbayHun62ZpyiNaQBybhP4Zg",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CRFTS1",
+      "pair_name": "USDC",
+      "description": "Crafting Station - XXS [USDC]",
+      "asset_type": "Structure",
+      "symbol": "CRFTS1USDC",
+      "mint": "Ur4RCegwEfvVHE1FLqNa4oHG7pAF48cXED9yxvbnMzM",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CRFTS1",
+      "pair_name": "ATLAS",
+      "description": "Crafting Station - XXS [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "CRFTS1ATLAS",
+      "mint": "Ur4RCegwEfvVHE1FLqNa4oHG7pAF48cXED9yxvbnMzM",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CRGOS3",
+      "pair_name": "USDC",
+      "description": "Cargo Storage - Tier 3 [USDC]",
+      "asset_type": "Structure",
+      "symbol": "CRGOS3USDC",
+      "mint": "9efb8dVqe2oGyW6SA4RSbWenQfY3R64hpMVazxiDjG1Q",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CRGOS3",
+      "pair_name": "ATLAS",
+      "description": "Cargo Storage - Tier 3 [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "CRGOS3ATLAS",
+      "mint": "9efb8dVqe2oGyW6SA4RSbWenQfY3R64hpMVazxiDjG1Q",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CRGOS5",
+      "pair_name": "USDC",
+      "description": "Cargo Storage - Tier 5 [USDC]",
+      "asset_type": "Structure",
+      "symbol": "CRGOS5USDC",
+      "mint": "FQ8uvjBHiNgMVDkGVf9uUD8nJ6th7HGyMB1kmytWgrVw",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CRGOS5",
+      "pair_name": "ATLAS",
+      "description": "Cargo Storage - Tier 5 [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "CRGOS5ATLAS",
+      "mint": "FQ8uvjBHiNgMVDkGVf9uUD8nJ6th7HGyMB1kmytWgrVw",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE5ME",
+      "pair_name": "USDC",
+      "description": "Core - Episode 5 (Magic Eden) [USDC]",
+      "asset_type": "Story",
+      "symbol": "CORE5MEUSDC",
+      "mint": "8fGDD3bwfNvEy4ER7ttfpccbvRUADjqG53PEXfnT7CbW",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE5ME",
+      "pair_name": "ATLAS",
+      "description": "Core - Episode 5 (Magic Eden) [ATLAS]",
+      "asset_type": "Story",
+      "symbol": "CORE5MEATLAS",
+      "mint": "8fGDD3bwfNvEy4ER7ttfpccbvRUADjqG53PEXfnT7CbW",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE5SA",
+      "pair_name": "USDC",
+      "description": "Core - Episode 5 (Star Atlas) [USDC]",
+      "asset_type": "Story",
+      "symbol": "CORE5SAUSDC",
+      "mint": "6fRmFGHcdsJST9DVhe9frrtzH9T1B4SeysdDNokpV5X5",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE5SA",
+      "pair_name": "ATLAS",
+      "description": "Core - Episode 5 (Star Atlas) [ATLAS]",
+      "asset_type": "Story",
+      "symbol": "CORE5SAATLAS",
+      "mint": "6fRmFGHcdsJST9DVhe9frrtzH9T1B4SeysdDNokpV5X5",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "SSB0",
+      "pair_name": "USDC",
+      "description": "Start Sequence Badge - Tier 0 [USDC]",
+      "asset_type": "Access",
+      "symbol": "SSB0USDC",
+      "mint": "2f2UeUs5kTXTEVMA65t3i7F6sSSkcaEUEKdnWZiZsroq",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "SSB0",
+      "pair_name": "ATLAS",
+      "description": "Start Sequence Badge - Tier 0 [ATLAS]",
+      "asset_type": "Access",
+      "symbol": "SSB0ATLAS",
+      "mint": "2f2UeUs5kTXTEVMA65t3i7F6sSSkcaEUEKdnWZiZsroq",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "SSB1",
+      "pair_name": "USDC",
+      "description": "Start Sequence Badge - Tier 1 [USDC]",
+      "asset_type": "Access",
+      "symbol": "SSB1USDC",
+      "mint": "C5HkVYzVLjdVSgJKT1cfvPgwMvyoGwC49RivNW5e1bmN",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "SSB1",
+      "pair_name": "ATLAS",
+      "description": "Start Sequence Badge - Tier 1 [ATLAS]",
+      "asset_type": "Access",
+      "symbol": "SSB1ATLAS",
+      "mint": "C5HkVYzVLjdVSgJKT1cfvPgwMvyoGwC49RivNW5e1bmN",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "SSB2",
+      "pair_name": "USDC",
+      "description": "Start Sequence Badge - Tier 2 [USDC]",
+      "asset_type": "Access",
+      "symbol": "SSB2USDC",
+      "mint": "DJ2gBp5WSc9rWrsdHiDs9UAwaQTuCT6bsESCrgWMKNxe",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "SSB2",
+      "pair_name": "ATLAS",
+      "description": "Start Sequence Badge - Tier 2 [ATLAS]",
+      "asset_type": "Access",
+      "symbol": "SSB2ATLAS",
+      "mint": "DJ2gBp5WSc9rWrsdHiDs9UAwaQTuCT6bsESCrgWMKNxe",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "SSB3",
+      "pair_name": "USDC",
+      "description": "Start Sequence Badge - Tier 3 [USDC]",
+      "asset_type": "Access",
+      "symbol": "SSB3USDC",
+      "mint": "CHhaMX8D2ZQZSAhGcoQjzxHyRT9gDAAVJcMdLxgKih2a",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "SSB3",
+      "pair_name": "ATLAS",
+      "description": "Start Sequence Badge - Tier 3 [ATLAS]",
+      "asset_type": "Access",
+      "symbol": "SSB3ATLAS",
+      "mint": "CHhaMX8D2ZQZSAhGcoQjzxHyRT9gDAAVJcMdLxgKih2a",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "PPB3",
+      "pair_name": "USDC",
+      "description": "Power Plant Tier 3 Upgrade Bundle [USDC]",
+      "asset_type": "Resource",
+      "symbol": "PPB3USDC",
+      "mint": "2bJ7CrJ3Q6aE7D2ESXf2UJ5o2Yi2ZcxMLjXgKpUAtbCb",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "PPB3",
+      "pair_name": "ATLAS",
+      "description": "Power Plant Tier 3 Upgrade Bundle [ATLAS]",
+      "asset_type": "Resource",
+      "symbol": "PPB3ATLAS",
+      "mint": "2bJ7CrJ3Q6aE7D2ESXf2UJ5o2Yi2ZcxMLjXgKpUAtbCb",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "MDB5",
+      "pair_name": "USDC",
+      "description": "Mining Drill Tier 5 Upgrade Bundle [USDC]",
+      "asset_type": "Resource",
+      "symbol": "MDB5USDC",
+      "mint": "4GXJnFKEJuhe3obiaRsV1AdghAn9wWokdpGMkyQowatK",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "MDB5",
+      "pair_name": "ATLAS",
+      "description": "Mining Drill Tier 5 Upgrade Bundle [ATLAS]",
+      "asset_type": "Resource",
+      "symbol": "MDB5ATLAS",
+      "mint": "4GXJnFKEJuhe3obiaRsV1AdghAn9wWokdpGMkyQowatK",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "PPB5",
+      "pair_name": "USDC",
+      "description": "Power Plant Tier 5 Upgrade Bundle [USDC]",
+      "asset_type": "Resource",
+      "symbol": "PPB5USDC",
+      "mint": "A9bRBLhPe4sZ6vmBJjHSBjgvECwz5LU95idAGvjA8geK",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "PPB5",
+      "pair_name": "ATLAS",
+      "description": "Power Plant Tier 5 Upgrade Bundle [ATLAS]",
+      "asset_type": "Resource",
+      "symbol": "PPB5ATLAS",
+      "mint": "A9bRBLhPe4sZ6vmBJjHSBjgvECwz5LU95idAGvjA8geK",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "PPB2",
+      "pair_name": "USDC",
+      "description": "Power Plant Tier 2 Upgrade Bundle [USDC]",
+      "asset_type": "Resource",
+      "symbol": "PPB2USDC",
+      "mint": "8y5KFaXtc84VWE4mMi8bNU5u8wHD9SjU4VMaZ8xCCw2r",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "PPB2",
+      "pair_name": "ATLAS",
+      "description": "Power Plant Tier 2 Upgrade Bundle [ATLAS]",
+      "asset_type": "Resource",
+      "symbol": "PPB2ATLAS",
+      "mint": "8y5KFaXtc84VWE4mMi8bNU5u8wHD9SjU4VMaZ8xCCw2r",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "MDB3",
+      "pair_name": "USDC",
+      "description": "Mining Drill Tier 3 Upgrade Bundle [USDC]",
+      "asset_type": "Resource",
+      "symbol": "MDB3USDC",
+      "mint": "4s9so85n4AT2xj5kH9vepgxZ4McovRWAKvGhkBRxdVhB",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "MDB3",
+      "pair_name": "ATLAS",
+      "description": "Mining Drill Tier 3 Upgrade Bundle [ATLAS]",
+      "asset_type": "Resource",
+      "symbol": "MDB3ATLAS",
+      "mint": "4s9so85n4AT2xj5kH9vepgxZ4McovRWAKvGhkBRxdVhB",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "MDB4",
+      "pair_name": "USDC",
+      "description": "Mining Drill Tier 4 Upgrade Bundle [USDC]",
+      "asset_type": "Resource",
+      "symbol": "MDB4USDC",
+      "mint": "D91FzmVLoPyXvDypE1DwJ5o21fQb3f1jMuUWMHXnjccV",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "MDB4",
+      "pair_name": "ATLAS",
+      "description": "Mining Drill Tier 4 Upgrade Bundle [ATLAS]",
+      "asset_type": "Resource",
+      "symbol": "MDB4ATLAS",
+      "mint": "D91FzmVLoPyXvDypE1DwJ5o21fQb3f1jMuUWMHXnjccV",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "PPB4",
+      "pair_name": "USDC",
+      "description": "Power Plant Tier 4 Upgrade Bundle [USDC]",
+      "asset_type": "Resource",
+      "symbol": "PPB4USDC",
+      "mint": "6Wg9wch8SCEqWGasjxZGUakZYXx1JwnRRRKyeqN1jRns",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "PPB4",
+      "pair_name": "ATLAS",
+      "description": "Power Plant Tier 4 Upgrade Bundle [ATLAS]",
+      "asset_type": "Resource",
+      "symbol": "PPB4ATLAS",
+      "mint": "6Wg9wch8SCEqWGasjxZGUakZYXx1JwnRRRKyeqN1jRns",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "MDB2",
+      "pair_name": "USDC",
+      "description": "Mining Drill Tier 2 Upgrade Bundle [USDC]",
+      "asset_type": "Resource",
+      "symbol": "MDB2USDC",
+      "mint": "2Qf22wRRRZ5usMLYmYBAB23sfwXcTvAxWLckJCC9kBUW",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "MDB2",
+      "pair_name": "ATLAS",
+      "description": "Mining Drill Tier 2 Upgrade Bundle [ATLAS]",
+      "asset_type": "Resource",
+      "symbol": "MDB2ATLAS",
+      "mint": "2Qf22wRRRZ5usMLYmYBAB23sfwXcTvAxWLckJCC9kBUW",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE6ME",
+      "pair_name": "USDC",
+      "description": "Core - Episode 6 (Magic Eden) [USDC]",
+      "asset_type": "Story",
+      "symbol": "CORE6MEUSDC",
+      "mint": "HfD2TpBfaB4CqvQw3PFEqjTPEMVNdvupzoBPftn8rKUn",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE6ME",
+      "pair_name": "ATLAS",
+      "description": "Core - Episode 6 (Magic Eden) [ATLAS]",
+      "asset_type": "Story",
+      "symbol": "CORE6MEATLAS",
+      "mint": "HfD2TpBfaB4CqvQw3PFEqjTPEMVNdvupzoBPftn8rKUn",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE6SA",
+      "pair_name": "USDC",
+      "description": "Core - Episode 6 (Star Atlas) [USDC]",
+      "asset_type": "Story",
+      "symbol": "CORE6SAUSDC",
+      "mint": "B9A1Z5ujSfEC1KWgNEQF6MVXKXh3go6apNSRgPmCWqBb",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE6SA",
+      "pair_name": "ATLAS",
+      "description": "Core - Episode 6 (Star Atlas) [ATLAS]",
+      "asset_type": "Story",
+      "symbol": "CORE6SAATLAS",
+      "mint": "B9A1Z5ujSfEC1KWgNEQF6MVXKXh3go6apNSRgPmCWqBb",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "HABEP2",
+      "pair_name": "USDC",
+      "description": "Escape Velocity Exterior Paint [USDC]",
+      "asset_type": "Structure",
+      "symbol": "HABEP2USDC",
+      "mint": "BaYBQcSVkU8utoK9CFwVBQV9uWEZi64Vd8pfyPKRdVE3",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "HABEP2",
+      "pair_name": "ATLAS",
+      "description": "Escape Velocity Exterior Paint [ATLAS]",
+      "asset_type": "Structure",
+      "symbol": "HABEP2ATLAS",
+      "mint": "BaYBQcSVkU8utoK9CFwVBQV9uWEZi64Vd8pfyPKRdVE3",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "ESCVP",
+      "pair_name": "USDC",
+      "description": "Escape Velocity [USDC]",
+      "asset_type": "Collectible",
+      "symbol": "ESCVPUSDC",
+      "mint": "8yfRmmuzUQqDJJkdwmcBhny1axkCdfDaVxcLPyv2XkTt",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "ESCVP",
+      "pair_name": "ATLAS",
+      "description": "Escape Velocity [ATLAS]",
+      "asset_type": "Collectible",
+      "symbol": "ESCVPATLAS",
+      "mint": "8yfRmmuzUQqDJJkdwmcBhny1axkCdfDaVxcLPyv2XkTt",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "ATLAS",
+      "pair_name": "USDC",
+      "description": "Atlas [USDC]",
+      "asset_type": "Currency",
+      "symbol": "ATLASUSDC",
+      "mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "ATLAS",
+      "pair_name": "ATLAS",
+      "description": "Atlas [ATLAS]",
+      "asset_type": "Currency",
+      "symbol": "ATLASATLAS",
+      "mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "IMP1",
+      "pair_name": "USDC",
+      "description": "Armstrong IMP Tip [USDC]",
+      "asset_type": "Ship",
+      "symbol": "IMP1USDC",
+      "mint": "DTbNmLWfu1pm4AuXRKYTApnDNfxMz73VET7nW5wizG5t",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "IMP1",
+      "pair_name": "ATLAS",
+      "description": "Armstrong IMP Tip [ATLAS]",
+      "asset_type": "Ship",
+      "symbol": "IMP1ATLAS",
+      "mint": "DTbNmLWfu1pm4AuXRKYTApnDNfxMz73VET7nW5wizG5t",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "IMP2",
+      "pair_name": "USDC",
+      "description": "Armstrong IMP Tap [USDC]",
+      "asset_type": "Ship",
+      "symbol": "IMP2USDC",
+      "mint": "ARNZXUQoBKx3JCX3UJB4aitSnvcjMMphN9YVDFy1PdKq",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "IMP2",
+      "pair_name": "ATLAS",
+      "description": "Armstrong IMP Tap [ATLAS]",
+      "asset_type": "Ship",
+      "symbol": "IMP2ATLAS",
+      "mint": "ARNZXUQoBKx3JCX3UJB4aitSnvcjMMphN9YVDFy1PdKq",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "IMP3",
+      "pair_name": "USDC",
+      "description": "Armstrong IMP [USDC]",
+      "asset_type": "Ship",
+      "symbol": "IMP3USDC",
+      "mint": "GmVKV9W3qZcERxk7hjqwRDcn9Kgtz3XDi7KfFLdGqyaW",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "IMP3",
+      "pair_name": "ATLAS",
+      "description": "Armstrong IMP [ATLAS]",
+      "asset_type": "Ship",
+      "symbol": "IMP3ATLAS",
+      "mint": "GmVKV9W3qZcERxk7hjqwRDcn9Kgtz3XDi7KfFLdGqyaW",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     }
   ],
   "currencies": [
@@ -1210,5 +4030,51 @@
       "name": "ATLAS",
       "mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx"
     }
-  ]
+  ],
+  "exchange": {
+    "symbol": "GM",
+    "name": "GalacticMarket",
+    "description": "StarAtlas GalacticMarket",
+    "asset_type": [
+      "Collectible",
+      "Access",
+      "Ship",
+      "Structure",
+      "Resource",
+      "Story",
+      "Currency"
+    ],
+    "sesstion": "24x7",
+    "timezone": "Etc/UTC",
+    "minmovement": 0.0,
+    "minmov": 1.0,
+    "minmovement2": 0.0,
+    "minmov2": 0.0,
+    "supported_resolutions": [
+      "1",
+      "3",
+      "5",
+      "15",
+      "30",
+      "60",
+      "120",
+      "240",
+      "360",
+      "480",
+      "720",
+      "1D",
+      "3D",
+      "1W",
+      "1M"
+    ],
+    "has_intraday": true,
+    "has_daily": true,
+    "has_weekly_and_monthly": false,
+    "data_status": "streaming",
+    "supports_search": true,
+    "supports_group_request": false,
+    "supports_marks": false,
+    "supports_timescale_marks": false,
+    "supports_time": true
+  }
 }
