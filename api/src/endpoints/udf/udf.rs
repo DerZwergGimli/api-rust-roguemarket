@@ -453,11 +453,11 @@ pub async fn get_history(
                    coalesce(close, close) AS close,
                    coalesce(volume, 0)    AS volume
 
-            FROM (SELECT time_bucket_gapfill($4, timestamp) AS bucket,
+            FROM (SELECT time_bucket_gapfill($4, timestamp)     AS bucket,
                          first(price, timestamp)                AS open,
                          MAX(price)                             AS high,
                          MIN(price)                             AS low,
-                         locf(last(price, timestamp))     AS close,
+                         locf(last(price, timestamp))          AS close,
                          SUM(asset_change)                      AS volume
 
                   FROM trades
@@ -481,11 +481,11 @@ pub async fn get_history(
                    coalesce(close, close) AS close,
                    coalesce(volume, 0)    AS volume
 
-                FROM (SELECT time_bucket_gapfill($4, timestamp) AS bucket,
+                FROM (SELECT time_bucket_gapfill($4, timestamp)     AS bucket,
                              first(price, timestamp)                AS open,
                              MAX(price)                             AS high,
                              MIN(price)                             AS low,
-                             locf(last(price, timestamp))     AS close,
+                             locf(last(price, timestamp))          AS close,
                              SUM(asset_change)                      AS volume
 
                       FROM trades
