@@ -1,14 +1,14 @@
 use std::sync::Arc;
 
-use anyhow::{Error, format_err};
-use chrono::NaiveDateTime;
 use database_psql::model::Trade;
 use json::object;
-use log::info;
 use prost::Message;
 use reqwest::header;
 
+use anyhow::{Error, format_err};
+use chrono::NaiveDateTime;
 use indicatif::ProgressBar;
+use log::info;
 use staratlas::symbolstore::SymbolStore;
 
 use crate::pb::database::{DatabaseChanges, TableChange};
@@ -109,9 +109,11 @@ pub fn map_trade_to_struct(table_change: TableChange, symbol_store: Arc<SymbolSt
             // let currency_symbol = request_metadata_symbol(
             //     "https://api.mainnet-beta.solana.com".to_string(),
             //     trade.currency_mint.clone());
+            panic!("Error no symbol fetching implemented! - fail here and restart the service while fetching missing symbols");
+
             let asset_symbol = "unknown".to_string();
             let currency_symbol = "unknown".to_string();
-       
+
 
             format!("{}/{}", asset_symbol, currency_symbol)
         }
