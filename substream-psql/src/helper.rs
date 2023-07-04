@@ -3,12 +3,12 @@ use std::sync::Arc;
 use anyhow::{Error, format_err};
 use chrono::NaiveDateTime;
 use database_psql::model::Trade;
-use indicatif::ProgressBar;
 use json::object;
 use log::info;
-use metadata_gateway::request_metadata_symbol;
 use prost::Message;
 use reqwest::header;
+
+use indicatif::ProgressBar;
 use staratlas::symbolstore::SymbolStore;
 
 use crate::pb::database::{DatabaseChanges, TableChange};
@@ -102,12 +102,16 @@ pub fn map_trade_to_struct(table_change: TableChange, symbol_store: Arc<SymbolSt
         .find(|asset| { asset.mint == trade.asset_mint && asset.pair_mint == trade.currency_mint })
     {
         None => {
-            let asset_symbol = request_metadata_symbol(
-                "https://api.mainnet-beta.solana.com".to_string(),
-                trade.asset_mint.clone());
-            let currency_symbol = request_metadata_symbol(
-                "https://api.mainnet-beta.solana.com".to_string(),
-                trade.currency_mint.clone());
+            //TODO: Fetch metadata from onchain gain
+            // let asset_symbol = request_metadata_symbol(
+            //     "https://api.mainnet-beta.solana.com".to_string(),
+            //     trade.asset_mint.clone());
+            // let currency_symbol = request_metadata_symbol(
+            //     "https://api.mainnet-beta.solana.com".to_string(),
+            //     trade.currency_mint.clone());
+            let asset_symbol = "unknown".to_string();
+            let currency_symbol = "unknown".to_string();
+       
 
             format!("{}/{}", asset_symbol, currency_symbol)
         }
