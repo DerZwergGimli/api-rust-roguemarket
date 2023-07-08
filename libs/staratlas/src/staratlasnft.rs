@@ -23,7 +23,7 @@ pub struct StarAtlasNft {
     pub trade_settings: TradeSettings,
     pub airdrops: Vec<Airdrop>,
     pub primary_sales: Vec<PrimarySale>,
-    pub updated_at: String,
+    pub updated_at: Option<String>,
     pub collection: Option<Collection>,
     pub slots: Option<Slots>,
     #[serde(rename = "id")]

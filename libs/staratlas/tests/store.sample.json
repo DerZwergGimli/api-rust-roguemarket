@@ -4019,6 +4019,46 @@
       "mint": "GmVKV9W3qZcERxk7hjqwRDcn9Kgtz3XDi7KfFLdGqyaW",
       "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
       "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE7ME",
+      "pair_name": "USDC",
+      "description": "Core Act 2 - Episode 1 (Magic Eden) [USDC]",
+      "asset_type": "Story",
+      "symbol": "CORE7MEUSDC",
+      "mint": "H2FiaQatmsyzmEC6J3bD2B2oSXejm6m2UDEfpLpMkKiT",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE7ME",
+      "pair_name": "ATLAS",
+      "description": "Core Act 2 - Episode 1 (Magic Eden) [ATLAS]",
+      "asset_type": "Story",
+      "symbol": "CORE7MEATLAS",
+      "mint": "H2FiaQatmsyzmEC6J3bD2B2oSXejm6m2UDEfpLpMkKiT",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE7SA",
+      "pair_name": "USDC",
+      "description": "Core Act 2 - Episode 1 (Star Atlas) [USDC]",
+      "asset_type": "Story",
+      "symbol": "CORE7SAUSDC",
+      "mint": "GkyznBSPCKRsi8qSBXjAYvhzAUzhdRGMe3LvNyczdixL",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE7SA",
+      "pair_name": "ATLAS",
+      "description": "Core Act 2 - Episode 1 (Star Atlas) [ATLAS]",
+      "asset_type": "Story",
+      "symbol": "CORE7SAATLAS",
+      "mint": "GkyznBSPCKRsi8qSBXjAYvhzAUzhdRGMe3LvNyczdixL",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     }
   ],
   "currencies": [

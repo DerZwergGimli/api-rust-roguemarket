@@ -51,7 +51,7 @@ async fn test_helper_substreams(expected_data: String, start: i64, stop: u64) {
                         Ok(DatabaseChanges { table_changes }) => {
                             for table_changed in table_changes {
                                 match table_changed.operation() {
-                                    Operation::Unset => {
+                                    Operation::Unspecified => {
                                         warn!("operation not supported")
                                     }
                                     Operation::Create => {

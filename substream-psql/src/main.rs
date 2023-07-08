@@ -2,22 +2,22 @@ use std::env;
 use std::sync::Arc;
 
 use anyhow::{Context, format_err};
+use database_psql::connection::create_psql_pool_diesel;
+use database_psql::db_cursors::{create_cursor, get_cursor, update_cursor};
+use database_psql::db_trades::create_or_update_trade_table;
+use database_psql::model::Cursor;
 use diesel::prelude::*;
 use diesel::r2d2::ConnectionManager;
 use diesel::r2d2::Pool;
 use futures::FutureExt;
 use indicatif::{MultiProgress, ProgressBar, ProgressStyle};
 use log::{error, info, warn};
-use staratlas::symbolstore::{BuilderSymbolStore, SymbolStore};
 use structopt::StructOpt;
 use tokio::task::JoinSet;
 use tokio::time::{Duration, sleep};
 use tokio_stream::StreamExt;
 
-use database_psql::connection::create_psql_pool_diesel;
-use database_psql::db_cursors::{create_cursor, get_cursor, update_cursor};
-use database_psql::db_trades::create_or_update_trade_table;
-use database_psql::model::Cursor;
+use staratlas::symbolstore::{BuilderSymbolStore, SymbolStore};
 
 use crate::helper::{extract_database_changes_from_map, map_trade_to_struct, request_token, TaskStates, update_task_info};
 use crate::pb::database::DatabaseChanges;
@@ -213,7 +213,7 @@ async fn run_substream(
                         Ok(DatabaseChanges { table_changes }) => {
                             for table_changed in table_changes {
                                 match table_changed.operation() {
-                                    Operation::Unset => {
+                                    Operation::Unspecified => {
                                         warn!("operation not supported")
                                     }
                                     Operation::Create => {

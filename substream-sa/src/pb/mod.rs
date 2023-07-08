@@ -8,12 +8,3 @@ pub mod sa {
         }
     }
 }
-pub mod substreams {
-    pub mod database {
-        // @@protoc_insertion_point(attribute:substreams.database.v1)
-        pub mod v1 {
-            include!("substreams.database.v1.rs");
-            // @@protoc_insertion_point(substreams.database.v1)
-        }
-    }
-}
