@@ -11,6 +11,7 @@ serde_json = "1.0.61"
 reqwest = { version = "0.11.0", features = ["json"] }
 tokio = { version = "1", features = ["full"] }
 helper = { path = "../helper" }
-strum = "0.24"
-strum_macros = "0.24"
+
 log = "0.4"
+staratlas_nft = { path = "../staratlas_nft" }
+staratlas_symbols = { path = "../staratlas_symbols" }

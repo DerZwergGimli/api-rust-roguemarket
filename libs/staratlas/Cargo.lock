@@ -707,9 +707,28 @@ dependencies = [
  "reqwest",
  "serde",
  "serde_json",
+ "staratlas_nft",
+ "staratlas_symbols",
+ "tokio",
+]
+
+[[package]]
+name = "staratlas_nft"
+version = "0.1.1"
+dependencies = [
+ "log",
+ "serde",
+ "serde_json",
  "strum",
  "strum_macros",
- "tokio",
+]
+
+[[package]]
+name = "staratlas_symbols"
+version = "0.1.1"
+dependencies = [
+ "serde",
+ "serde_json",
 ]
 
 [[package]]

@@ -1,56 +1,9 @@
 use log::info;
 use serde::{Deserialize, Serialize};
 
-use crate::staratlasnft::StarAtlasNft;
-
-#[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct SymbolStore {
-    pub assets: Vec<Asset>,
-    pub currencies: Vec<Currency>,
-    pub exchange: Exchange,
-}
-
-#[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct Asset {
-    pub asset_name: String,
-    pub pair_name: String,
-    pub description: String,
-    pub asset_type: String,
-    pub symbol: String,
-    pub mint: String,
-    pub pair_mint: String,
-    pub pricescale: i64,
-}
-
-#[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct Currency {
-    pub name: String,
-    pub mint: String,
-}
-
-#[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct Exchange {
-    pub symbol: String,
-    pub name: String,
-    pub description: String,
-    pub asset_type: Vec<String>,
-    pub sesstion: String,
-    pub timezone: String,
-    pub minmovement: f64,
-    pub minmov: f64,
-    pub minmovement2: f64,
-    pub minmov2: f64,
-    pub supported_resolutions: Vec<String>,
-    pub has_intraday: bool,
-    pub has_daily: bool,
-    pub has_weekly_and_monthly: bool,
-    pub data_status: String,
-    pub supports_search: bool,
-    pub supports_group_request: bool,
-    pub supports_marks: bool,
-    pub supports_timescale_marks: bool,
-    pub supports_time: bool,
-}
+use staratlas_nft::staratlasnft::StarAtlasNft;
+use staratlas_symbols::symbol_store::{Asset, Currency, Exchange, SymbolStore};
+use staratlas_symbols::symbol_store_kv::SymbolKV;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct BuilderSymbolStore {}
@@ -155,5 +108,17 @@ impl BuilderSymbolStore {
         });
         symbol_store.exchange.asset_type = item_types;
         return symbol_store;
+    }
+
+    pub async fn simple_json_out(&self) -> Vec<SymbolKV> {
+        let store = self.init().await;
+        let mut simple_data: Vec<SymbolKV> = vec![];
+        store.assets.into_iter().for_each(|asset| {
+            simple_data.push(SymbolKV {
+                key: format!("{}{}", asset.mint, asset.pair_mint),
+                symbol: asset.symbol,
+            })
+        });
+        simple_data
     }
 }
