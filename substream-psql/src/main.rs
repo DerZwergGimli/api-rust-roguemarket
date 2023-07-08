@@ -17,8 +17,8 @@ use tokio::task::JoinSet;
 use tokio::time::{Duration, sleep};
 use tokio_stream::StreamExt;
 
-use staratlas::symbolstore::{BuilderSymbolStore, SymbolStore};
-
+use staratlas::symbolstore::BuilderSymbolStore;
+use staratlas_symbols::symbol_store::SymbolStore;
 use crate::helper::{extract_database_changes_from_map, map_trade_to_struct, request_token, TaskStates, update_task_info};
 use crate::pb::database::DatabaseChanges;
 use crate::pb::database::table_change::Operation;

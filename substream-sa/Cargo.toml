@@ -26,8 +26,6 @@ bigdecimal = "0.3.0"
 marketplace_interface = { path = "../libs/staratlas_gm/marketplace_interface" }
 
 
-
-
 [profile.release]
 lto = true
 opt-level = 's'

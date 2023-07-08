@@ -9,8 +9,7 @@ use anyhow::{Error, format_err};
 use chrono::NaiveDateTime;
 use indicatif::ProgressBar;
 use log::info;
-use staratlas::symbolstore::SymbolStore;
-
+use staratlas_symbols::symbol_store::SymbolStore;
 use crate::pb::database::{DatabaseChanges, TableChange};
 use crate::pb::substreams::BlockScopedData;
 use crate::pb::substreams::module_output::Data::MapOutput;
