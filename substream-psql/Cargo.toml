@@ -8,14 +8,16 @@ description = "Substreams for Ethereum tokens"
 env_logger = "0.10.0"
 log = "0.4.17"
 anyhow = "1.0.69"
-prost = "0.10.4"
-prost-types = "0.10.1"
+prost = "0.11"
+prost-types = "0.11"
 http = "0.2.3"
-tonic = { version = "0.7.1", features = ["tls-roots"] }
-tokio = { version = "1.0", features = ["macros", "rt-multi-thread"] }
-tokio-stream = { version = "0.1", features = ["net"] }
-tokio-retry = "0.3.0"
-async-stream = "0.3.5"
+tonic = { version = "0.9.2", features = ["tls-roots"] }
+tokio = { version = "1.27", features = ["time", "sync", "macros", "test-util", "rt-multi-thread", "parking_lot"] }
+tokio-stream = { version = "0.1", features = ["sync", "net"] }
+tokio-retry = "0.3"
+async-stream = "0.3.0"
+futures03 = { version = "0.3.1", package = "futures", features = ["compat"] }
+thiserror = "1"
 
 serde = "1.0.152"
 progress_bar = "1.0.3"
@@ -25,7 +27,6 @@ json = "0.12.4"
 types = { path = "../libs/types" }
 async-scoped = "0.7.1"
 indicatif = "0.17.3"
-futures = "0.3.26"
 structopt = "0.3.26"
 diesel = { version = "2.0.3", features = ["postgres"] }
 database_psql = { path = "../libs/database_psql" }

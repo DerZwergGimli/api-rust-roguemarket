@@ -27,7 +27,7 @@ modules:
 
   - name: store_sa_trades
     kind: store
-    initialBlock: 142318158
+    #initialBlock: 142318158
     updatePolicy: set
     valueType: proto:sa.trade.v1.ProcessExchanges
     inputs:
@@ -35,7 +35,7 @@ modules:
 
   - name: db_out
     kind: map
-    initialBlock: 142318158
+    #initialBlock: 142318158
     inputs:
       - map: map_sa_trades
     output:

@@ -1,7 +1,8 @@
 use std::env;
+use std::process::exit;
 use std::sync::Arc;
 
-use anyhow::{Context, format_err};
+use anyhow::{Context, Error, format_err};
 use database_psql::connection::create_psql_pool_diesel;
 use database_psql::db_cursors::{create_cursor, get_cursor, update_cursor};
 use database_psql::db_trades::create_or_update_trade_table;
@@ -9,7 +10,7 @@ use database_psql::model::Cursor;
 use diesel::prelude::*;
 use diesel::r2d2::ConnectionManager;
 use diesel::r2d2::Pool;
-use futures::FutureExt;
+//use futures::FutureExt;
 use indicatif::{MultiProgress, ProgressBar, ProgressStyle};
 use log::{error, info, warn};
 use structopt::StructOpt;
@@ -19,10 +20,13 @@ use tokio_stream::StreamExt;
 
 use staratlas::symbolstore::BuilderSymbolStore;
 use staratlas_symbols::symbol_store::SymbolStore;
-use crate::helper::{extract_database_changes_from_map, map_trade_to_struct, request_token, TaskStates, update_task_info};
+
+use crate::helper::{extract_database_changes_from_map, extract_pb_sa_trades_from_map, map_exchange_to_trade, map_trade_to_struct, request_token, TaskStates, update_task_info};
 use crate::pb::database::DatabaseChanges;
 use crate::pb::database::table_change::Operation;
-use crate::pb::substreams::Package;
+use crate::pb::pb_sa_trade::ProcessExchanges;
+use crate::pb::sf::substreams::rpc::v2::BlockScopedData;
+use crate::pb::sf::substreams::v1::Package;
 use crate::substreams::SubstreamsEndpoint;
 use crate::substreams_stream::{BlockResponse, SubstreamsStream};
 
@@ -198,62 +202,91 @@ async fn run_substream(
                 sleep(Duration::from_secs(2)).await;
                 break;
             }
-            Some(event) => match event {
-                Err(_) => {
-                    println!("Error");
-                    panic!("Error while handling stream?");
-                }
-                Ok(BlockResponse::New(data)) => {
-                    pb_task.inc(1);
+            Some(Ok(BlockResponse::New(data))) => {
+                pb_task.inc(1);
+                let cursor = Some(data.cursor.clone());
+                match extract_pb_sa_trades_from_map(data.clone()) {
+                    Ok(ProcessExchanges { process_exchanges }) => {
+                        for exchange in process_exchanges {
+                            println!("{:?}", exchange);
+                            update_task_info(pb_task.clone(), task_index, TaskStates::INSERTING_DB);
 
+                            let mapped = map_exchange_to_trade(exchange, symbol_store.clone()).expect("Error unwrapping db data");
+                            current_block = mapped.block as u64;
+                            create_or_update_trade_table(&mut connection_pool.get().expect("Error getting connection"), mapped);
 
-                    let cursor = Some(data.cursor.clone());
+                            //Update cursor
+                            let new_cursor = Cursor {
+                                id: format!("{}_{}_{}", module_name, range[0].clone(), range[1].clone()),
+                                value: cursor.clone(),
+                                block: Some(current_block as i64),
+                                start_block: Some(range[0].clone() as i64),
+                                end_block: Some(range[1].clone() as i64),
+                            };
+                            update_cursor(&mut connection_pool.get().expect("Error getting connection"), format!("{}_{}_{}", module_name, range[0], range[1]), new_cursor);
 
-                    match extract_database_changes_from_map(data.clone(), module_name.clone()) {
-                        Ok(DatabaseChanges { table_changes }) => {
-                            for table_changed in table_changes {
-                                match table_changed.operation() {
-                                    Operation::Unspecified => {
-                                        warn!("operation not supported")
-                                    }
-                                    Operation::Create => {
-                                        update_task_info(pb_task.clone(), task_index, TaskStates::INSERTING_DB);
-
-                                        let mapped = map_trade_to_struct(table_changed, symbol_store.clone()).expect("Error unwrapping db data");
-                                        current_block = mapped.block as u64;
-                                        create_or_update_trade_table(&mut connection_pool.get().expect("Error getting connection"), mapped);
-
-                                        //Update cursor
-                                        let new_cursor = Cursor {
-                                            id: format!("{}_{}_{}", module_name, range[0].clone(), range[1].clone()),
-                                            value: cursor.clone(),
-                                            block: Some(current_block as i64),
-                                            start_block: Some(range[0].clone() as i64),
-                                            end_block: Some(range[1].clone() as i64),
-                                        };
-                                        update_cursor(&mut connection_pool.get().expect("Error getting connection"), format!("{}_{}_{}", module_name, range[0], range[1]), new_cursor);
-
-                                        if range[1] > 0 {
-                                            pb_task.set_position(current_block - range[0]);
-                                        } else {
-                                            pb_task.set_position(current_block);
-                                        }
-                                    }
-                                    Operation::Update => {
-                                        warn!("operation not supported")
-                                    }
-                                    Operation::Delete => {
-                                        warn!("operation not supported")
-                                    }
-                                }
+                            if range[1] > 0 {
+                                pb_task.set_position(current_block - range[0]);
+                            } else {
+                                pb_task.set_position(current_block);
                             }
                         }
-                        Err(_error) => {
-                            error!("not correct module");
-                        }
                     }
+                    _ => {}
                 }
-            },
+
+                // match extract_database_changes_from_map(data.clone(), module_name.clone()) {
+                //     Ok(DatabaseChanges { table_changes }) => {
+                //         for table_changed in table_changes {
+                //             match table_changed.operation() {
+                //                 Operation::Unspecified => {
+                //                     warn!("operation not supported")
+                //                 }
+                //                 Operation::Create => {
+                //                     update_task_info(pb_task.clone(), task_index, TaskStates::INSERTING_DB);
+                //
+                //                     let mapped = map_trade_to_struct(table_changed, symbol_store.clone()).expect("Error unwrapping db data");
+                //                     current_block = mapped.block as u64;
+                //                     create_or_update_trade_table(&mut connection_pool.get().expect("Error getting connection"), mapped);
+                //
+                //                     //Update cursor
+                //                     let new_cursor = Cursor {
+                //                         id: format!("{}_{}_{}", module_name, range[0].clone(), range[1].clone()),
+                //                         value: cursor.clone(),
+                //                         block: Some(current_block as i64),
+                //                         start_block: Some(range[0].clone() as i64),
+                //                         end_block: Some(range[1].clone() as i64),
+                //                     };
+                //                     update_cursor(&mut connection_pool.get().expect("Error getting connection"), format!("{}_{}_{}", module_name, range[0], range[1]), new_cursor);
+                //
+                //                     if range[1] > 0 {
+                //                         pb_task.set_position(current_block - range[0]);
+                //                     } else {
+                //                         pb_task.set_position(current_block);
+                //                     }
+                //                 }
+                //                 Operation::Update => {
+                //                     warn!("operation not supported");
+                //                 }
+                //                 Operation::Delete => {
+                //                     warn!("operation not supported");
+                //                 }
+                //             }
+                //         }
+                //     }
+                //
+                //     _ => {}
+                // };
+            }
+            Some(Ok(BlockResponse::Undo(undo_signal))) => {
+                unimplemented!("you must implement some kind of block undo handling, or request only final blocks (tweak substreams_stream.rs)")
+            }
+            Some(Err(err)) => {
+                println!();
+                println!("Stream terminated with error");
+                println!("{:?}", err);
+                exit(1);
+            }
         }
     }
 
@@ -262,6 +295,11 @@ async fn run_substream(
     pb_task.finish_with_message(format!("Task_{} DONE with range {}:{}", task_index, range[0], range[1]));
     task_index
 //    Ok(())
+}
+
+
+fn process_block_scoped_data(data: &BlockScopedData) -> Result<(), Error> {
+    Ok(())
 }
 
 

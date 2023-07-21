@@ -1,8 +1,11 @@
-#[path = "./sf.substreams.v1.rs"]
-pub mod substreams;
+use std::fmt::Display;
 
-#[path = "./sf.substreams.tokens.v1.rs"]
-pub mod tokens;
+use crate::pb::sf::substreams::rpc::v2::BlockRange;
 
-#[path = "sf.substreams.sink.database.v1.rs"]
-pub mod database;
+include!("pb.rs");
+
+impl Display for BlockRange {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "({}-{})", self.start_block, self.end_block)
+    }
+}

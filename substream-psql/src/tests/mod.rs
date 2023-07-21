@@ -1,7 +1,7 @@
 use std::env;
 use std::sync::Arc;
 
-use futures::StreamExt;
+use futures03::StreamExt;
 use log::{error, warn};
 
 use crate::helper::{extract_database_changes_from_map, request_token};
@@ -73,6 +73,10 @@ async fn test_helper_substreams(expected_data: String, start: i64, stop: u64) {
                             error!("not correct module");
                         }
                     }
+                }
+                Ok(BlockResponse::Undo(undo_signal)) => {
+                    println!("Not implemented");
+                    panic!("Undo signal is not implemented!");
                 }
             },
         }

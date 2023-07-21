@@ -1,18 +1,19 @@
 use std::sync::Arc;
 
-use database_psql::model::Trade;
-use json::object;
-use prost::Message;
-use reqwest::header;
-
 use anyhow::{Error, format_err};
 use chrono::NaiveDateTime;
+use database_psql::model::Trade;
+use database_psql::schema::trades::{asset_mint, symbol};
 use indicatif::ProgressBar;
+use json::object;
 use log::info;
+use reqwest::header;
+
 use staratlas_symbols::symbol_store::SymbolStore;
+
 use crate::pb::database::{DatabaseChanges, TableChange};
-use crate::pb::substreams::BlockScopedData;
-use crate::pb::substreams::module_output::Data::MapOutput;
+use crate::pb::pb_sa_trade::{ProcessExchange, ProcessExchanges};
+use crate::pb::sf::substreams::rpc::v2::BlockScopedData;
 
 #[derive(Debug)]
 pub enum TaskStates {
@@ -49,28 +50,65 @@ pub async fn request_token(key: String) -> Option<String> {
     Some(d.clone())
 }
 
-pub fn extract_database_changes_from_map(data: BlockScopedData, module_name: String) -> Result<DatabaseChanges, Error> {
-    let output = data
-        .outputs
-        .first()
-        .ok_or(format_err!("expecting one module output"))?;
-    if &output.name != module_name.as_str() {
-        return Err(format_err!(
-            "invalid module output name {}, expecting {}",
-            output.name,
-            module_name
-        ));
-    }
+pub fn extract_pb_sa_trades_from_map(data: BlockScopedData) -> Result<ProcessExchanges, Error> {
+    let output = data.output.as_ref().unwrap().map_output.as_ref().unwrap();
 
-    match output.data.as_ref().unwrap() {
-        MapOutput(data) => {
-            let wrapper: DatabaseChanges = Message::decode(data.value.as_slice())?;
-            Ok(wrapper)
+    use prost::Message;
+    let data: ProcessExchanges = Message::decode(output.value.as_slice()).unwrap();
+    Ok(data)
+}
+
+pub fn extract_database_changes_from_map(data: BlockScopedData, module_name: String) -> Result<DatabaseChanges, Error> {
+    let output = data.output.as_ref().unwrap().map_output.as_ref().unwrap();
+
+    use prost::Message;
+    let data: DatabaseChanges = Message::decode(output.value.as_slice()).unwrap();
+    Ok(data)
+
+    // match output.data.as_ref().unwrap() {
+    //     MapOutput(data) => {
+    //         let wrapper: DatabaseChanges = Message::decode(data.value.as_slice())?;
+    //         Ok(wrapper)
+    //     }
+    //     _ => {
+    //         Err(format_err!("invalid module output StoreDeltas, expecting MapOutput"))
+    //     }
+    // }
+}
+
+pub fn map_exchange_to_trade(exchange: ProcessExchange, symbol_store: Arc<SymbolStore>) -> Result<Trade, Error> {
+    let mut trade = Trade {
+        pk: exchange.pk,
+        symbol: "-none-".to_string(),
+        signature: exchange.signature,
+        block: exchange.block as i64,
+        timestamp: exchange.timestamp,
+        timestamp_ts: NaiveDateTime::from_timestamp_millis(exchange.timestamp * 1000).unwrap(),
+        order_taker: exchange.order_taker,
+        currency_mint: exchange.currency_mint,
+        asset_mint: exchange.asset_mint,
+        order_initializer: exchange.order_initializer,
+        asset_receiving_wallet: exchange.asset_receiving_wallet,
+        asset_change: exchange.asset_change.parse::<f64>().unwrap(),
+        currency_change: exchange.currency_change.parse::<f64>().unwrap(),
+        market_fee: exchange.market_fee.parse::<f64>().unwrap(),
+        price: exchange.price.parse::<f64>().unwrap(),
+        total_cost: exchange.total_cost.parse::<f64>().unwrap(),
+    };
+
+    trade.symbol = match symbol_store
+        .assets
+        .clone()
+        .into_iter()
+        .find(|asset| { asset.mint == trade.asset_mint && asset.pair_mint == trade.currency_mint })
+    {
+        None => {
+            panic!("Error no symbol fetching implemented! - fail here and restart the service while fetching missing symbols!");
         }
-        _ => {
-            Err(format_err!("invalid module output StoreDeltas, expecting MapOutput"))
-        }
-    }
+        Some(asset) => { asset.symbol }
+    };
+
+    return Ok(trade);
 }
 
 pub fn map_trade_to_struct(table_change: TableChange, symbol_store: Arc<SymbolStore>) -> Result<Trade, Error> {

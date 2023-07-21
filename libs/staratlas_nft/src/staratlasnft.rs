@@ -76,6 +76,7 @@ pub enum Edition {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum ItemType {
+    Memories,
     Access,
     Collectible,
     Currency,

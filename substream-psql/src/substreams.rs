@@ -1,13 +1,13 @@
 use std::{fmt::Display, sync::Arc, time::Duration};
 
-use http::{uri::Scheme, Uri};
+use http::{Uri, uri::Scheme};
 use tonic::{
+    codegen::http,
     metadata::MetadataValue,
     transport::{Channel, ClientTlsConfig},
 };
-use crate::pb::substreams::{Request, Response};
-use crate::pb::substreams::stream_client::StreamClient;
 
+use crate::pb::sf::substreams::rpc::v2::{Request, Response, stream_client::StreamClient};
 
 #[derive(Clone, Debug)]
 pub struct SubstreamsEndpoint {
@@ -36,10 +36,11 @@ impl SubstreamsEndpoint {
                 .expect("TLS config on this host is invalid"),
             _ => panic!("invalid uri scheme for firehose endpoint"),
         }
-            .connect_timeout(Duration::from_secs(10));
+            .connect_timeout(Duration::from_secs(10))
+            .http2_adaptive_window(true)
+            .tcp_keepalive(Some(Duration::from_secs(30)));
 
         let uri = endpoint.uri().to_string();
-        //connect_lazy() used to return Result, but not anymore, that makes sence since Channel is not used immediatelly
         let channel = endpoint.connect_lazy();
 
         Ok(SubstreamsEndpoint {
@@ -53,8 +54,9 @@ impl SubstreamsEndpoint {
         self: Arc<Self>,
         request: Request,
     ) -> Result<tonic::Streaming<Response>, anyhow::Error> {
-        let token_metadata = match self.token.clone() {
-            Some(token) => Some(MetadataValue::from_str(token.as_str())?),
+        let token_metadata: Option<MetadataValue<tonic::metadata::Ascii>> = match self.token.clone()
+        {
+            Some(token) => Some(token.as_str().try_into()?),
             None => None,
         };
 
