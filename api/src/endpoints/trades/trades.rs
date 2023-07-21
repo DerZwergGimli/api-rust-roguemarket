@@ -18,7 +18,7 @@ use log::{info, warn};
 use postgres::{NoTls, Row};
 use r2d2_postgres::PostgresConnectionManager;
 use serde::{Deserialize, Serialize};
-use staratlas::symbolstore::{BuilderSymbolStore, SymbolStore};
+use staratlas::symbolstore::{BuilderSymbolStore};
 use types::databasetrade::DBTrade;
 use types::m_ohclvt::M_OHCLVT;
 use utoipa::{IntoParams, ToSchema};

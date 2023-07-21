@@ -10,7 +10,7 @@ use diesel::PgConnection;
 use diesel::r2d2::{ConnectionManager, Pool};
 use log::{info, warn};
 use serde::{Deserialize, Serialize};
-use staratlas::symbolstore::{BuilderSymbolStore, SymbolStore};
+use staratlas::symbolstore::{BuilderSymbolStore};
 use types::databasetrade::DBTrade;
 use types::m_ohclvt::M_OHCLVT;
 use utoipa::{IntoParams, ToSchema};
