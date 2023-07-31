@@ -279,7 +279,7 @@ async fn run_substream(
                 // };
             }
             Some(Ok(BlockResponse::Undo(undo_signal))) => {
-                unimplemented!("you must implement some kind of block undo handling, or request only final blocks (tweak substreams_stream.rs)")
+                //unimplemented!("you must implement some kind of block undo handling, or request only final blocks (tweak substreams_stream.rs)")
             }
             Some(Err(err)) => {
                 println!();
