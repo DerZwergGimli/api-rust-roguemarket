@@ -1,8 +1,4 @@
-use std::str::FromStr;
-
 use serde::{Deserialize, Serialize};
-use strum_macros::Display;
-use strum_macros::EnumString;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -62,6 +58,7 @@ pub struct Attributes {
     pub series_name: Option<SeriesName>,
     pub episode: Option<i64>,
     pub edition: Option<Edition>,
+    pub asset_type: Option<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -76,10 +73,10 @@ pub enum Edition {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum ItemType {
-    Memories,
     Access,
     Collectible,
     Currency,
+    Memories,
     Resource,
     Ship,
     Story,
@@ -152,13 +149,14 @@ pub struct Media {
     pub qr_facebook: Option<String>,
     pub sketchfab: Option<String>,
     pub audio: Option<String>,
-    pub thumbnail_url: String,
+    pub thumbnail_url: Option<String>,
     pub gallery: Option<Vec<String>>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "kebab-case")]
 pub enum Network {
+    Devnet,
     #[serde(rename = "mainnet-beta")]
     MainnetBeta,
 }
