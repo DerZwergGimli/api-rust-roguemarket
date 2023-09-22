@@ -12,7 +12,7 @@ build:
 
 .PHONY: map_sa_trades
 map_sa_trades: build
-	substreams run -e mainnet.sol.streamingfast.io:443 substreams.yaml map_sa_trades --start-block 218804287 --stop-block 218804289
+	substreams run -e mainnet.sol.streamingfast.io:443 substreams.yaml map_sa_trades --start-block 218817508 --stop-block 218817510
 
 .PHONY: map_sa_trades_long
 map_sa_trades_long: build
