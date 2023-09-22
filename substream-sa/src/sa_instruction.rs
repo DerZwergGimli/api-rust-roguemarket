@@ -19,6 +19,7 @@ pub enum MarketplaceInstruction<'a> {
     InitializeOpenOrdersCounter,
     InitializeMarketplace,
     RegisterCurrency,
+    UpdateAtlasRate,
     DeregisterCurrency,
     UpdateCurrencyRoyalty,
     ProcessCancel,
@@ -154,6 +155,10 @@ impl<'a> MarketplaceInstruction<'a> {
             247 => {
                 log::info!("[Instruction] RegisterCurrency");
                 Self::RegisterCurrency {}
+            }
+            248 => {
+                log::info!("[Instruction] UpdateAtlasRate");
+                Self::UpdateAtlasRate {}
             }
             _ => {
                 log::info!("tag={:?}", tag);
