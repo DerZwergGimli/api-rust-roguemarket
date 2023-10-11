@@ -155,9 +155,23 @@ fn process_blocks(blk: Block, process_exchanges: &mut Vec<ProcessExchange>) -> R
                                 let asset_mint = bs58::encode(&msg.account_keys[inst.accounts[4] as usize]).into_string();
 
 
+                                log::info!("instruction none={:?}", trx.clone().meta.clone().unwrap().inner_instructions_none);
+                                trx.clone().meta.clone().unwrap().inner_instructions.clone().into_iter().for_each(|e| {
+                                    log::info!("instruction inner={:?}", e.index);
+                                });
                                 log::info!("instruction index={:?}", inst_idx);
-                                log::info!("instruction inner={:?}", trx.clone().meta.clone().unwrap().inner_instructions);
-                                let asset_receiving_wallet_index = find_asset_mint_in_inner_instruction_get_index(meta.clone().inner_instructions.into_iter().find(|i| i.index == inst_idx as u32).unwrap().clone().instructions, inst.accounts[4]).unwrap();
+
+
+                                let mut asset_receiving_wallet_index = 0;
+                                if trx.meta.clone().unwrap().inner_instructions_none {
+                                    asset_receiving_wallet_index = 4
+                                } else {
+                                    asset_receiving_wallet_index =
+                                        find_asset_mint_in_inner_instruction_get_index(
+                                            meta.clone().inner_instructions.into_iter()
+                                                .find(|i| i.index == inst_idx as u32).unwrap()
+                                                .clone().instructions, inst.accounts[4]).unwrap();
+                                }
 
                                 log::info!("asset_receiving_wallet_index={:?}", asset_receiving_wallet_index);
                                 let asset_receiving_wallet = match asset_receiving_wallet_index {
