@@ -157,7 +157,7 @@ fn process_blocks(blk: Block, process_exchanges: &mut Vec<ProcessExchange>) -> R
 
                                 log::info!("instruction index={:?}", inst_idx);
                                 log::info!("instruction inner={:?}", trx.clone().meta.clone().unwrap().inner_instructions);
-                                let asset_receiving_wallet_index = find_asset_mint_in_inner_instruction_get_index(meta.clone().inner_instructions.into_iter().find(|i| i.index == inst_idx as u32).unwrap_or_default().clone().instructions, inst.accounts[4]).unwrap();
+                                let asset_receiving_wallet_index = find_asset_mint_in_inner_instruction_get_index(meta.clone().inner_instructions.into_iter().find(|i| i.index == inst_idx as u32).unwrap().clone().instructions, inst.accounts[4]).unwrap();
 
                                 log::info!("asset_receiving_wallet_index={:?}", asset_receiving_wallet_index);
                                 let asset_receiving_wallet = match asset_receiving_wallet_index {

@@ -60,7 +60,7 @@ pub fn find_asset_mint_in_inner_instruction_get_index(inner_instructions: Vec<Co
             return Some(idx);
         }
     }
-    None
+    Some(4)
 }
 
 
