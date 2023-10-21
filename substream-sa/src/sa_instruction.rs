@@ -66,6 +66,12 @@ impl<'a> MarketplaceInstruction<'a> {
         let (_dump, exchange_args) = rest.split_at(7);
 
         Ok(match tag {
+            9 => {
+                Self::UnknownTransaction
+            }
+            12 => {
+                Self::UnknownTransaction
+            }
             18 => {
                 log::info!("[Instruction] UpdateCurrencyVault");
                 Self::UpdateCurrencyVault {}
