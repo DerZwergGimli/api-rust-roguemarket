@@ -179,7 +179,7 @@ fn process_blocks(blk: Block, process_exchanges: &mut Vec<ProcessExchange>) -> R
                                     2 => { bs58::encode(&msg.account_keys[inst.accounts[0] as usize]).into_string() }
                                     3 => { bs58::encode(&msg.account_keys[inst.accounts[5] as usize]).into_string() }
                                     4 => { bs58::encode(&msg.account_keys[inst.accounts[0] as usize]).into_string() }
-                                    _ => { panic!("Error mapping a wallet to the receiving wallet index from inner_instructions!") }
+                                    _ => { bs58::encode(&msg.account_keys[inst.accounts[0] as usize]).into_string() }
                                 };
 
 
