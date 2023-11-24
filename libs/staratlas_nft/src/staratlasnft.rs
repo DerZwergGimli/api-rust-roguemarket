@@ -68,6 +68,8 @@ pub enum Edition {
     MagicEden,
     #[serde(rename = "star-atlas")]
     StarAtlas,
+    #[serde(rename = "alternate-cover")]
+    AlternateCover,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

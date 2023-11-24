@@ -4799,6 +4799,146 @@
       "mint": "MEXfyQHowwqoTHsN6yjfeXVaxZxALUFJAHuzY8gFiUu",
       "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
       "pricescale": 1000000
+    },
+    {
+      "asset_name": "PCC1",
+      "pair_name": "USDC",
+      "description": "PCC #1 [USDC]",
+      "asset_type": "Collectible",
+      "symbol": "PCC1USDC",
+      "mint": "FfRV7CcedJ284kkaQf4CY9XaaZHdkHaBcFU77qTAKT4n",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "PCC1",
+      "pair_name": "ATLAS",
+      "description": "PCC #1 [ATLAS]",
+      "asset_type": "Collectible",
+      "symbol": "PCC1ATLAS",
+      "mint": "FfRV7CcedJ284kkaQf4CY9XaaZHdkHaBcFU77qTAKT4n",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "PCC2",
+      "pair_name": "USDC",
+      "description": "PCC #2 [USDC]",
+      "asset_type": "Collectible",
+      "symbol": "PCC2USDC",
+      "mint": "BH3eEgWyBmVYA9cvQj3yMDeUFL2auoD8WefycT8NdzJ5",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "PCC2",
+      "pair_name": "ATLAS",
+      "description": "PCC #2 [ATLAS]",
+      "asset_type": "Collectible",
+      "symbol": "PCC2ATLAS",
+      "mint": "BH3eEgWyBmVYA9cvQj3yMDeUFL2auoD8WefycT8NdzJ5",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE9SA",
+      "pair_name": "USDC",
+      "description": "Core Act 2 - Episode 3 (Star Atlas) [USDC]",
+      "asset_type": "Story",
+      "symbol": "CORE9SAUSDC",
+      "mint": "C9SAoQrMnBrLxMEL5cb3XFnWgqp7GyUKyjZVCVFaBNBj",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE9SA",
+      "pair_name": "ATLAS",
+      "description": "Core Act 2 - Episode 3 (Star Atlas) [ATLAS]",
+      "asset_type": "Story",
+      "symbol": "CORE9SAATLAS",
+      "mint": "C9SAoQrMnBrLxMEL5cb3XFnWgqp7GyUKyjZVCVFaBNBj",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE9ME",
+      "pair_name": "USDC",
+      "description": "Core Act 2 - Episode 3 (Magic Eden) [USDC]",
+      "asset_type": "Story",
+      "symbol": "CORE9MEUSDC",
+      "mint": "C9MEzvvVoDiEeGCo4vwYjdYczUknvjpEZQvMMK7EUJhS",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE9ME",
+      "pair_name": "ATLAS",
+      "description": "Core Act 2 - Episode 3 (Magic Eden) [ATLAS]",
+      "asset_type": "Story",
+      "symbol": "CORE9MEATLAS",
+      "mint": "C9MEzvvVoDiEeGCo4vwYjdYczUknvjpEZQvMMK7EUJhS",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "OPALRF",
+      "pair_name": "USDC",
+      "description": "Opal Rayfam [USDC]",
+      "asset_type": "Ship",
+      "symbol": "OPALRFUSDC",
+      "mint": "RaYfM1RLfxQJWF8RZravTshKj1aHaWBNXF94VWToY9n",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "OPALRF",
+      "pair_name": "ATLAS",
+      "description": "Opal Rayfam [ATLAS]",
+      "asset_type": "Ship",
+      "symbol": "OPALRFATLAS",
+      "mint": "RaYfM1RLfxQJWF8RZravTshKj1aHaWBNXF94VWToY9n",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE10SA",
+      "pair_name": "USDC",
+      "description": "Core Act 2 - Episode 4 (Star Atlas) [USDC]",
+      "asset_type": "Story",
+      "symbol": "CORE10SAUSDC",
+      "mint": "C1oSAZQk8uzAr3WTPYEqtg3fiazp6m2Yaj8vbaGf6F7n",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE10SA",
+      "pair_name": "ATLAS",
+      "description": "Core Act 2 - Episode 4 (Star Atlas) [ATLAS]",
+      "asset_type": "Story",
+      "symbol": "CORE10SAATLAS",
+      "mint": "C1oSAZQk8uzAr3WTPYEqtg3fiazp6m2Yaj8vbaGf6F7n",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE10AC",
+      "pair_name": "USDC",
+      "description": "Core Act 2 - Episode 4 (Alternate Cover) [USDC]",
+      "asset_type": "Story",
+      "symbol": "CORE10ACUSDC",
+      "mint": "C1oACSR5G8WWrDCTPeezj6GAcC2huXg4e3uDpqXAs16",
+      "pair_mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pricescale": 1000000
+    },
+    {
+      "asset_name": "CORE10AC",
+      "pair_name": "ATLAS",
+      "description": "Core Act 2 - Episode 4 (Alternate Cover) [ATLAS]",
+      "asset_type": "Story",
+      "symbol": "CORE10ACATLAS",
+      "mint": "C1oACSR5G8WWrDCTPeezj6GAcC2huXg4e3uDpqXAs16",
+      "pair_mint": "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
+      "pricescale": 1000000
     }
   ],
   "currencies": [
